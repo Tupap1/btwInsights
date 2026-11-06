@@ -1,0 +1,41 @@
+{
+  "accounts": [
+    {
+      "_id": "6aed07f75d163393fc5c0a9d",
+      "profileId": "6aed07d06bc63d1eeba9f731",
+      "isActive": true,
+      "platform": "tiktok",
+      "username": "btw.inc",
+      "displayName": "BTW · Software para negocios",
+      "profilePicture": "https://media.zernio.com/media/tiktok-avatars/1793918967359_0afe6def77b9df6a_tiktok-avatar--000lM_N8uy3tyGQjVni-Rmc-ciIstiFTfS0.jpg",
+      "currentFollowers": 2,
+      "lastUpdated": "2026-11-05T22:49:27.663Z",
+      "growth": 0,
+      "growthPercentage": 0,
+      "dataPoints": 0
+    },
+    {
+      "_id": "6aed36858405bb702db92cda",
+      "profileId": "6aed07d06bc63d1eeba9f731",
+      "isActive": true,
+      "platform": "instagram",
+      "username": "btwone.co",
+      "displayName": "BTW Inc",
+      "profilePicture": "https://scontent-lhr11-1.cdninstagram.com/v/t51.82787-19/870167692_18063307514533411_7884440868638054383_n.jpg?stp=dst-jpg_s240x240_tt6&_nc_cat=106&ig_cache_key=GIy03TMjVt_DeyxAAO9XvksyKWttbmNDAQAB2402400j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=ZTWEapOPQVgQ7kNvwEOvy8r&_nc_oc=AdrTQiLYTZbDNFja3XdIux-z6eu-Zm4g0-n1cXbHGqcNxXYZhQmYfu4tgx6mQKmWsWE&_nc_zt=24&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=cHAjQQdNfWZSdizg2IowuQ&_nc_tpa=Q5bMBQIKdlWnJhCIbClwLbifvLQCBf58F1Cwd0NkCW7kZMSclYw85bZUQpMA9WIkdmqcogRZlWV4iU_2Aw&oh=00_AQTm0Uk6808XpCfk-2-fk3Q51NxQ76IHESwUJN78jU7s9Q&oe=6AF31B00",
+      "currentFollowers": 7,
+      "lastUpdated": "2026-11-06T02:08:04.978Z",
+      "growth": 0,
+      "growthPercentage": 0,
+      "dataPoints": 0
+    }
+  ],
+  "stats": {
+    "6aed07f75d163393fc5c0a9d": [],
+    "6aed36858405bb702db92cda": []
+  },
+  "dateRange": {
+    "from": "2025-01-01T00:00:00.000Z",
+    "to": "2026-11-06T23:59:59.999Z"
+  },
+  "granularity": "daily"
+}

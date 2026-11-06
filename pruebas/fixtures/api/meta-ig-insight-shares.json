@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "id": "18120342799999707/insights/shares/lifetime",
+      "name": "shares",
+      "period": "lifetime",
+      "title": "Veces que se ha compartido",
+      "description": "Número de veces que se ha compartido tu reel.",
+      "values": [
+        {
+          "value": 2
+        }
+      ]
+    }
+  ]
+}

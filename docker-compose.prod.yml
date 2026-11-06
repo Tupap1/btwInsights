@@ -1,0 +1,125 @@
+# Producción de btw-insights. Uso (ver docs/despliegue.md):
+#   docker compose --env-file .env.produccion -f docker-compose.prod.yml up -d
+# .env.produccion va fuera de git. Nada se publica al exterior: el proxy llega a app:3000 por la red externa.
+name: btw-insights
+
+x-registro: &registro
+  logging:
+    driver: json-file
+    options: { max-size: "10m", max-file: "3" }
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: btw
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Falta POSTGRES_PASSWORD en .env.produccion}
+      POSTGRES_DB: btw_insights
+    volumes:
+      - datos_pg:/var/lib/postgresql/data
+    # Sin "ports": solo las demás piezas la alcanzan, por la red interna.
+    healthcheck:
+      # Por TCP: en el primer arranque Postgres corre un servidor temporal solo por socket mientras se inicializa, y
+      # pg_isready por socket lo daba por sano antes de tiempo (migrar fallaba con "CREATE SCHEMA drizzle").
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U btw -d btw_insights"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    networks: [interna]
+    <<: *registro
+
+  migrar:
+    image: btw-insights-herramientas:${VERSION:-local}
+    build:
+      context: .
+      target: herramientas
+    restart: "no"
+    # Como dueño (btw): primero las migraciones y luego los roles (scripts/roles.sql, idempotente).
+    command: ["sh", "-c", "node --import tsx scripts/migrar.ts && node --import tsx scripts/roles.ts"]
+    environment:
+      DATABASE_URL: postgres://btw:${POSTGRES_PASSWORD}@db:5432/btw_insights
+      POSTGRES_APP_PASSWORD: ${POSTGRES_APP_PASSWORD:?Falta POSTGRES_APP_PASSWORD en .env.produccion}
+      POSTGRES_LECTURA_PASSWORD: ${POSTGRES_LECTURA_PASSWORD:?Falta POSTGRES_LECTURA_PASSWORD en .env.produccion}
+      # Para "invitar" (el enlace sale de WEBAUTHN_ORIGEN), que corre en esta misma imagen.
+      WEBAUTHN_RP_ID: ${WEBAUTHN_RP_ID:?Falta WEBAUTHN_RP_ID en .env.produccion}
+      WEBAUTHN_ORIGEN: ${WEBAUTHN_ORIGEN:?Falta WEBAUTHN_ORIGEN en .env.produccion}
+      WEBAUTHN_RP_NOMBRE: ${WEBAUTHN_RP_NOMBRE:?Falta WEBAUTHN_RP_NOMBRE en .env.produccion}
+    depends_on:
+      db: { condition: service_healthy }
+    networks: [interna]
+
+  app:
+    image: btw-insights-app:${VERSION:-local}
+    build:
+      context: .
+      target: app
+    restart: unless-stopped
+    environment:
+      # La app no es dueña: btw_app lee y escribe, sin DDL y sin DELETE (salvo sesion, desafio e invitacion).
+      DATABASE_URL: postgres://btw_app:${POSTGRES_APP_PASSWORD:?Falta POSTGRES_APP_PASSWORD en .env.produccion}@db:5432/btw_insights
+      WEBAUTHN_RP_ID: ${WEBAUTHN_RP_ID:?Falta WEBAUTHN_RP_ID en .env.produccion}
+      WEBAUTHN_ORIGEN: ${WEBAUTHN_ORIGEN:?Falta WEBAUTHN_ORIGEN en .env.produccion}
+      WEBAUTHN_RP_NOMBRE: ${WEBAUTHN_RP_NOMBRE:?Falta WEBAUTHN_RP_NOMBRE en .env.produccion}
+      RECOLECTOR_SECRETO: ${RECOLECTOR_SECRETO:?Falta RECOLECTOR_SECRETO en .env.produccion}
+      META_PAGE_TOKEN: ${META_PAGE_TOKEN:-}
+      META_PAGE_ID: ${META_PAGE_ID:-}
+      IG_USER_ID: ${IG_USER_ID:-}
+      GRAPH_VERSION: ${GRAPH_VERSION:-v25.0}
+      ZERNIO_API_KEY: ${ZERNIO_API_KEY:-}
+      # "1" prende "Editar borrador" (escribe en Zernio). Apagado por defecto: el tablero es para ver.
+      EDITAR_BORRADORES: ${EDITAR_BORRADORES:-}
+    depends_on:
+      migrar: { condition: service_completed_successfully }
+    # Para probar desde el propio servidor, descomenta (solo escucha en loopback):
+    # ports:
+    #   - "127.0.0.1:3100:3000"
+    networks:
+      interna:
+      proxy:
+        # Nombre fijo en la red del proxy: en Nginx Proxy Manager el destino es http://btw-insights-app:3000.
+        aliases: [btw-insights-app]
+    <<: *registro
+
+  cron:
+    image: btw-insights-cron:${VERSION:-local}
+    build: ./docker/cron
+    restart: unless-stopped
+    environment:
+      RECOLECTOR_SECRETO: ${RECOLECTOR_SECRETO}
+    depends_on:
+      app: { condition: service_started }
+    networks: [interna]
+    <<: *registro
+
+  respaldo:
+    image: btw-insights-respaldo:${VERSION:-local}
+    build: ./docker/respaldo
+    restart: unless-stopped
+    environment:
+      PGHOST: db
+      PGUSER: btw
+      PGDATABASE: btw_insights
+      PGPASSWORD: ${POSTGRES_PASSWORD}
+      RETENCION: "30"
+      RESPALDO_HOST_PROPIETARIO: ${RESPALDO_HOST_PROPIETARIO:-}
+      TZ: America/Bogota
+    volumes:
+      - respaldos:/respaldos
+      # Segunda copia en una carpeta del servidor (fuera de Docker), con la misma retención.
+      - ${RESPALDO_HOST_DIR:-./respaldos/produccion}:/respaldos-host
+    depends_on:
+      db: { condition: service_healthy }
+    networks: [interna]
+    <<: *registro
+
+volumes:
+  datos_pg:
+  respaldos:
+
+networks:
+  interna:
+  # Red donde ya viven Nginx Proxy Manager o cloudflared. Debe existir: docker network create proxy
+  proxy:
+    name: ${PROXY_RED:-proxy}
+    external: true

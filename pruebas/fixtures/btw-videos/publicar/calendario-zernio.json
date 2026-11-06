@@ -1,0 +1,17 @@
+{
+  "_nota": "Borradores para Zernio. scripts/zernio-borradores.mjs crea uno por video y red, con isDraft: true (nunca se publica solo). Andrés lo revisa en Zernio y lo programa. 'ia' = voz o imagen hecha con IA (etiqueta de IA en TikTok).",
+  "hora": "19:30",
+  "zona": "America/Bogota",
+  "videos": [
+    { "id": "14", "carpeta": "2026-11-06_vie_14_plata-que-se-escapa", "fecha": "2026-11-06", "ia": true, "tiktok": "2026-11-06_14_plata-que-se-escapa.mp4" },
+    { "id": "13", "carpeta": "2026-11-07_sab_13_cuanto-le-debes", "fecha": "2026-11-07", "ia": true, "tiktok": "2026-11-07_13_cuanto-le-debes.mp4" },
+    { "id": "11", "carpeta": "2026-11-08_dom_11_el-cuaderno", "fecha": "2026-11-08", "ia": true, "tiktok": "2026-11-08_11_el-cuaderno_tiktok.mp4", "meta": "2026-11-08_11_el-cuaderno_facebook-instagram.mp4" },
+    { "id": "15", "carpeta": "2026-11-09_lun_15_quien-lavo", "fecha": "2026-11-09", "ia": false, "tiktok": "2026-11-09_15_quien-lavo.mp4" },
+    { "id": "16", "carpeta": "2026-11-10_mar_16_dos-lavaderos", "fecha": "2026-11-10", "ia": true, "tiktok": "2026-11-10_16_dos-lavaderos.mp4" },
+    { "id": "17", "carpeta": "2026-11-11_mie_17_en-la-mano", "fecha": "2026-11-11", "ia": true, "tiktok": "2026-11-11_17_en-la-mano.mp4" },
+    { "id": "18", "carpeta": "2026-11-12_jue_18_subir-precio", "fecha": "2026-11-12", "ia": true, "tiktok": "2026-11-12_18_subir-precio.mp4" },
+    { "id": "19", "carpeta": "2026-11-13_vie_19_quincena", "fecha": "2026-11-13", "ia": false, "tiktok": "2026-11-13_19_quincena.mp4" },
+    { "id": "20", "carpeta": "2026-11-14_sab_20_talonario", "fecha": "2026-11-14", "ia": true, "tiktok": "2026-11-14_20_talonario.mp4" },
+    { "id": "21", "carpeta": "2026-11-15_dom_21_cinco-mil", "fecha": "2026-11-15", "ia": true, "tiktok": "2026-11-15_21_cinco-mil.mp4" }
+  ]
+}

@@ -15,7 +15,7 @@ services:
     volumes:
       - btw_tablero_pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U btw_dueno -d btw_tablero"]
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U btw_dueno -d btw_tablero"]
       interval: 5s
       timeout: 3s
       retries: 12

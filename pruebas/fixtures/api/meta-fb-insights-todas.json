@@ -1,0 +1,80 @@
+{
+  "data": [
+    {
+      "name": "blue_reels_play_count",
+      "period": "lifetime",
+      "values": [
+        {
+          "value": 196
+        }
+      ],
+      "title": "Recuento de reproducciones del reel en total",
+      "description": "Total: Número de veces que tu reel empieza a reproducirse una vez que se ha contabilizado una impresión. Este resultado se define como sesiones de reels con una reproducción de al menos 1 ms. Se excluyen las repeticiones.",
+      "id": "1091172913760322/video_insights/blue_reels_play_count/lifetime"
+    },
+    {
+      "name": "fb_reels_total_plays",
+      "period": "lifetime",
+      "values": [
+        {
+          "value": 236
+        }
+      ],
+      "title": "Reproducciones totales",
+      "description": "Número de veces que tu reel comienza a reproducirse después de que ya se haya contabilizado una impresión. Este resultado se define como sesiones de reel de al menos 1 ms e incluye las reproducciones sucesivas, que se cuentan después de la reproducción inicial del reel en la misma sesión.",
+      "id": "1091172913760322/video_insights/fb_reels_total_plays/lifetime"
+    },
+    {
+      "name": "post_video_avg_time_watched",
+      "period": "lifetime",
+      "values": [
+        {
+          "value": 6778
+        }
+      ],
+      "title": "Tiempo medio de reproducción del reel en total",
+      "description": "Total: número medio (en minutos) que se ha reproducido tu reel, incluido el tiempo invertido en volver a reproducirlo durante una única instancia de reproducción. Es posible que el número sea mayor que la duración total del reel porque esta métrica incluye las reproducciones repetidas.",
+      "id": "1091172913760322/video_insights/post_video_avg_time_watched/lifetime"
+    },
+    {
+      "name": "post_video_view_time",
+      "period": "lifetime",
+      "values": [
+        {
+          "value": 1328665
+        }
+      ],
+      "title": "Tiempo de reproducción del reel (en ms) en total",
+      "description": "Total: tiempo total (en ms) que se ha reproducido tu reel, incluido el tiempo invertido en volver a reproducirlo.",
+      "id": "1091172913760322/video_insights/post_video_view_time/lifetime"
+    },
+    {
+      "name": "post_video_social_actions",
+      "period": "lifetime",
+      "values": [
+        {
+          "value": {
+            "COMMENT": 1
+          }
+        }
+      ],
+      "title": "Comentarios y reacciones en tu reel, y veces que se ha compartido en total",
+      "description": "Total: número de comentarios y reacciones en tu reel, y veces que se ha compartido",
+      "id": "1091172913760322/video_insights/post_video_social_actions/lifetime"
+    },
+    {
+      "name": "post_video_likes_by_reaction_type",
+      "period": "lifetime",
+      "values": [
+        {
+          "value": {
+            "REACTION_LIKE": 2
+          }
+        }
+      ],
+      "title": "Reacciones totales",
+      "description": "Total: número de reacciones en tu reel. El botón de reacciones de un reel permite a las personas compartir diferentes reacciones sobre el contenido: Me gusta, Me encanta, Me divierte, Me asombra, Me entristece o Me enfada.",
+      "id": "1091172913760322/video_insights/post_video_likes_by_reaction_type/lifetime"
+    }
+  ]
+}

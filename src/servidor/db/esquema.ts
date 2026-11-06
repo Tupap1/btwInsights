@@ -3,6 +3,7 @@
 // Un dato que la fuente no dio queda en NULL: nunca se rellena ni se interpola.
 import { sql } from "drizzle-orm";
 import {
+  bigint,
   boolean,
   date,
   doublePrecision,
@@ -95,6 +96,11 @@ export const publicacion = pgTable(
     estado: estadoPublicacion().notNull(),
     origen: origenPublicacion().notNull(),
     emparejadoPor: emparejadoPor(),
+    /**
+     * Marca de IA que trae el borrador en la plataforma (Zernio: tiktokSettings.video_made_with_ai o
+     * platformSpecificData.isAiGenerated). NULL = la fuente no la dio. Se compara con reel.etiquetaIa (T19).
+     */
+    marcaIa: boolean(),
     creadoEn: ahora(),
     actualizadoEn: ahora(),
   },
@@ -224,19 +230,24 @@ export const corrida = pgTable(
 );
 
 // ---------- Fase 2 (las tablas existen desde ya; sus pantallas vienen después) ----------
-export const idea = pgTable("idea", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  titulo: text().notNull(),
-  gancho: text(),
-  formato: formato(),
-  funcionBtwash: text(),
-  verificadaEnCodigo: boolean().notNull().default(false),
-  puntaje: integer(),
-  estado: text().notNull().default("nueva"),
-  fuente: text(),
-  reelId: text().references(() => reel.id, { onUpdate: "cascade" }),
-  creadaEn: ahora(),
-});
+export const idea = pgTable(
+  "idea",
+  {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    titulo: text().notNull(),
+    gancho: text(),
+    formato: formato(),
+    funcionBtwash: text(),
+    verificadaEnCodigo: boolean().notNull().default(false),
+    puntaje: integer(),
+    estado: text().notNull().default("nueva"),
+    /** De dónde salió: "<archivo>#<fila o encabezado>". Única, para que re-importar no duplique (T16). */
+    fuente: text(),
+    reelId: text().references(() => reel.id, { onUpdate: "cascade" }),
+    creadaEn: ahora(),
+  },
+  (t) => [uniqueIndex("idea_fuente_unica").on(t.fuente)],
+);
 
 export const lead = pgTable("lead", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
@@ -246,4 +257,123 @@ export const lead = pgTable("lead", {
   nota: text(),
   resultado: text(),
   creadoEn: ahora(),
+});
+
+// ---------- Comentarios del inbox de Zernio (T22) ----------
+// Privacidad: de quien comenta solo se guarda el @ (autor_usuario). Nunca su nombre, su id ni su foto.
+export const comentario = pgTable(
+  "comentario",
+  {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    publicacionId: integer()
+      .notNull()
+      .references(() => publicacion.id),
+    red: red().notNull(),
+    idPlataforma: text().notNull(),
+    /** NULL en los comentarios de primer nivel. */
+    padreIdPlataforma: text(),
+    /** Vacío si el comentario es solo imagen. */
+    texto: text().notNull(),
+    /** El @ de quien comenta (from.username). NULL si no vino. */
+    autorUsuario: text(),
+    /** El comentario es de la propia cuenta. */
+    esPropio: boolean().notNull().default(false),
+    creadoEn: momento(),
+    meGusta: integer(),
+    /** replyCount de la plataforma (puede ser mayor que las respuestas guardadas). */
+    respuestas: integer(),
+    oculto: boolean().notNull().default(false),
+    enlace: text(),
+    /** La primera vez que el tablero lo vio. */
+    leidoEn: ahora(),
+    actualizadoEn: ahora(),
+    /** Se llena si una lectura completa del hilo ya no lo trae. Nada se borra. */
+    desaparecioEn: momento(),
+  },
+  (t) => [
+    uniqueIndex("comentario_red_id_unico").on(t.red, t.idPlataforma),
+    index("comentario_publicacion_idx").on(t.publicacionId),
+  ],
+);
+
+/** Estado de lectura del hilo de cada publicación: sirve para no volver a pedir hilos que no cambiaron. */
+export const hiloComentarios = pgTable("hilo_comentarios", {
+  publicacionId: integer()
+    .primaryKey()
+    .references(() => publicacion.id),
+  /** El commentCount de la lista cuando se leyó el hilo. NULL = la lista no lo dio. */
+  conteoFuente: integer(),
+  /** La lectura trajo todas las páginas del hilo. */
+  completo: boolean().notNull(),
+  leidoEn: momento().notNull(),
+});
+
+// ---------- Acceso (T09) ----------
+// Nunca se guarda un token en claro: sesión e invitación guardan su sha256 en hexadecimal.
+export const tipoDesafio = pgEnum("tipo_desafio", ["registro", "entrada"]);
+
+export const usuario = pgTable("usuario", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  nombre: text().notNull().unique(),
+  /** Identificador estable para WebAuthn: aleatorio, base64url, sin relación con el nombre. */
+  idWebauthn: text().notNull().unique(),
+  activo: boolean().notNull().default(true),
+  creadoEn: ahora(),
+});
+
+export const credencial = pgTable(
+  "credencial",
+  {
+    /** El credentialID en base64url. */
+    id: text().primaryKey(),
+    usuarioId: integer()
+      .notNull()
+      .references(() => usuario.id),
+    /** Clave pública COSE en base64url. */
+    clavePublica: text().notNull(),
+    contador: bigint({ mode: "number" }).notNull().default(0),
+    transportes: text().array(),
+    creadaEn: ahora(),
+    usadaEn: momento(),
+  },
+  (t) => [index("credencial_usuario_idx").on(t.usuarioId)],
+);
+
+export const sesion = pgTable(
+  "sesion",
+  {
+    /** sha256 (hex) del token de la cookie. */
+    hash: text().primaryKey(),
+    usuarioId: integer()
+      .notNull()
+      .references(() => usuario.id),
+    creadaEn: ahora(),
+    expiraEn: timestamp({ withTimezone: true }).notNull(),
+    usadaEn: momento(),
+  },
+  (t) => [index("sesion_usuario_idx").on(t.usuarioId)],
+);
+
+export const invitacion = pgTable(
+  "invitacion",
+  {
+    /** sha256 (hex) del token del enlace. */
+    hash: text().primaryKey(),
+    usuarioId: integer()
+      .notNull()
+      .references(() => usuario.id),
+    creadaEn: ahora(),
+    expiraEn: timestamp({ withTimezone: true }).notNull(),
+    usadaEn: momento(),
+  },
+  (t) => [index("invitacion_usuario_idx").on(t.usuarioId)],
+);
+
+export const desafio = pgTable("desafio", {
+  /** Aleatorio; va en la cookie btw_desafio. */
+  id: text().primaryKey(),
+  reto: text().notNull(),
+  tipo: tipoDesafio().notNull(),
+  usuarioId: integer().references(() => usuario.id),
+  expiraEn: timestamp({ withTimezone: true }).notNull(),
 });

@@ -18,9 +18,15 @@ const esquema = z.object({
   IG_USER_ID: opcional,
   GRAPH_VERSION: z.string().default("v25.0"),
   ZERNIO_API_KEY: opcional,
+  /** T24: "1" prende "Editar borrador" en /cola (escribe en Zernio). Apagado por defecto: el tablero es para ver. */
+  EDITAR_BORRADORES: opcional,
   RECOLECTOR_SECRETO: opcional,
   /** Carpeta de btw-videos, solo para la importación inicial. */
   BTW_VIDEOS_DIR: opcional,
+  /** Inicio de sesión con llave de acceso. En producción son obligatorias (ver datosWebauthn). */
+  WEBAUTHN_RP_ID: opcional,
+  WEBAUTHN_ORIGEN: opcional,
+  WEBAUTHN_RP_NOMBRE: opcional,
 });
 
 export type Config = z.infer<typeof esquema>;
@@ -43,4 +49,27 @@ export function config(): Config {
 export function secretos(): string[] {
   const c = config();
   return [c.META_PAGE_TOKEN, c.ZERNIO_API_KEY, c.RECOLECTOR_SECRETO].filter((v): v is string => !!v && v.length >= 8);
+}
+
+export interface DatosWebauthn {
+  rpId: string;
+  origen: string;
+  rpNombre: string;
+}
+
+/**
+ * Datos del inicio de sesión. En desarrollo y pruebas tienen valores por defecto; en producción, si falta alguna
+ * variable el acceso falla cerrado (nadie entra) y el error nombra la variable, nunca su valor.
+ */
+export function datosWebauthn(): DatosWebauthn {
+  const c = config();
+  if (c.NODE_ENV === "production") {
+    const faltan = (["WEBAUTHN_RP_ID", "WEBAUTHN_ORIGEN", "WEBAUTHN_RP_NOMBRE"] as const).filter((k) => !c[k]);
+    if (faltan.length > 0) throw new Error(`Falta configurar el acceso: ${faltan.join(", ")}`);
+  }
+  return {
+    rpId: c.WEBAUTHN_RP_ID ?? "localhost",
+    origen: c.WEBAUTHN_ORIGEN ?? "http://localhost:3000",
+    rpNombre: c.WEBAUTHN_RP_NOMBRE ?? "BTW Insights",
+  };
 }

@@ -1,0 +1,18 @@
+{
+  "data": [
+    {
+      "name": "post_video_social_actions",
+      "period": "lifetime",
+      "values": [
+        {
+          "value": {
+            "COMMENT": 1
+          }
+        }
+      ],
+      "title": "Comentarios y reacciones en tu reel, y veces que se ha compartido en total",
+      "description": "Total: número de comentarios y reacciones en tu reel, y veces que se ha compartido",
+      "id": "1091172913760322/video_insights/post_video_social_actions/lifetime"
+    }
+  ]
+}

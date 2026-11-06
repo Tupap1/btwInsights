@@ -1,0 +1,112 @@
+{
+  "data": [
+    {
+      "id": "18120342799999707/insights/views/lifetime",
+      "name": "views",
+      "period": "lifetime",
+      "title": "Visualizaciones",
+      "description": "Número de veces que tus reels se han reproducido o mostrado.",
+      "values": [
+        {
+          "value": 1275
+        }
+      ]
+    },
+    {
+      "id": "18120342799999707/insights/reach/lifetime",
+      "name": "reach",
+      "period": "lifetime",
+      "title": "Cuentas alcanzadas",
+      "description": "Número de cuentas únicas que han visto este reel al menos una vez. El alcance es diferente de las impresiones, ya que estas pueden incluir varias visualizaciones de tu reel por parte de las mismas cuentas. Esta métrica es una estimación.",
+      "values": [
+        {
+          "value": 1048
+        }
+      ]
+    },
+    {
+      "id": "18120342799999707/insights/likes/lifetime",
+      "name": "likes",
+      "period": "lifetime",
+      "title": "Me gusta",
+      "description": "Número de Me gusta de tu reel.",
+      "values": [
+        {
+          "value": 29
+        }
+      ]
+    },
+    {
+      "id": "18120342799999707/insights/comments/lifetime",
+      "name": "comments",
+      "period": "lifetime",
+      "title": "Comentarios",
+      "description": "Número de comentarios de tu reel.",
+      "values": [
+        {
+          "value": 1
+        }
+      ]
+    },
+    {
+      "id": "18120342799999707/insights/shares/lifetime",
+      "name": "shares",
+      "period": "lifetime",
+      "title": "Veces que se ha compartido",
+      "description": "Número de veces que se ha compartido tu reel.",
+      "values": [
+        {
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "18120342799999707/insights/saved/lifetime",
+      "name": "saved",
+      "period": "lifetime",
+      "title": "Veces que se ha guardado",
+      "description": "Número de veces que se ha guardado tu reel.",
+      "values": [
+        {
+          "value": 4
+        }
+      ]
+    },
+    {
+      "id": "18120342799999707/insights/total_interactions/lifetime",
+      "name": "total_interactions",
+      "period": "lifetime",
+      "title": "Interacciones con reels",
+      "description": "Número de Me gusta de tu reel y de veces que este se ha guardado, comentado o compartido menos el número de Ya no me gusta, de comentarios eliminados del reel y de veces que este se ha eliminado de los elementos guardados.",
+      "values": [
+        {
+          "value": 36
+        }
+      ]
+    },
+    {
+      "id": "18120342799999707/insights/ig_reels_avg_watch_time/lifetime",
+      "name": "ig_reels_avg_watch_time",
+      "period": "lifetime",
+      "title": "Tiempo medio de reproducción de reels (milisegundos)",
+      "description": "Este texto informa sobre la definición del tiempo medio de reproducción de reels",
+      "values": [
+        {
+          "value": 17677
+        }
+      ]
+    },
+    {
+      "id": "18120342799999707/insights/ig_reels_video_view_total_time/lifetime",
+      "name": "ig_reels_video_view_total_time",
+      "period": "lifetime",
+      "title": "Tiempo total de reproducción del vídeo (milisegundos)",
+      "description": "Este texto explica la definición del tiempo de visualización del vídeo de Reels",
+      "values": [
+        {
+          "value": 18986157
+        }
+      ]
+    }
+  ]
+}

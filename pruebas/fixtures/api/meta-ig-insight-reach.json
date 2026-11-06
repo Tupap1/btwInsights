@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "id": "18120342799999707/insights/reach/lifetime",
+      "name": "reach",
+      "period": "lifetime",
+      "title": "Cuentas alcanzadas",
+      "description": "Número de cuentas únicas que han visto este reel al menos una vez. El alcance es diferente de las impresiones, ya que estas pueden incluir varias visualizaciones de tu reel por parte de las mismas cuentas. Esta métrica es una estimación.",
+      "values": [
+        {
+          "value": 1048
+        }
+      ]
+    }
+  ]
+}

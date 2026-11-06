@@ -1,0 +1,21 @@
+# Nada de llaves ni de basura dentro de la imagen
+.env*
+!.env.example
+node_modules
+.next
+out
+build
+coverage
+.git
+.gitignore
+respaldos
+datos
+pruebas/fixtures
+*.tsbuildinfo
+*.log
+.claude
+docs
+Dockerfile
+.dockerignore
+docker-compose*.yml
+docker

@@ -13,7 +13,10 @@ export default async function preparar(): Promise<void> {
   const sqlAdmin = postgres(admin.toString(), { max: 1, onnotice: () => {} });
   try {
     await sqlAdmin.unsafe(`drop database if exists ${NOMBRE_BD_PRUEBA} with (force)`);
-    await sqlAdmin.unsafe(`create database ${NOMBRE_BD_PRUEBA}`);
+    await crearConReintentos(sqlAdmin);
+    // Solo la base de pruebas: no espera el fsync de cada commit (en WSL2 cuesta ~28 ms por commit y las pruebas
+    // del recolector pasaban de 5 s). Si el equipo se apaga a mitad de una prueba, no importa perder esa base.
+    await sqlAdmin.unsafe(`alter database ${NOMBRE_BD_PRUEBA} set synchronous_commit = off`);
   } finally {
     await sqlAdmin.end();
   }
@@ -22,5 +25,22 @@ export default async function preparar(): Promise<void> {
     await migrate(drizzle({ client: cliente }), { migrationsFolder: "migraciones" });
   } finally {
     await cliente.end();
+  }
+}
+
+/**
+ * CREATE DATABASE copia template1 y falla ("is being accessed by other users", código 55006) si otro proceso de
+ * pruebas (otra BD_PRUEBA_NOMBRE) está creando su base en ese mismo momento. Se reintenta unas veces.
+ */
+async function crearConReintentos(sqlAdmin: postgres.Sql): Promise<void> {
+  for (let intento = 1; ; intento++) {
+    try {
+      await sqlAdmin.unsafe(`create database ${NOMBRE_BD_PRUEBA}`);
+      return;
+    } catch (e) {
+      const codigo = (e as { code?: string }).code;
+      if (codigo !== "55006" || intento >= 20) throw e;
+      await new Promise((r) => setTimeout(r, 250 + Math.random() * 750));
+    }
   }
 }

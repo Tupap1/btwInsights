@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "id": "18120342799999707/insights/ig_reels_avg_watch_time/lifetime",
+      "name": "ig_reels_avg_watch_time",
+      "period": "lifetime",
+      "title": "Tiempo medio de reproducción de reels (milisegundos)",
+      "description": "Este texto informa sobre la definición del tiempo medio de reproducción de reels",
+      "values": [
+        {
+          "value": 17677
+        }
+      ]
+    }
+  ]
+}
