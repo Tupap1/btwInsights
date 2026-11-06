@@ -33,9 +33,12 @@ services:
       context: .
       target: herramientas
     restart: "no"
-    command: ["node", "--import", "tsx", "scripts/migrar.ts"]
+    # Como dueño (btw): primero las migraciones y luego los roles (scripts/roles.sql, idempotente).
+    command: ["sh", "-c", "node --import tsx scripts/migrar.ts && node --import tsx scripts/roles.ts"]
     environment:
       DATABASE_URL: postgres://btw:${POSTGRES_PASSWORD}@db:5432/btw_insights
+      POSTGRES_APP_PASSWORD: ${POSTGRES_APP_PASSWORD:?Falta POSTGRES_APP_PASSWORD en .env.produccion}
+      POSTGRES_LECTURA_PASSWORD: ${POSTGRES_LECTURA_PASSWORD:?Falta POSTGRES_LECTURA_PASSWORD en .env.produccion}
     depends_on:
       db: { condition: service_healthy }
     networks: [interna]
@@ -47,7 +50,11 @@ services:
       target: app
     restart: unless-stopped
     environment:
-      DATABASE_URL: postgres://btw:${POSTGRES_PASSWORD}@db:5432/btw_insights
+      # La app no es dueña: btw_app lee y escribe, sin DDL y sin DELETE (salvo sesion, desafio e invitacion).
+      DATABASE_URL: postgres://btw_app:${POSTGRES_APP_PASSWORD:?Falta POSTGRES_APP_PASSWORD en .env.produccion}@db:5432/btw_insights
+      WEBAUTHN_RP_ID: ${WEBAUTHN_RP_ID:?Falta WEBAUTHN_RP_ID en .env.produccion}
+      WEBAUTHN_ORIGEN: ${WEBAUTHN_ORIGEN:?Falta WEBAUTHN_ORIGEN en .env.produccion}
+      WEBAUTHN_RP_NOMBRE: ${WEBAUTHN_RP_NOMBRE:?Falta WEBAUTHN_RP_NOMBRE en .env.produccion}
       RECOLECTOR_SECRETO: ${RECOLECTOR_SECRETO:?Falta RECOLECTOR_SECRETO en .env.produccion}
       META_PAGE_TOKEN: ${META_PAGE_TOKEN:-}
       META_PAGE_ID: ${META_PAGE_ID:-}
@@ -85,9 +92,12 @@ services:
       PGDATABASE: btw_insights
       PGPASSWORD: ${POSTGRES_PASSWORD}
       RETENCION: "30"
+      RESPALDO_HOST_PROPIETARIO: ${RESPALDO_HOST_PROPIETARIO:-}
       TZ: America/Bogota
     volumes:
       - respaldos:/respaldos
+      # Segunda copia en una carpeta del servidor (fuera de Docker), con la misma retención.
+      - ${RESPALDO_HOST_DIR:-./respaldos/produccion}:/respaldos-host
     depends_on:
       db: { condition: service_healthy }
     networks: [interna]
