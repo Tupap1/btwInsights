@@ -28,6 +28,7 @@ function pub(id: number, parcial: Partial<PublicacionFila>): PublicacionFila {
     estado: "programado",
     origen: "zernio",
     emparejadoPor: null,
+    marcaIa: null,
     creadoEn: t("2026-11-01T00:00:00Z"),
     actualizadoEn: t("2026-11-01T00:00:00Z"),
     ...parcial,

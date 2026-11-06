@@ -96,6 +96,11 @@ export const publicacion = pgTable(
     estado: estadoPublicacion().notNull(),
     origen: origenPublicacion().notNull(),
     emparejadoPor: emparejadoPor(),
+    /**
+     * Marca de IA que trae el borrador en la plataforma (Zernio: tiktokSettings.video_made_with_ai o
+     * platformSpecificData.isAiGenerated). NULL = la fuente no la dio. Se compara con reel.etiquetaIa (T19).
+     */
+    marcaIa: boolean(),
     creadoEn: ahora(),
     actualizadoEn: ahora(),
   },
@@ -225,19 +230,24 @@ export const corrida = pgTable(
 );
 
 // ---------- Fase 2 (las tablas existen desde ya; sus pantallas vienen después) ----------
-export const idea = pgTable("idea", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  titulo: text().notNull(),
-  gancho: text(),
-  formato: formato(),
-  funcionBtwash: text(),
-  verificadaEnCodigo: boolean().notNull().default(false),
-  puntaje: integer(),
-  estado: text().notNull().default("nueva"),
-  fuente: text(),
-  reelId: text().references(() => reel.id, { onUpdate: "cascade" }),
-  creadaEn: ahora(),
-});
+export const idea = pgTable(
+  "idea",
+  {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    titulo: text().notNull(),
+    gancho: text(),
+    formato: formato(),
+    funcionBtwash: text(),
+    verificadaEnCodigo: boolean().notNull().default(false),
+    puntaje: integer(),
+    estado: text().notNull().default("nueva"),
+    /** De dónde salió: "<archivo>#<fila o encabezado>". Única, para que re-importar no duplique (T16). */
+    fuente: text(),
+    reelId: text().references(() => reel.id, { onUpdate: "cascade" }),
+    creadaEn: ahora(),
+  },
+  (t) => [uniqueIndex("idea_fuente_unica").on(t.fuente)],
+);
 
 export const lead = pgTable("lead", {
   id: integer().primaryKey().generatedAlwaysAsIdentity(),
