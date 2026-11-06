@@ -67,6 +67,8 @@ services:
       IG_USER_ID: ${IG_USER_ID:-}
       GRAPH_VERSION: ${GRAPH_VERSION:-v25.0}
       ZERNIO_API_KEY: ${ZERNIO_API_KEY:-}
+      # "1" prende "Editar borrador" (escribe en Zernio). Apagado por defecto: el tablero es para ver.
+      EDITAR_BORRADORES: ${EDITAR_BORRADORES:-}
     depends_on:
       migrar: { condition: service_completed_successfully }
     # Para probar desde el propio servidor, descomenta (solo escucha en loopback):

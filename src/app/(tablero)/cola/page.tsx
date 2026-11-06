@@ -6,6 +6,8 @@ import { NOMBRE_RED } from "@/componentes/etiquetas";
 import { Card, CardContent, CardHeader, CardTitle } from "@/componentes/ui/card";
 import { cn } from "@/lib/utils";
 import { exigirSesion } from "@/servidor/acceso/sesion";
+import { edicionActiva } from "@/servidor/borradores/activa";
+import { config } from "@/servidor/config";
 import { bd } from "@/servidor/db/cliente";
 import { consultarCola } from "@/servidor/consultas/cola";
 import { REDES } from "@/servidor/consultas/datos";
@@ -20,6 +22,7 @@ export const metadata = { title: "Cola · BTW Insights" };
 
 export default async function PaginaCola() {
   await exigirSesion();
+  const edicion = edicionActiva(config().EDITAR_BORRADORES);
   const ahora = ahoraServidor();
   const cola = await consultarCola(bd(), ahora);
   const hoy = diaBogota(ahora);
@@ -28,7 +31,7 @@ export default async function PaginaCola() {
     <div className="flex flex-col gap-4">
       <header>
         <h1 className="text-xl font-semibold">Cola de 14 días</h1>
-        <p className="text-sm text-muted-foreground">Lo que está programado, en borrador o publicado, por día y por red. Los borradores de TikTok e Instagram se pueden editar (texto y fecha); nada se publica desde aquí.</p>
+        <p className="text-sm text-muted-foreground">Lo que está programado, en borrador o publicado, por día y por red. {edicion ? "Los borradores de TikTok e Instagram se pueden editar (texto y fecha); nada se publica desde aquí." : "Solo para ver: nada se edita ni se publica desde aquí."}</p>
         <p className="mt-1 text-xs text-muted-foreground">
           Las alertas de IA sin etiqueta, dos videos el mismo día y días sin video las calcula el recolector y salen en{" "}
           <Link href="/hoy" className="underline">Hoy</Link>.
@@ -98,7 +101,7 @@ export default async function PaginaCola() {
                             </span>
                             <EstadoPublicacionBadge estado={i.estado} />
                           </div>
-                          {i.editable && (
+                          {edicion && i.editable && (
                             <EditarBorrador
                               publicacionId={i.publicacionId}
                               texto={i.texto ?? ""}

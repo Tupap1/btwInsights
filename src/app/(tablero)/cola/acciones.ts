@@ -1,9 +1,10 @@
 "use server";
-// Editar un borrador de Zernio desde /cola (T15). Dos pasos: "revisar" (no escribe nada) y "guardar" (con
+// Editar un borrador de Zernio desde /cola (T15), apagado por defecto (T24: EDITAR_BORRADORES=1 lo prende). Dos pasos: "revisar" (no escribe nada) y "guardar" (con
 // confirmación explícita). Pide sesión primero, valida con zod y nunca devuelve un error crudo ni una llave.
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { exigirSesion } from "@/servidor/acceso/sesion";
+import { edicionActiva, MENSAJE_EDICION_APAGADA } from "@/servidor/borradores/activa";
 import {
   ErrorEdicion,
   fechaBogotaADate,
@@ -36,6 +37,8 @@ const NO_VALIDO: EstadoEdicion = { paso: "error", mensaje: "Revisa el texto, la 
 
 export async function editarBorrador(_previo: EstadoEdicion, datos: FormData): Promise<EstadoEdicion> {
   await exigirSesion();
+  // T24: con la edición apagada no se lee ni se escribe nada, ni siquiera el paso "revisar".
+  if (!edicionActiva(config().EDITAR_BORRADORES)) return { paso: "error", mensaje: MENSAJE_EDICION_APAGADA };
   const r = esquema.safeParse(Object.fromEntries(datos));
   if (!r.success) return NO_VALIDO;
   const { paso, confirmar, publicacionId, texto, dia, hora } = r.data;

@@ -18,6 +18,8 @@ const esquema = z.object({
   IG_USER_ID: opcional,
   GRAPH_VERSION: z.string().default("v25.0"),
   ZERNIO_API_KEY: opcional,
+  /** T24: "1" prende "Editar borrador" en /cola (escribe en Zernio). Apagado por defecto: el tablero es para ver. */
+  EDITAR_BORRADORES: opcional,
   RECOLECTOR_SECRETO: opcional,
   /** Carpeta de btw-videos, solo para la importación inicial. */
   BTW_VIDEOS_DIR: opcional,
