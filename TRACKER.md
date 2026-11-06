@@ -1,6 +1,6 @@
 # Tracker del tablero BTW Insights
 
-Estado al 6-nov-2026, madrugada (hora de Bogotá): fases 1 y 2 terminadas y desplegadas en Docker en el servidor de BTW; de la fase 3 no quedó nada sin un permiso o una decisión de Andrés. Cada tarea dice quién la hace (Opus = la sesión principal, que arma, revisa
+Estado al 6-nov-2026, tarde (hora de Bogotá): fases 1 y 2 desplegadas en Docker en el servidor de BTW. De la fase 3 quedaron hechos los comentarios del inbox (T22); además el tablero quedó solo para ver (T24) y se actualiza al entrar (T25). La pauta de Meta (T23) espera un token con `ads_read`. No hay fase 4. Cada tarea dice quién la hace (Opus = la sesión principal, que arma, revisa
 e integra; Sonnet o Haiku = subagentes) y qué archivos son suyos. Nadie toca archivos de otra tarea. **Cada tarea
 terminada va en su propio commit** (Andrés, 5-nov).
 
@@ -21,6 +21,11 @@ terminada va en su propio commit** (Andrés, 5-nov).
 | 5-nov | "Fecha y texto" nunca asigna un reel que ya tiene otra publicación **publicada** en esa red: queda en "Sin asignar" | Error real: el 04-G4 del 28-oct caía en el 04C-G1 |
 | 5-nov | Una fila mal formada de `seguimiento.csv` se salta con aviso; no se adivina qué columna se corrió | El 5-nov las filas del 14 y del 13 traen una coma sin comillas (26 columnas) |
 | 5-nov | Llaves copiadas de `btw-videos/.env.local` al de este repo, solo las 4 del tablero, sin mostrarlas | Andrés lo pidió |
+| 6-nov | **Comentarios:** se guardan el texto y el @ de quien comenta; nunca el nombre, el id ni la foto (regla 3.6) | Andrés |
+| 6-nov | **Pauta por la API de Meta**, no por Zernio. Solo lectura | Andrés: "se va a manejar directamente desde la API de Meta" |
+| 6-nov | **El tablero es para ver:** "Editar borrador" (T15) apagado; se prende con `EDITAR_BORRADORES=1` | Andrés: "no es como para editar cosas por ahora" |
+| 6-nov | **Se actualiza al entrar:** cada vez que se abre el tablero pide una lectura nueva (solo GET) | Andrés: "que cada vez que yo entre consulte se actualice" |
+| 6-nov | Leads de BTWash: **todavía no** (no se toca su Supabase). No hay fase 4 | Andrés |
 
 ## Decisiones por revisar (sesión del servidor, noche del 6-nov)
 
@@ -46,6 +51,11 @@ Tomadas sin preguntar, eligiendo lo más seguro y reversible (`docs/handoff-serv
 | 16 | En el celular la barra muestra Hoy, Videos, Cola y "Más" (el resto y Salir en `/mas`) | Con 8 pantallas no caben | `src/componentes/enlaces.ts` |
 | 17 | `editarBorrador` manda `scheduledFor` en UTC y sin `timezone` (documentación de Zernio: `PUT /v1/posts/{id}`) | No tocar más campos de los necesarios | Confirmar en el primer uso real (punto 8 de "Para Andrés") |
 | 18 | **Incidente corregido:** al importar en producción (01:50) entraron 19 lecturas CSV de Meta repetidas (la hora del archivo perdió los milisegundos en el tar). Se arregló el código (hora en segundos enteros y tolerancia de 2 s) y se borraron esas 19 filas, verificadas como copias exactas, en producción y en desarrollo | "No se duplican cifras". Había respaldo de justo antes (`respaldos/produccion/btw-insights-20261106-014942.dump`) | Restaurar ese respaldo |
+| 19 | **Al entrar** (T25): no se lanza otra lectura si la última empezó hace menos de 2 min; Meta relee lo de menos de 30 días con lectura de 10 min o más | Datos frescos sin una lectura por cada pestaña o vuelta | Constantes en `recolector/al-entrar.ts` y `plan.ts` |
+| 20 | Cada relectura de Meta se guarda como lectura nueva aunque las cifras no cambien | La cifra de Meta vale "cuando se leyó": así el "dato de hace X" es real. Como mucho una por publicación cada 10 min | Saltar las lecturas idénticas en `guardar.ts` |
+| 21 | La lectura al entrar usa el origen `boton` (no uno nuevo) | Es una lectura pedida desde el tablero; evita una migración del enum | Agregar `entrada` a `origen_corrida` |
+| 22 | Comentarios: como mucho 30 hilos por corrida; un hilo se relee si cambió su conteo, quedó incompleto o pasaron 24 h. Solo cuentan los de primer nivel de otras personas | Zernio cachea el inbox 10 min y pide no sondearlo | `recolector/comentarios.ts` |
+| 23 | T24 solo apaga la escritura en Zernio. Leads, notas del reel, "Asignar" y "Pasar a reel" siguen activos (escriben solo en la base del tablero; los leads no tienen otra fuente) | Lo mínimo para "solo ver" sin perder datos manuales | Ocultarlos igual que "Editar" |
 
 ## Para Andrés al levantarse
 
@@ -79,11 +89,11 @@ de sesión:
 6. **`seguimiento.csv`** (en btw-videos): las filas del 13 y el 14 tienen una celda con coma sin comillas; ponla
    entre comillas y vuelve a importar.
 7. **Asignar a mano** los 2 posts del 28-oct en "Sin asignar" (deben ser del 04-G4).
-8. **Primer uso real de "Editar" en `/cola`** (T15): pruébalo con un borrador que no importe; revisa en Zernio que
-   el texto cambió, que la hora quedó en Bogotá y que sigue siendo borrador. Si algo no cuadra, dime y se ajusta.
-9. **Fase 3, decide:** qué se guarda de los comentarios del inbox de Zernio (regla 3.6); si quieres la pauta de
-   Meta Ads, dale `ads_read` al token y dime la cuenta publicitaria; si apruebas leer los leads de BTWash desde
-   Supabase (solo lectura, regla 3.7).
+8. ~~Primer uso real de "Editar"~~: apagado (T24, el tablero es para ver). Si un día lo quieres, `EDITAR_BORRADORES=1`
+   en `.env.produccion` y reinicia la app; pruébalo primero con un borrador que no importe.
+9. **Pauta de Meta (T23):** el token del servidor no tiene `ads_read`. Genera uno con `ads_read` (mejor de un usuario
+   del sistema del Business Manager, no vence), ponlo en `.env.produccion` y `.env.local` como `META_ADS_TOKEN` junto
+   con `META_AD_ACCOUNT_ID=act_…`, y avísame. Nunca en el chat.
 10. **Tarea de las 8:00** (en tu PC): sigue `docs/tarea-8am.md`. El secreto es `RECOLECTOR_SECRETO` de
     `.env.produccion` en el servidor: cópialo a una variable de entorno del PC, nunca al chat ni a un archivo del repo.
 11. **Revisa "Decisiones por revisar"** (arriba): todas se pueden deshacer.
@@ -139,10 +149,17 @@ Regla de toda la fase: ninguna escritura real en Zernio ni en Meta durante la no
 
 ## Fase 3
 
+| ID | Tarea | Quién | Estado | Archivos |
+|---|---|---|---|---|
+| — | Lecturas GET del inbox de Zernio y fixtures reales anonimizados | Opus | ✅ | `fuentes/zernio.ts`, `scripts/grabar-fixtures-fase3.ts`, `pruebas/fixtures/api/zernio-inbox-*` |
+| T22 | Comentarios de Instagram y TikTok: migración 0003, bloque del recolector, `/comentarios`, sección en el detalle y tarjeta en `/hoy` | Sonnet + Opus | ✅ | `normalizar/comentarios*`, `recolector/comentarios*`, `consultas/comentarios*`, `(tablero)/comentarios/` |
+| T23 | Pauta de Meta Ads por la API de Meta, solo lectura | — | ⛔ falta un token con `ads_read` y la cuenta publicitaria (`docs/specs/T23.md`) | — |
+| T24 | El tablero es solo para ver: "Editar borrador" apagado | Opus | ✅ | `borradores/activa*`, `(tablero)/cola/*`, `config.ts` |
+| T25 | Actualizar al entrar: lectura nueva al abrir el tablero y al volver a la pestaña | Opus | ✅ | `recolector/{plan,al-entrar}*`, `api/actualizar/`, `actualizar-al-entrar*` |
+
 - **Copia de los videos en R2:** descartada (5-nov: los videos no se guardan en el tablero).
-- **Bloqueadas** (necesitan a Andrés; ver "Para Andrés", punto 9): comentarios del inbox de Zernio (regla 3.6: qué
-  datos de quien comenta se guardan), pauta de Meta Ads en solo lectura (el token no tiene `ads_read` ni hay cuenta
-  publicitaria configurada) y leads de BTWash desde Supabase (regla 3.7: aprobación explícita).
+- **Leads de BTWash:** "todavía no" (Andrés, 6-nov). Su Supabase no se toca.
+- **Pauta por Zernio:** se armó y se quitó el mismo día (Andrés prefiere la API de Meta).
 
 ## Investigación de servidores (5-nov; se eligió el servidor propio)
 

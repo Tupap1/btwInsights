@@ -1,4 +1,4 @@
-# Tablero BTW Insights: fases 1 y 2
+# Tablero BTW Insights: fases 1, 2 y 3
 
 No fusionar todavía: Andrés lo revisa.
 
@@ -20,10 +20,17 @@ No fusionar todavía: Andrés lo revisa.
 - T16: banco de ideas y guiones (`/ideas`, "Pasar a reel").
 - T17 leads, T18 cuentas, T19 alertas completas, T20 aprendizajes, T21 exportación CSV para la tarea de las 8:00.
 
-**Fase 3:** nada implementado; lo que queda necesita una decisión o un permiso de Andrés (ver `TRACKER.md`).
+**Fase 3 y cambios del 6-nov:**
+- T22: comentarios de Instagram y TikTok desde el inbox de Zernio (solo GET). De quien comenta se guardan el texto
+  y el @, nunca el nombre, el id ni la foto. `/comentarios`, sección en el detalle y tarjeta "sin responder" en `/hoy`.
+- T24: el tablero es para ver. "Editar borrador" (T15) queda apagado salvo `EDITAR_BORRADORES=1`.
+- T25: se actualiza al entrar. Al abrir el tablero, o al volver a la pestaña, pide una lectura nueva y vuelve a pintar
+  la página. Si hubo una hace menos de 2 min, no lanza otra.
+- T23, pauta de Meta Ads por la API de Meta: bloqueada hasta que haya un token con `ads_read` y la cuenta
+  publicitaria. Leads de BTWash: todavía no. R2: descartada.
 
 ## Pruebas
-- `npm run verificar` (tsc, eslint y vitest): 437 pruebas en 49 archivos, en verde desde un checkout limpio.
+- `npm run verificar` (tsc, eslint y vitest) en verde desde un checkout limpio, en cada commit.
 - `npm run build` en verde.
 - Revisado en modo producción con una sesión real: todas las pantallas responden 200 sin desbordamiento a 375 y
   1440 px (`docs/capturas/`).
@@ -32,8 +39,8 @@ No fusionar todavía: Andrés lo revisa.
 ## Pendiente (detalle en `TRACKER.md`, "Para Andrés al levantarse")
 - Nginx Proxy Manager y el hostname del túnel para `insights.btw-one.com`.
 - Registrar la llave de acceso con el enlace de invitación.
-- Primer uso real de "Editar borrador".
-- Decisiones de la fase 3 y de "Decisiones por revisar".
+- El token de Meta con `ads_read` para la pauta (T23).
+- "Decisiones por revisar".
 
 Specs por tarea en `docs/specs/`.
 
