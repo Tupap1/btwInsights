@@ -1,7 +1,7 @@
 // La hora de las lecturas de métricas CSV sale de la fecha de modificación del archivo. Al copiar btw-videos (tar,
 // zip, otra máquina) esa fecha pierde los milisegundos: re-importar no debe duplicar lecturas por eso (6-nov:
 // producción sumó 19 lecturas repetidas de Meta que solo diferían en 0,725 s).
-import { cpSync, mkdtempSync, readdirSync, rmSync, statSync, utimesSync } from "node:fs";
+import { cpSync, mkdtempSync, readdirSync, rmSync, utimesSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { count, eq } from "drizzle-orm";
