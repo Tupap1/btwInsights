@@ -72,6 +72,13 @@ const plataformaEsquema = z.object({
   platformPostId: textoTolerante,
   platformPostUrl: textoTolerante,
   accountUsername: textoTolerante,
+  platformSpecificData: z
+    .object({
+      isAiGenerated: z.boolean().nullish().catch(undefined),
+      tiktokSettings: z.object({ video_made_with_ai: z.boolean().nullish().catch(undefined) }).nullish().catch(undefined),
+    })
+    .nullish()
+    .catch(undefined),
   accountId: z
     .union([z.string(), z.object({ username: textoTolerante })])
     .nullish()
@@ -183,6 +190,12 @@ export function zernioAnaliticaAPost(post: unknown, leidoEn: Date): PostLeido {
   return { publicacion, lectura };
 }
 
+/** TikTok la guarda en tiktokSettings.video_made_with_ai; Instagram, en isAiGenerated. Sin dato, null (nunca false). */
+function marcaIaDe(red: Red, d: z.infer<typeof plataformaEsquema>["platformSpecificData"]): boolean | null {
+  const v = red === "tiktok" ? d?.tiktokSettings?.video_made_with_ai : d?.isAiGenerated;
+  return typeof v === "boolean" ? v : null;
+}
+
 const colaEsquema = z.object({
   _id: z.string().min(1),
   content: textoTolerante,
@@ -219,6 +232,7 @@ export function zernioColaAPublicaciones(post: unknown): PublicacionVista[] {
       programadoPara: fecha(p.scheduledFor),
       publicadoEn: fecha(p.publishedAt),
       estado,
+      marcaIa: marcaIaDe(red, plat.platformSpecificData),
     });
   }
   return salida;

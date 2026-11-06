@@ -48,6 +48,8 @@ function camposConocidos(p: PublicacionVista) {
     duracionS: p.duracionS,
     programadoPara: p.programadoPara,
     publicadoEn: p.publicadoEn,
+    // Una marca de IA conocida (true o false) no se pisa con null: el filtro de abajo ya quita los null.
+    marcaIa: p.marcaIa ?? null,
   };
   return Object.fromEntries(Object.entries(c).filter(([, v]) => v !== null)) as Partial<typeof c>;
 }

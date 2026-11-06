@@ -67,6 +67,21 @@ describe.skipIf(!hayBd)("guardar en la base", () => {
     expect(c.reelId).toBe("09b");
   });
 
+  it("la marca de IA se guarda y un null posterior no la pisa; un false sí la corrige", async () => {
+    const borrador = base({ red: "tiktok", origen: "zernio", postIdPlataforma: null, zernioPostId: "z9", estado: "borrador", publicadoEn: null });
+    const a = await guardarPublicacion(db, { ...borrador, marcaIa: true }, { reelId: null, por: null });
+    const marca = async () => (await db.select().from(publicacion).where(eq(publicacion.id, a.id)))[0]?.marcaIa;
+    expect(await marca()).toBe(true);
+    await guardarPublicacion(db, { ...borrador, marcaIa: null }, { reelId: null, por: null });
+    expect(await marca()).toBe(true);
+    await guardarPublicacion(db, borrador, { reelId: null, por: null }); // sin el campo
+    expect(await marca()).toBe(true);
+    await guardarPublicacion(db, { ...borrador, marcaIa: false }, { reelId: null, por: null });
+    expect(await marca()).toBe(false);
+    const n = await guardarPublicacion(db, { ...borrador, zernioPostId: "z10" }, { reelId: null, por: null });
+    expect((await db.select().from(publicacion).where(eq(publicacion.id, n.id)))[0]?.marcaIa).toBeNull(); // nunca false inventado
+  });
+
   it("un borrador de Zernio que luego sale publicado se actualiza, no se duplica", async () => {
     const borrador = base({ red: "tiktok", origen: "zernio", postIdPlataforma: null, zernioPostId: "z1", estado: "borrador", publicadoEn: null });
     const a = await guardarPublicacion(db, borrador, { reelId: "10", por: "id" });

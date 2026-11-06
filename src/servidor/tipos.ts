@@ -34,6 +34,8 @@ export interface PublicacionVista {
   programadoPara: Date | null;
   publicadoEn: Date | null;
   estado: EstadoPublicacion;
+  /** Marca de "hecho con IA" que tiene el borrador en Zernio. Ausente o null = la fuente no la dio. */
+  marcaIa?: boolean | null;
 }
 
 /** Cifras de una publicación en un momento. Los porcentajes van de 0 a 100 y los tiempos en segundos. */

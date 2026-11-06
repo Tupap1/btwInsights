@@ -5,7 +5,7 @@ import { and, eq, gte, inArray, isNotNull, isNull, lt, lte, like, max, sql } fro
 import type { BaseDeDatos } from "../db/cliente";
 import { alerta, corrida, lectura, publicacion, reel } from "../db/esquema";
 import type { ClienteMeta } from "../fuentes/meta";
-import { redactar } from "../fuentes/http";
+import { ErrorFuente, redactar } from "../fuentes/http";
 import type { ClienteZernio, EstadoZernio } from "../fuentes/zernio";
 import { emparejarLote, type ContextoEmparejar } from "../emparejar";
 import {
@@ -25,6 +25,15 @@ import {
 } from "../normalizar/meta";
 import { zernioAnaliticaAPost, zernioColaAPublicaciones, zernioSeguidores } from "../normalizar/zernio";
 import type { MetricasMeta, PostLeido, PublicacionVista, Red, ReelCandidato } from "../tipos";
+import {
+  alertaDeCodigoMeta,
+  alertaLecturaAtrasada,
+  alertasNuevasDeCola,
+  CLAVE_LECTURA_ATRASADA,
+  CLAVE_META_PERMISOS,
+  CLAVE_META_TOKEN,
+  type PublicacionParaAlertas,
+} from "./alertas";
 import { porLeer } from "./plan";
 
 export interface DepsRecolector {
@@ -205,10 +214,17 @@ export async function recolectar(db: BaseDeDatos, deps: DepsRecolector): Promise
   let erroresMetricas = 0;
   let intentoMetricas = false;
   let colaOk = true;
+  /** Códigos de error que devolvió Meta en esta corrida (190 = token, 10/200 = permisos). */
+  const codigosMeta = new Set<number>();
+  let metaLeida = false;
 
   const limpio = (e: unknown): string => {
     const crudo = e instanceof Error ? e.message : String(e);
     return redactar(crudo, deps.secretos).replace(/\s+/g, " ").slice(0, 300);
+  };
+
+  const anotarCodigoMeta = (e: unknown): void => {
+    if (e instanceof ErrorFuente && e.codigo !== undefined) codigosMeta.add(e.codigo);
   };
 
   const falloNormalizar = (fuente: "zernio" | "meta", e: unknown): void => {
@@ -225,6 +241,7 @@ export async function recolectar(db: BaseDeDatos, deps: DepsRecolector): Promise
       try {
         await paso();
       } catch (e) {
+        if (fuente === "meta") anotarCodigoMeta(e);
         mensajes.push(limpio(e));
       }
     }
@@ -315,7 +332,7 @@ export async function recolectar(db: BaseDeDatos, deps: DepsRecolector): Promise
     // 4. Meta.
     const meta = deps.meta;
     if (meta) {
-      await bloque("meta", "cuentas", [
+      metaLeida = await bloque("meta", "cuentas", [
         async () => {
           await guardarCuenta(db, metaCuentaFacebook(await meta.cuentaFacebook(), reloj()));
         },
@@ -410,6 +427,7 @@ export async function recolectar(db: BaseDeDatos, deps: DepsRecolector): Promise
                 leidas += 1;
                 seguidos = 0;
               } catch (e) {
+                anotarCodigoMeta(e);
                 fallos += 1;
                 seguidos += 1;
                 primero ??= limpio(e);
@@ -447,8 +465,14 @@ export async function recolectar(db: BaseDeDatos, deps: DepsRecolector): Promise
       }
     }
 
+    // 5b. Token vencido o sin permisos: según los errores que devolvió Meta en esta corrida.
+    if (deps.meta) await alertasDeMeta(db, codigosMeta, metaLeida);
+
     // 6. Alertas de la cola (se calculan sobre lo guardado).
     await alertasDeCola(db, reloj(), colaOk);
+
+    // 6b. Más de 24 h sin leer. Esta corrida cuenta como lectura si al menos un bloque salió bien.
+    await alertaDeLectura(db, reloj(), bloques > 0 && bloquesFallidos < bloques);
 
     // 7. Cierre.
     const alertasAbiertas = await contarAbiertas(db);
@@ -505,6 +529,39 @@ async function contarAbiertas(db: BaseDeDatos): Promise<number> {
   return f?.n ?? 0;
 }
 
+// ---------- Alertas de Meta y de lectura ----------
+
+/** `meta:token` y `meta:permisos`: se abren con el error de la corrida y se cierran cuando Meta se lee sin él. */
+async function alertasDeMeta(db: BaseDeDatos, codigos: ReadonlySet<number>, metaLeida: boolean): Promise<void> {
+  const activas = new Map<string, AlertaNueva>();
+  for (const c of codigos) {
+    const a = alertaDeCodigoMeta(c);
+    if (a) activas.set(a.clave, a);
+  }
+  for (const a of activas.values()) await abrirAlerta(db, a);
+  // Si Meta ni siquiera respondió la lectura de cuentas por otro motivo, no se sabe si el problema sigue: no se cierra.
+  if (!metaLeida) return;
+  await resolverAlertas(
+    db,
+    [CLAVE_META_TOKEN, CLAVE_META_PERMISOS].filter((c) => !activas.has(c)),
+  );
+}
+
+/** `lectura:atrasada`: la última corrida `ok` o `parcial` terminó hace más de 24 h (o nunca hubo). */
+async function alertaDeLectura(db: BaseDeDatos, ahora: Date, estaCorridaLee: boolean): Promise<void> {
+  let ultima: Date | null = ahora;
+  if (!estaCorridaLee) {
+    const [f] = await db
+      .select({ fin: max(corrida.terminadaEn) })
+      .from(corrida)
+      .where(inArray(corrida.estado, ["ok", "parcial"]));
+    ultima = f?.fin ? new Date(f.fin) : null;
+  }
+  const activas = alertaLecturaAtrasada(ahora, ultima);
+  for (const a of activas) await abrirAlerta(db, a);
+  if (activas.length === 0) await resolverAlertas(db, [CLAVE_LECTURA_ATRASADA]);
+}
+
 // ---------- Alertas de la cola ----------
 
 /** Borrador que sale en menos de 24 h y publicaciones fallidas. Se cierran solas cuando dejan de cumplirse. */
@@ -547,6 +604,24 @@ async function alertasDeCola(db: BaseDeDatos, ahora: Date, colaOk: boolean): Pro
       reelId: p.reelId,
       publicacionId: p.id,
     });
+  }
+
+  // T19: dobles, días sin video e IA sin etiqueta (puras, en alertas.ts).
+  const todas: PublicacionParaAlertas[] = (await db.select().from(publicacion)).map((p) => ({
+    id: p.id,
+    red: p.red,
+    estado: p.estado,
+    reelId: p.reelId,
+    programadoPara: p.programadoPara,
+    marcaIa: p.marcaIa,
+  }));
+  const reels = await db.select({ id: reel.id, ia: reel.etiquetaIa }).from(reel);
+  for (const a of alertasNuevasDeCola({
+    ahora,
+    publicaciones: todas,
+    etiquetaIaPorReel: new Map(reels.map((r) => [r.id, r.ia])),
+  })) {
+    activas.set(a.clave, a);
   }
 
   for (const a of activas.values()) await abrirAlerta(db, a);

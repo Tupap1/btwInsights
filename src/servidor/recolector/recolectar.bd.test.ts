@@ -202,8 +202,9 @@ describe.skipIf(!hayBd)("recolector", () => {
 
     // Dos semanas después los borradores siguen en la cola de Zernio, pero ya no están cerca: se cierran.
     conCorrida(await corre(c, { ahora: new Date("2026-11-21T12:00:00Z") }));
+    // (T19: las alertas nuevas de la cola, como "sin-video", pueden seguir abiertas; aquí solo importan las de borrador.)
     const siguen = (await db.select().from(alerta).where(isNull(alerta.resueltaEn))).filter((a) =>
-      a.clave.startsWith("cola:"),
+      a.clave.endsWith(":sin-programar"),
     );
     expect(siguen).toEqual([]);
   });

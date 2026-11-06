@@ -158,6 +158,32 @@ describe("zernioColaAPublicaciones", () => {
     expect(prog[0]!.etiquetas).toEqual(["reel-14"]);
   });
 
+  it("la marca de IA sale de isAiGenerated (Instagram) o video_made_with_ai (TikTok); sin dato, null", () => {
+    const todas = borradores.posts.flatMap((p) => zernioColaAPublicaciones(p));
+    const ig = todas.filter((x) => x.red === "instagram");
+    const tt = todas.filter((x) => x.red === "tiktok");
+    expect(ig.length).toBeGreaterThan(0);
+    expect(tt.length).toBeGreaterThan(0);
+    expect(ig.some((x) => x.marcaIa === true)).toBe(true);
+    expect(tt.some((x) => x.marcaIa === true)).toBe(true);
+    expect(tt.some((x) => x.marcaIa === false)).toBe(true); // hay un borrador de TikTok con video_made_with_ai: false
+    // Cada valor coincide con el dato crudo de su plataforma.
+    for (const post of borradores.posts as Array<{ platforms: Array<{ platform: string; platformSpecificData?: Record<string, unknown> }> }>) {
+      const v = zernioColaAPublicaciones(post);
+      for (const [i, plat] of post.platforms.entries()) {
+        const d = plat.platformSpecificData ?? {};
+        const tk = d["tiktokSettings"] as Record<string, unknown> | undefined;
+        const crudo = plat.platform === "tiktok" ? tk?.["video_made_with_ai"] : d["isAiGenerated"];
+        expect(v[i]?.marcaIa).toBe(typeof crudo === "boolean" ? crudo : null);
+      }
+    }
+  });
+
+  it("sin platformSpecificData la marca es null, nunca false", () => {
+    const v = zernioColaAPublicaciones({ _id: "x", status: "draft", platforms: [{ platform: "facebook" }] });
+    expect(v[0]?.marcaIa).toBeNull();
+  });
+
   it("mapea todos los estados", () => {
     const base = { _id: "x", platforms: [{ platform: "tiktok" }] };
     const casos: Array<[string, string]> = [
