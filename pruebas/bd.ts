@@ -7,7 +7,7 @@ export const hayBd = !!process.env.DATABASE_URL;
 /** Deja todas las tablas vacías y los contadores en 1. */
 export async function vaciar(db: BaseDeDatos): Promise<void> {
   await db.execute(
-    sql`truncate table lectura, curva_retencion, cuenta_lectura, alerta, corrida, idea, lead, publicacion, reel restart identity cascade`,
+    sql`truncate table comentario, hilo_comentarios, lectura, curva_retencion, cuenta_lectura, alerta, corrida, idea, lead, publicacion, reel restart identity cascade`,
   );
   await vaciarAcceso(db);
 }

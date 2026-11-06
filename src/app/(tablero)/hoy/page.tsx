@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 import { exigirSesion } from "@/servidor/acceso/sesion";
 import { bd } from "@/servidor/db/cliente";
 import { consultarHoy, lecturaVencida, separarAlertas, variacion, type AlertaHoy, type Comparada } from "@/servidor/consultas/hoy";
-import { formatoDecimal, formatoFechaHora, formatoHora, haceCuanto } from "@/servidor/consultas/formato";
+import { formatoDecimal, formatoEntero, formatoFechaHora, formatoHora, haceCuanto } from "@/servidor/consultas/formato";
 import { ahoraServidor } from "@/servidor/consultas/tiempo";
 import type { FormatoCifra } from "@/componentes/cifra";
 
@@ -113,6 +113,22 @@ export default async function PaginaHoy() {
           </CardHeader>
           <CardContent>
             <FilaSemana etiqueta="Esta semana (lunes a domingo)" datos={hoy.leads} formato="entero" ahora={ahora} />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between text-base">
+              Comentarios sin responder
+              <Link href="/comentarios" className="text-xs font-normal text-muted-foreground underline">
+                ver
+              </Link>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-2xl font-semibold">{hoy.comentariosSinResponder === null ? "—" : formatoEntero(hoy.comentariosSinResponder)}</p>
+            <p className="text-xs text-muted-foreground">
+              {hoy.comentariosSinResponder === null ? "Todavía no se ha leído ningún hilo." : "Instagram y TikTok, según Zernio."}
+            </p>
           </CardContent>
         </Card>
       </section>

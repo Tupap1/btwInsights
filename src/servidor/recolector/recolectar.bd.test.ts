@@ -29,7 +29,10 @@ function fetchFalso(cuenta: { zernio: number; meta: number }): typeof fetch {
       const ruta = url.pathname.replace("/api/v1", "");
       if (ruta === "/accounts/follower-stats") cuerpo = fixture("zernio-follower-stats");
       else if (ruta === "/analytics") cuerpo = fixture("zernio-analytics");
-      else if (ruta === "/posts") {
+      else if (ruta === "/inbox/comments") cuerpo = fixture("zernio-inbox-comments");
+      else if (ruta.startsWith("/inbox/comments/")) {
+        cuerpo = fixture(url.searchParams.get("accountId") === "6aed36858405bb702db92cda" ? "zernio-inbox-hilo-instagram" : "zernio-inbox-hilo-tiktok");
+      } else if (ruta === "/posts") {
         const e = url.searchParams.get("status");
         cuerpo = e === "draft" || e === "scheduled" ? fixture(`zernio-posts-${e}`) : vacia;
       } else throw new Error(`ruta de Zernio sin fixture: ${ruta}`);

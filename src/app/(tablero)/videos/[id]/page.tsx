@@ -5,11 +5,13 @@ import { Cifra, ChipFuente, type FormatoCifra } from "@/componentes/cifra";
 import { EstadoPublicacionBadge } from "@/componentes/estado-publicacion";
 import { NOMBRE_FORMATO, NOMBRE_RED, NOMBRE_VOZ } from "@/componentes/etiquetas";
 import { FormularioReel } from "@/componentes/formulario-reel";
+import { TarjetaComentario } from "@/componentes/tarjeta-comentario";
 import { GraficaCrecimiento, GraficaRetencion, type SerieGrafica } from "@/componentes/graficas";
 import { Card, CardContent, CardHeader, CardTitle } from "@/componentes/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/componentes/ui/table";
 import { exigirSesion } from "@/servidor/acceso/sesion";
 import { bd } from "@/servidor/db/cliente";
+import { comentariosDeReel } from "@/servidor/consultas/comentarios";
 import { consultarDetalle } from "@/servidor/consultas/detalle";
 import { formatoFechaHora } from "@/servidor/consultas/formato";
 import { ahoraServidor } from "@/servidor/consultas/tiempo";
@@ -51,7 +53,7 @@ export default async function PaginaDetalle({ params }: { params: Promise<{ id: 
     // Un id con % mal formado no existe: se queda tal cual y cae en "no encontrado".
   }
   const ahora = ahoraServidor();
-  const d = await consultarDetalle(bd(), reelId);
+  const [d, comentarios] = await Promise.all([consultarDetalle(bd(), reelId), comentariosDeReel(bd(), reelId)]);
   if (!d) notFound();
   const { reel } = d;
 
@@ -225,6 +227,21 @@ export default async function PaginaDetalle({ params }: { params: Promise<{ id: 
           </Card>
         </section>
       )}
+
+      <section aria-labelledby="comentarios" className="flex flex-col gap-3">
+        <h2 id="comentarios" className="text-base font-semibold">
+          Comentarios
+        </h2>
+        {comentarios.length === 0 ? (
+          <p className="text-sm text-muted-foreground">Este reel no tiene comentarios de otras personas guardados.</p>
+        ) : (
+          <ul className="grid gap-3 md:grid-cols-2">
+            {comentarios.map((c) => (
+              <TarjetaComentario key={c.id} comentario={c} mostrarReel={false} />
+            ))}
+          </ul>
+        )}
+      </section>
 
       <section aria-labelledby="textos" className="flex flex-col gap-3">
         <h2 id="textos" className="text-base font-semibold">

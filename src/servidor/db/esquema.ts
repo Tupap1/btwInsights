@@ -259,6 +259,55 @@ export const lead = pgTable("lead", {
   creadoEn: ahora(),
 });
 
+// ---------- Comentarios del inbox de Zernio (T22) ----------
+// Privacidad: de quien comenta solo se guarda el @ (autor_usuario). Nunca su nombre, su id ni su foto.
+export const comentario = pgTable(
+  "comentario",
+  {
+    id: integer().primaryKey().generatedAlwaysAsIdentity(),
+    publicacionId: integer()
+      .notNull()
+      .references(() => publicacion.id),
+    red: red().notNull(),
+    idPlataforma: text().notNull(),
+    /** NULL en los comentarios de primer nivel. */
+    padreIdPlataforma: text(),
+    /** Vacío si el comentario es solo imagen. */
+    texto: text().notNull(),
+    /** El @ de quien comenta (from.username). NULL si no vino. */
+    autorUsuario: text(),
+    /** El comentario es de la propia cuenta. */
+    esPropio: boolean().notNull().default(false),
+    creadoEn: momento(),
+    meGusta: integer(),
+    /** replyCount de la plataforma (puede ser mayor que las respuestas guardadas). */
+    respuestas: integer(),
+    oculto: boolean().notNull().default(false),
+    enlace: text(),
+    /** La primera vez que el tablero lo vio. */
+    leidoEn: ahora(),
+    actualizadoEn: ahora(),
+    /** Se llena si una lectura completa del hilo ya no lo trae. Nada se borra. */
+    desaparecioEn: momento(),
+  },
+  (t) => [
+    uniqueIndex("comentario_red_id_unico").on(t.red, t.idPlataforma),
+    index("comentario_publicacion_idx").on(t.publicacionId),
+  ],
+);
+
+/** Estado de lectura del hilo de cada publicación: sirve para no volver a pedir hilos que no cambiaron. */
+export const hiloComentarios = pgTable("hilo_comentarios", {
+  publicacionId: integer()
+    .primaryKey()
+    .references(() => publicacion.id),
+  /** El commentCount de la lista cuando se leyó el hilo. NULL = la lista no lo dio. */
+  conteoFuente: integer(),
+  /** La lectura trajo todas las páginas del hilo. */
+  completo: boolean().notNull(),
+  leidoEn: momento().notNull(),
+});
+
 // ---------- Acceso (T09) ----------
 // Nunca se guarda un token en claro: sesión e invitación guardan su sha256 en hexadecimal.
 export const tipoDesafio = pgEnum("tipo_desafio", ["registro", "entrada"]);

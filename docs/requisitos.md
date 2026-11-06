@@ -71,7 +71,8 @@ Cuentas:
 5. **Cada red mide "vistas" a su manera.** Se muestra cada red aparte. Cuando se suma Instagram + Facebook (como la
    app de Instagram), va rotulado "IG + FB".
 6. **Datos personales:** no se guardan datos de clientes de BTWash ni de quien comenta, salvo lo que Andrés pida
-   (fase 3).
+   (fase 3). El 6-nov Andrés pidió guardar el texto de cada comentario y el @ de quien comenta; el nombre, el id y la
+   foto de esa persona no se guardan (T22).
 7. **El Supabase de producción de BTWash no se toca.** El tablero tiene su propia base en el PC. Leer leads de
    BTWash es de la fase 3, solo lectura y con aprobación explícita.
 8. **Español; America/Bogota; pesos colombianos con punto de miles.**

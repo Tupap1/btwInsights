@@ -34,6 +34,7 @@ import {
   CLAVE_META_TOKEN,
   type PublicacionParaAlertas,
 } from "./alertas";
+import { leerComentarios } from "./comentarios";
 import { porLeer } from "./plan";
 
 export interface DepsRecolector {
@@ -53,6 +54,7 @@ export interface ResumenCorrida {
   publicacionesNuevas: number;
   lecturasNuevas: number;
   lecturasRepetidas: number;
+  comentariosNuevos: number;
   pendientes: number;
   alertasAbiertas: number;
   errores: string[];
@@ -204,6 +206,7 @@ export async function recolectar(db: BaseDeDatos, deps: DepsRecolector): Promise
   let publicacionesNuevas = 0;
   let lecturasNuevas = 0;
   let lecturasRepetidas = 0;
+  let comentariosNuevos = 0;
   let pendientes = 0;
   let bloques = 0;
   let bloquesFallidos = 0;
@@ -325,6 +328,14 @@ export async function recolectar(db: BaseDeDatos, deps: DepsRecolector): Promise
             const id = ids[i];
             if (id !== undefined) await guardarLecturaDe(id, p.publicacion.publicadoEn, p, t);
           }
+        },
+      ]);
+      // Comentarios del inbox (Instagram y TikTok). Un hilo que falla se anota y no corta a los demás.
+      await bloque("zernio", "comentarios", [
+        async () => {
+          const r = await leerComentarios(db, zernio, reloj(), limpio);
+          comentariosNuevos += r.comentariosNuevos;
+          if (r.errores.length > 0) throw new Error(r.errores.join("; "));
         },
       ]);
     }
@@ -485,6 +496,7 @@ export async function recolectar(db: BaseDeDatos, deps: DepsRecolector): Promise
       publicacionesNuevas,
       lecturasNuevas,
       lecturasRepetidas,
+      comentariosNuevos,
       pendientes,
       alertasAbiertas,
       errores,
@@ -500,6 +512,7 @@ export async function recolectar(db: BaseDeDatos, deps: DepsRecolector): Promise
       publicacionesNuevas,
       lecturasNuevas,
       lecturasRepetidas,
+      comentariosNuevos,
       pendientes,
       alertasAbiertas: 0,
       errores,

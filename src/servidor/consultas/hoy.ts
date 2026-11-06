@@ -19,6 +19,7 @@ import {
   type PublicacionFila,
   type PublicacionSalida,
 } from "./datos";
+import { contarSinResponder } from "./comentarios";
 import { cargarLecturasCuenta, seguidoresNuevos } from "./cuentas";
 import { cargarLeadsFila, cifrasDeLeads } from "./leads";
 import { HORA_MS, diaBogota, inicioDiaBogota, sumarDias } from "./tiempo";
@@ -72,6 +73,8 @@ export interface Hoy {
   alertas: AlertaHoy[];
   mejor: MejorVideo | null;
   ultimaLectura: Date | null;
+  /** Comentarios de otras personas sin responder. null = nunca se leyó un hilo (no se sabe). */
+  comentariosSinResponder: number | null;
 }
 
 // ---------- Funciones puras (con pruebas) ----------
@@ -135,7 +138,7 @@ export function vistasEn(lecturas: readonly LecturaDato[], publicadoEn: Date, in
 // ---------- Consulta ----------
 
 export async function consultarHoy(db: BaseDeDatos, ahora: Date): Promise<Hoy> {
-  const [datos, alertas, corridas, cuentas, leadsFilas] = await Promise.all([
+  const [datos, alertas, corridas, cuentas, leadsFilas, comentariosSinResponder] = await Promise.all([
     cargarDatos(db),
     db
       .select()
@@ -150,6 +153,7 @@ export async function consultarHoy(db: BaseDeDatos, ahora: Date): Promise<Hoy> {
       .limit(1),
     cargarLecturasCuenta(db),
     cargarLeadsFila(db),
+    contarSinResponder(db),
   ]);
 
   const hoy = diaBogota(ahora);
@@ -291,6 +295,7 @@ export async function consultarHoy(db: BaseDeDatos, ahora: Date): Promise<Hoy> {
     alertas: alertas.map((a) => ({ id: a.id, clave: a.clave, nivel: a.nivel, mensaje: a.mensaje, creadaEn: a.creadaEn })),
     mejor,
     ultimaLectura: ultima ? (ultima.terminadaEn ?? ultima.iniciadaEn) : null,
+    comentariosSinResponder,
   };
 }
 
