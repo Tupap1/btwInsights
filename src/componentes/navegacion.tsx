@@ -3,6 +3,7 @@
 import { CalendarDays, Film, Home, Inbox } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BotonSalir } from "@/componentes/boton-salir";
 import { cn } from "@/lib/utils";
 
 const ENLACES = [
@@ -39,6 +40,9 @@ export function Navegacion() {
             </li>
           );
         })}
+        <li className="flex-1 md:flex-none">
+          <BotonSalir />
+        </li>
       </ul>
     </nav>
   );

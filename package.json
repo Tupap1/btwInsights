@@ -19,10 +19,13 @@
     "db:migrar": "tsx --env-file=.env.local scripts/migrar.ts",
     "importar": "tsx --conditions=react-server --env-file=.env.local scripts/importar.ts",
     "recolectar": "tsx --conditions=react-server --env-file=.env.local scripts/recolectar.ts",
+    "invitar": "tsx --conditions=react-server --env-file=.env.local scripts/invitar.ts",
     "preparar-env": "node scripts/preparar-env.mjs",
     "grabar-fixtures": "tsx --env-file=.env.local scripts/grabar-fixtures.ts"
   },
   "dependencies": {
+    "@simplewebauthn/browser": "14.0.0",
+    "@simplewebauthn/server": "14.0.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "csv-parse": "7.0.3",

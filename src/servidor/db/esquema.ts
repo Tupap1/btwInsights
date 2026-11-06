@@ -3,6 +3,7 @@
 // Un dato que la fuente no dio queda en NULL: nunca se rellena ni se interpola.
 import { sql } from "drizzle-orm";
 import {
+  bigint,
   boolean,
   date,
   doublePrecision,
@@ -246,4 +247,74 @@ export const lead = pgTable("lead", {
   nota: text(),
   resultado: text(),
   creadoEn: ahora(),
+});
+
+// ---------- Acceso (T09) ----------
+// Nunca se guarda un token en claro: sesión e invitación guardan su sha256 en hexadecimal.
+export const tipoDesafio = pgEnum("tipo_desafio", ["registro", "entrada"]);
+
+export const usuario = pgTable("usuario", {
+  id: integer().primaryKey().generatedAlwaysAsIdentity(),
+  nombre: text().notNull().unique(),
+  /** Identificador estable para WebAuthn: aleatorio, base64url, sin relación con el nombre. */
+  idWebauthn: text().notNull().unique(),
+  activo: boolean().notNull().default(true),
+  creadoEn: ahora(),
+});
+
+export const credencial = pgTable(
+  "credencial",
+  {
+    /** El credentialID en base64url. */
+    id: text().primaryKey(),
+    usuarioId: integer()
+      .notNull()
+      .references(() => usuario.id),
+    /** Clave pública COSE en base64url. */
+    clavePublica: text().notNull(),
+    contador: bigint({ mode: "number" }).notNull().default(0),
+    transportes: text().array(),
+    creadaEn: ahora(),
+    usadaEn: momento(),
+  },
+  (t) => [index("credencial_usuario_idx").on(t.usuarioId)],
+);
+
+export const sesion = pgTable(
+  "sesion",
+  {
+    /** sha256 (hex) del token de la cookie. */
+    hash: text().primaryKey(),
+    usuarioId: integer()
+      .notNull()
+      .references(() => usuario.id),
+    creadaEn: ahora(),
+    expiraEn: timestamp({ withTimezone: true }).notNull(),
+    usadaEn: momento(),
+  },
+  (t) => [index("sesion_usuario_idx").on(t.usuarioId)],
+);
+
+export const invitacion = pgTable(
+  "invitacion",
+  {
+    /** sha256 (hex) del token del enlace. */
+    hash: text().primaryKey(),
+    usuarioId: integer()
+      .notNull()
+      .references(() => usuario.id),
+    creadaEn: ahora(),
+    expiraEn: timestamp({ withTimezone: true }).notNull(),
+    usadaEn: momento(),
+  },
+  (t) => [index("invitacion_usuario_idx").on(t.usuarioId)],
+);
+
+export const desafio = pgTable("desafio", {
+  /** Aleatorio; va en la cookie btw_desafio. */
+  id: text().primaryKey(),
+  reto: text().notNull(),
+  tipo: tipoDesafio().notNull(),
+  usuarioId: integer().references(() => usuario.id),
+  expiraEn: timestamp({ withTimezone: true }).notNull(),
 });
