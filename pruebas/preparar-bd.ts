@@ -14,6 +14,9 @@ export default async function preparar(): Promise<void> {
   try {
     await sqlAdmin.unsafe(`drop database if exists ${NOMBRE_BD_PRUEBA} with (force)`);
     await sqlAdmin.unsafe(`create database ${NOMBRE_BD_PRUEBA}`);
+    // Solo la base de pruebas: no espera el fsync de cada commit (en WSL2 cuesta ~28 ms por commit y las pruebas
+    // del recolector pasaban de 5 s). Si el equipo se apaga a mitad de una prueba, no importa perder esa base.
+    await sqlAdmin.unsafe(`alter database ${NOMBRE_BD_PRUEBA} set synchronous_commit = off`);
   } finally {
     await sqlAdmin.end();
   }

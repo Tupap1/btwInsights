@@ -83,7 +83,10 @@ describe("leerTextoTxt con los fixtures reales", () => {
   });
 
   it("archivo con fin de línea CRLF (2026-11-02) se lee igual que con LF", () => {
-    const crlf = fixture("2026-11-02_lun_APP01_app-real_cuerpo-app");
+    // En btw-videos (Windows) este archivo es CRLF; el repo guarda todo en LF (.gitattributes), así que el CRLF se
+    // arma aquí y la prueba no depende de cómo se clonó.
+    const lf = fixture("2026-11-02_lun_APP01_app-real_cuerpo-app").replace(/\r\n/g, "\n");
+    const crlf = lf.replace(/\n/g, "\r\n");
     expect(crlf).toContain("\r\n");
     const texto = leerTextoTxt(crlf);
     expect(texto.general).not.toBeNull();
