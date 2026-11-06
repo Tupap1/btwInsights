@@ -6,7 +6,7 @@ const p = (ruta: string, extra: Partial<Parameters<typeof decidirProxy>[0]> = {}
   decidirProxy({ ruta, tieneCookie: false, produccion: true, origen: ORIGEN, ...extra });
 
 describe("rutaPublica", () => {
-  it.each(["/entrar", "/registrar", "/api/salud", "/api/recolectar", "/api/acceso/entrada/opciones", "/_next/static/x.js", "/favicon.ico", "/logo.png"])(
+  it.each(["/entrar", "/registrar", "/api/salud", "/api/recolectar", "/api/acceso/entrada/opciones", "/api/exportar/metricas.csv", "/api/exportar/metricas", "/_next/static/x.js", "/favicon.ico", "/logo.png"])(
     "%s es pública",
     (r) => expect(rutaPublica(r)).toBe(true),
   );

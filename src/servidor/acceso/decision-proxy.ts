@@ -1,7 +1,9 @@
 // Decisión del proxy como función pura (sin Next), para probarla. La revisión real de la sesión es de exigirSesion().
 
 const EXACTAS = ["/entrar", "/registrar", "/api/salud", "/api/recolectar", "/favicon.ico"];
-const PREFIJOS = ["/api/acceso/", "/_next/"];
+// /api/exportar/ va fuera porque sus rutas exigen su propio secreto (Bearer RECOLECTOR_SECRETO), como /api/recolectar.
+// Cualquier ruta nueva bajo ese prefijo TIENE que revisar ese secreto.
+const PREFIJOS = ["/api/acceso/", "/api/exportar/", "/_next/"];
 
 export function rutaPublica(ruta: string): boolean {
   if (EXACTAS.includes(ruta)) return true;
