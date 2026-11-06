@@ -20,7 +20,9 @@ services:
       - datos_pg:/var/lib/postgresql/data
     # Sin "ports": solo las demás piezas la alcanzan, por la red interna.
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U btw -d btw_insights"]
+      # Por TCP: en el primer arranque Postgres corre un servidor temporal solo por socket mientras se inicializa, y
+      # pg_isready por socket lo daba por sano antes de tiempo (migrar fallaba con "CREATE SCHEMA drizzle").
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U btw -d btw_insights"]
       interval: 5s
       timeout: 5s
       retries: 20
@@ -39,6 +41,10 @@ services:
       DATABASE_URL: postgres://btw:${POSTGRES_PASSWORD}@db:5432/btw_insights
       POSTGRES_APP_PASSWORD: ${POSTGRES_APP_PASSWORD:?Falta POSTGRES_APP_PASSWORD en .env.produccion}
       POSTGRES_LECTURA_PASSWORD: ${POSTGRES_LECTURA_PASSWORD:?Falta POSTGRES_LECTURA_PASSWORD en .env.produccion}
+      # Para "invitar" (el enlace sale de WEBAUTHN_ORIGEN), que corre en esta misma imagen.
+      WEBAUTHN_RP_ID: ${WEBAUTHN_RP_ID:?Falta WEBAUTHN_RP_ID en .env.produccion}
+      WEBAUTHN_ORIGEN: ${WEBAUTHN_ORIGEN:?Falta WEBAUTHN_ORIGEN en .env.produccion}
+      WEBAUTHN_RP_NOMBRE: ${WEBAUTHN_RP_NOMBRE:?Falta WEBAUTHN_RP_NOMBRE en .env.produccion}
     depends_on:
       db: { condition: service_healthy }
     networks: [interna]
@@ -67,8 +73,10 @@ services:
     # ports:
     #   - "127.0.0.1:3100:3000"
     networks:
-      - interna
-      - proxy
+      interna:
+      proxy:
+        # Nombre fijo en la red del proxy: en Nginx Proxy Manager el destino es http://btw-insights-app:3000.
+        aliases: [btw-insights-app]
     <<: *registro
 
   cron:

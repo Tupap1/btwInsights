@@ -22,11 +22,53 @@ terminada va en su propio commit** (Andrés, 5-nov).
 | 5-nov | Una fila mal formada de `seguimiento.csv` se salta con aviso; no se adivina qué columna se corrió | El 5-nov las filas del 14 y del 13 traen una coma sin comillas (26 columnas) |
 | 5-nov | Llaves copiadas de `btw-videos/.env.local` al de este repo, solo las 4 del tablero, sin mostrarlas | Andrés lo pidió |
 
+## Decisiones por revisar (sesión del servidor, noche del 6-nov)
+
+Tomadas sin preguntar, eligiendo lo más seguro y reversible (`docs/handoff-servidor.md`). Andrés las revisa.
+
+| # | Decisión | Por qué | Cómo deshacerla |
+|---|---|---|---|
+| 1 | **Sin push ni PR:** los commits quedan locales en `fase-1` | El servidor no tiene credenciales de GitHub (`git push` pide usuario) y `gh` no tiene sesión. No se buscaron credenciales | `gh auth login` y `git push origin fase-1`; luego el PR (ver "Para Andrés") |
+| 2 | Node 24 instalado en `~/.local/node24` (solo para el usuario, verificado con SHA256 de nodejs.org) | El sistema tiene Node 20 y el proyecto pide >= 24. No se tocó el Node del sistema | `rm -rf ~/.local/node24` |
+| 3 | La base de **pruebas** corre con `synchronous_commit=off` | En WSL2 cada commit tarda ~28 ms y las pruebas del recolector pasaban de 5 s. Solo afecta a `btw_tablero_prueba*` | Quitar la línea en `pruebas/preparar-bd.ts` |
+| 4 | `PROXY_RED=proxy-net` | Es la red de `nginx-proxy` y `cloudflare-tunnel` (`docker inspect`, sin cambiarlos) | Cambiar en `.env.produccion` |
+| 5 | Los archivos de `~/btw-respaldos` se movieron a `respaldos/` (ignorado por git); los tar se extrajeron en `datos/btw-videos/` (ignorado) y `BTW_VIDEOS_DIR` apunta ahí | Lo pidió Andrés | — |
+| 6 | La base de **desarrollo** del servidor (`127.0.0.1:5434`) se llenó con `btw_tablero.dump` | Para probar las pantallas con datos reales | `docker compose down -v` del compose de desarrollo |
+| 7 | `.env.produccion` creado con secretos nuevos al azar (nunca impresos) y las 4 llaves de `respaldos/llaves-api.env` | Paso 0 del traspaso | Borrar el archivo y regenerar |
+
+## Para Andrés al levantarse
+
+El tablero ya corre en Docker en este servidor (proyecto `btw-insights`: `db`, `app`, `cron` cada hora y `respaldo`
+diario a las 3:00), con los datos del dump del 6-nov y una recolección real hecha. Falta lo que necesita tu inicio
+de sesión:
+
+1. **Empujar y abrir el PR** (no pude: el servidor no tiene credenciales de GitHub). Desde este repo:
+   `gh auth login`, luego `git push origin fase-1`. `main` no existe en GitHub: créala desde el primer commit
+   (`git push origin $(git rev-list --max-parents=0 HEAD):refs/heads/main`) y abre el PR sin fusionar:
+   `gh pr create --base main --head fase-1 --title "Tablero BTW Insights: fases 1 y 2" --body-file docs/pr.md`.
+2. **Nginx Proxy Manager** (`http://127.0.0.1:81` en el servidor): *Add Proxy Host* →
+   - Domain: `insights.btw-one.com`; Scheme `http`; Forward Hostname `btw-insights-app`; Port `3000`;
+   - activa *Block Common Exploits* y *Websockets Support*;
+   - SSL: igual que tus otros dominios (si Cloudflare termina el HTTPS y el túnel llega a NPM por HTTP, no hace
+     falta certificado en NPM).
+3. **Túnel de Cloudflare** (Zero Trust → Networks → Tunnels → el túnel de este servidor → *Public Hostname*):
+   `insights.btw-one.com` → el mismo servicio que usan tus otros dominios (si van a NPM: `http://nginx-proxy:80`;
+   si van directo: `http://btw-insights-app:3000`). Sin aplicación de Access delante (decidido el 5-nov).
+4. **Probar:** `https://insights.btw-one.com/api/salud` debe dar `{"ok":true,"base":"ok"}` y cualquier otra página
+   debe mandarte a `/entrar`.
+5. **Registrar tu llave de acceso:** abre en el celular el enlace de invitación que dejé en la terminal de esta
+   sesión (vale 24 h y un solo uso; no está en git). Si se venció o se perdió, crea otro:
+   `docker compose --env-file .env.produccion -f docker-compose.prod.yml run --rm migrar node --conditions=react-server --import tsx scripts/invitar.ts "Andrés"`.
+   La llave solo sirve en `insights.btw-one.com` (no por IP ni por localhost).
+6. **`seguimiento.csv`** (en btw-videos): las filas del 13 y el 14 tienen una celda con coma sin comillas; ponla
+   entre comillas y vuelve a importar.
+7. **Asignar a mano** los 2 posts del 28-oct en "Sin asignar" (deben ser del 04-G4).
+
 ## Pendiente de Andrés
 
 1. **`seguimiento.csv` (en btw-videos):** las filas del 14 y del 13 tienen una celda con coma sin comillas (la de
    la etiqueta de IA). Ponerla entre comillas y volver a correr `npm run importar`.
-2. **Nginx Proxy Manager:** ¿cómo se llama la red de Docker donde corre? El tablero se une a ella (`PROXY_RED`).
+2. ~~Red de Nginx Proxy Manager~~: resuelto, es `proxy-net` (decisión 4).
 3. **Inicio de sesión:** passkey (decidido el 6-nov). Falta saber quiénes más entran, además de Andrés.
 4. **Asignar a mano** los 2 posts del 28-oct ("¿Cuánto te quedó hoy?", TikTok y Facebook): deben ser del 04-G4.
 
@@ -44,13 +86,14 @@ terminada va en su propio commit** (Andrés, 5-nov).
 | T02b | Guardado en la base: publicación, lectura, cuenta y alertas, sin duplicar ni pisar | Opus | ✅ | `src/servidor/guardar*.ts` |
 | T07 | `npm run importar`: 21 reels, 49 publicaciones y 36 lecturas; 2 en "Sin asignar". Idempotente y no pisa lo editado | Sonnet | ✅ | `src/servidor/importar/a-la-base*.ts`, `scripts/importar.ts` |
 | T08 | Recolector: plan de lecturas, candado con `corrida`, alertas, `npm run recolectar` y `POST /api/recolectar`. Probado con las APIs reales: 36 lecturas y luego 0 repetidas | Opus + Sonnet | ✅ | `src/servidor/recolector/*`, `src/app/api/recolectar/`, `scripts/recolectar.ts` |
-| T08b | Rellenar huecos (domingos) con el historial diario de Zernio | Sonnet | ⬜ | `src/servidor/recolector/historial*.ts` |
+| T08b | Rellenar huecos (domingos) con el historial diario de Zernio | Sonnet | ✅ sin relleno: el timeline es acumulado, pero solo existe desde el 5-nov y no trae la hora (ver `docs/specs/T08b.md`) | `scripts/grabar-fixtures.ts`, fixture del timeline |
 | T11 | Docker de producción: imagen `app` (326 MB, amd64 probada) y `herramientas`; Compose con base, migración, app, cron cada hora y respaldo diario | Sonnet | ✅ | `Dockerfile`, `docker-compose.prod.yml`, `docker/*`, `src/app/api/salud/`, `docs/despliegue.md` |
-| T09 | Inicio de sesión propio, sesión en la base, `proxy.ts` y verificación en cada ruta | Opus | ⬜ (passkey decidida el 6-nov; diseño en `docs/handoff-servidor.md`) | `src/servidor/acceso/*`, `src/proxy.ts` |
+| T09 | Inicio de sesión con llave de acceso (passkey), invitaciones de un solo uso, sesión en la base, `proxy.ts` y cabeceras | Sonnet + Opus | ✅ (53 pruebas; probado en modo producción) | `src/servidor/acceso/*`, `src/proxy.ts`, `src/app/{entrar,registrar,api/acceso}/`, `scripts/invitar.ts`, migración 0001 |
 | T10 | Pantallas: Hoy, Videos, Detalle, Cola de 14 días y Sin asignar (celular primero; cada cifra con su fuente y antigüedad) | Sonnet | ✅ (229 pruebas; pulido en T10b) | `src/app/(tablero)/*`, `src/componentes/*`, `src/servidor/consultas/*` |
-| T12 | Roles de la base (dueño, app y lectura), copia del respaldo fuera del servidor y restauración probada | Opus | ⬜ | `scripts/roles.sql`, `docker/respaldo/*` |
-| T13 | Prueba de portabilidad (base nueva), búsqueda de secretos en `.next`, README, `docs/nube.md`, `.env.example` | Haiku + Opus | ⬜ | `README.md`, `docs/*`, `.env.example`, `scripts/revisar-secretos.*` |
-| T14 | Desplegar en el servidor de BTW: levantar el Compose entero, unirlo a Nginx Proxy Manager y abrir insights.btw-one.com | Opus | ⬜ (espera la pregunta 2) | — |
+| T10b | Pulido en el celular: tarjetas en `/videos`, "día sin video" por celda, fechas cortas, capturas a 375 y 1440 px | Sonnet | ✅ | `src/app/(tablero)/{videos,cola}/`, `docs/capturas/` |
+| T12 | Roles de la base (dueño, app y lectura), copia del respaldo a una carpeta del host y restauración probada | Sonnet | ✅ | `scripts/roles.*`, `docker/respaldo/*`, `docker-compose.prod.yml` |
+| T13 | Prueba de portabilidad (base nueva), búsqueda de secretos en `.next` y en la imagen, README, `docs/nube.md`, `.env.example` | Haiku + Opus | ✅ (resultado en `docs/specs/T13.md`) | `README.md`, `docs/*`, `.env.example`, `scripts/revisar-secretos.*` |
+| T14 | Desplegar en el servidor de BTW: Compose entero (`btw-insights`) unido a `proxy-net`, dump restaurado, recolección y respaldo probados | Opus | ✅ 6-nov 01:19 (falta NPM y el túnel: ver "Para Andrés") | `docker-compose*.yml`, `scripts/migrar.ts`, `docs/specs/T14.md` |
 
 **Siguiente:** la sesión del servidor sigue con `docs/handoff-servidor.md`: fase 1 (T09, T10b, T08b, T12, T13 y T14), fase 2 (T15 a T21) y, de la fase 3, lo que no necesita a Andrés.
 
