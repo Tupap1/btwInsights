@@ -7,7 +7,7 @@ import { sinDato } from "./cifras";
 import type { PublicacionFila, ReelFila } from "./datos";
 import { armarFilasCrecimiento } from "./detalle";
 import { agregar, lecturaVencida, variacion, vistasEn } from "./hoy";
-import { leerFiltros } from "./videos";
+import { leerFiltros, ordenar, type FilaVideo } from "./videos";
 
 const t = (iso: string) => new Date(iso);
 
@@ -196,5 +196,37 @@ describe("leerFiltros", () => {
       orden: "fecha",
       dir: "desc",
     });
+  });
+});
+
+describe("armarCola: día sin video por celda", () => {
+  const hoy = "2026-11-06";
+  it("marca cada red sin publicaciones ese día, aunque otra red sí tenga", () => {
+    const c = armarCola(
+      [
+        pub(1, { red: "tiktok", reelId: "14", programadoPara: t("2026-11-07T15:00:00Z") }),
+        pub(2, { red: "instagram", reelId: "14", programadoPara: t("2026-11-07T15:00:00Z") }),
+      ],
+      [reel("14", "g")],
+      hoy,
+    );
+    expect(c.dias[1]?.sinVideo).toEqual(["facebook"]);
+    expect(c.dias[2]?.sinVideo).toEqual(["tiktok", "instagram", "facebook"]);
+  });
+  it("una cancelada no cuenta como video", () => {
+    const c = armarCola([pub(1, { estado: "cancelado", programadoPara: t("2026-11-06T15:00:00Z") })], [reel("10", "g")], hoy);
+    expect(c.dias[0]?.sinVideo).toContain("tiktok");
+  });
+});
+
+describe("ordenar /videos por fecha", () => {
+  const fila = (id: string, fecha: string | null, publicado: boolean): FilaVideo =>
+    ({ reel: { id }, fecha, publicado, redes: { tiktok: null, instagram: null, facebook: null } }) as unknown as FilaVideo;
+  const filas = [fila("a", "2026-11-03", true), fila("f", "2026-11-20", false), fila("b", "2026-11-05", true), fila("g", null, false)];
+  it("por defecto (desc): publicados por fecha descendente y los futuros al final", () => {
+    expect(ordenar(filas, "fecha", -1).map((f) => f.reel.id)).toEqual(["b", "a", "f", "g"]);
+  });
+  it("asc: publicados del más viejo al más nuevo, los futuros siguen al final", () => {
+    expect(ordenar(filas, "fecha", 1).map((f) => f.reel.id)).toEqual(["a", "b", "f", "g"]);
   });
 });

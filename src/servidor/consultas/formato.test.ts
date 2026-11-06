@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   formatoDecimal,
   formatoEntero,
+  formatoFechaCola,
   formatoFechaHora,
   formatoHora,
   formatoPesos,
@@ -52,5 +53,13 @@ describe("fechas en America/Bogota", () => {
     expect(haceCuanto(new Date("2026-11-06T11:30:00Z"), ahora)).toBe("hace 30 min");
     expect(haceCuanto(new Date("2026-11-06T09:00:00Z"), ahora)).toBe("hace 3 h");
     expect(haceCuanto(new Date("2026-11-03T12:00:00Z"), ahora)).toBe("hace 3 d");
+  });
+});
+
+describe("formatoFechaCola", () => {
+  it("sale como 'vie 6 de nov', en minúsculas y sin coma", () => {
+    expect(formatoFechaCola(inicioDiaBogota("2026-11-06"))).toBe("vie 6 de nov");
+    expect(formatoFechaCola(inicioDiaBogota("2026-12-01"))).toBe("mar 1 de dic");
+    expect(formatoFechaCola(inicioDiaBogota("2026-09-12"))).toBe("sáb 12 de sept");
   });
 });

@@ -87,6 +87,8 @@ export interface FilaVideo {
   reel: ReelFila;
   /** Día de Bogotá en que salió (o el del plan). */
   fecha: string | null;
+  /** Ya salió en alguna red (si no, la fecha es la del plan o no hay). */
+  publicado: boolean;
   redes: Record<Red, CeldaRed | null>;
   igfb: Cifra;
 }
@@ -147,7 +149,7 @@ export async function consultarVideos(db: BaseDeDatos, filtros: FiltrosVideos): 
     const fecha = primera !== null ? diaBogota(new Date(primera)) : r.fechaPlan;
     const igfb =
       redes.instagram && redes.facebook ? sumaIgFb(redes.instagram.cifras.vistas, redes.facebook.cifras.vistas) : sinDato;
-    return { reel: r, fecha, redes, igfb };
+    return { reel: r, fecha, publicado: salidas.length > 0, redes, igfb };
   });
 
   const total = filas.length;
@@ -184,6 +186,8 @@ function valorOrden(f: FilaVideo, clave: ClaveOrden): string | number | null {
 /** Orden por cualquier columna; lo que no tiene dato va siempre al final. */
 export function ordenar(filas: readonly FilaVideo[], clave: ClaveOrden, signo: 1 | -1): FilaVideo[] {
   return [...filas].sort((a, b) => {
+    // Por fecha, lo que aún no salió va al final en cualquier sentido.
+    if (clave === "fecha" && a.publicado !== b.publicado) return a.publicado ? -1 : 1;
     const va = valorOrden(a, clave);
     const vb = valorOrden(b, clave);
     const desempate = a.reel.id.localeCompare(b.reel.id, "es", { numeric: true });

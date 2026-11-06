@@ -8,7 +8,7 @@ import { exigirSesion } from "@/servidor/acceso/sesion";
 import { bd } from "@/servidor/db/cliente";
 import { consultarCola } from "@/servidor/consultas/cola";
 import { REDES } from "@/servidor/consultas/datos";
-import { formatoFechaDia, formatoHora } from "@/servidor/consultas/formato";
+import { formatoFechaCola, formatoHora } from "@/servidor/consultas/formato";
 import { ahoraServidor, diaBogota, inicioDiaBogota } from "@/servidor/consultas/tiempo";
 
 export const dynamic = "force-dynamic";
@@ -44,15 +44,15 @@ export default async function PaginaCola() {
           <li key={d.dia}>
             <Card className={cn("h-full gap-3 py-4", d.dia === hoy && "border-foreground/40")}>
               <CardHeader className="gap-0">
-                <CardTitle className="text-sm capitalize">
-                  {formatoFechaDia(inicioDiaBogota(d.dia))}
-                  {d.dia === hoy && <span className="ml-2 text-xs font-normal normal-case text-muted-foreground">hoy</span>}
+                <CardTitle className="text-sm">
+                  {formatoFechaCola(inicioDiaBogota(d.dia))}
+                  {d.dia === hoy && <span className="ml-2 text-xs font-normal text-muted-foreground">hoy</span>}
                 </CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col gap-3">
-                {d.avisos.length > 0 && (
+                {d.avisos.some((a) => a.tipo !== "sin_video") && (
                   <ul className="flex flex-col gap-1">
-                    {d.avisos.map((a) => (
+                    {d.avisos.filter((a) => a.tipo !== "sin_video").map((a) => (
                       <li
                         key={a.mensaje}
                         className={cn(
@@ -69,7 +69,13 @@ export default async function PaginaCola() {
                   <div key={red} className="flex flex-col gap-1">
                     <p className="text-xs font-medium text-muted-foreground">{NOMBRE_RED[red]}</p>
                     {d.redes[red].length === 0 ? (
-                      <p className="text-xs text-muted-foreground">—</p>
+                      d.sinVideo.includes(red) ? (
+                        <p className="flex items-center gap-1.5 text-xs text-aviso">
+                          <TriangleAlert className="size-3.5 shrink-0" aria-hidden /> Día sin video
+                        </p>
+                      ) : (
+                        <p className="text-xs text-muted-foreground">—</p>
+                      )
                     ) : (
                       d.redes[red].map((i) => (
                         <div key={i.publicacionId} className="flex items-center justify-between gap-2 text-sm">

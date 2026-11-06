@@ -35,6 +35,12 @@ const soloHora = new Intl.DateTimeFormat("es-CO", { timeZone: "America/Bogota", 
 
 export const formatoFechaCorta = (f: Date): string => fechaCorta.format(f);
 export const formatoFechaDia = (f: Date): string => fechaDia.format(f);
+/** "vie 6 de nov": minúsculas, sin coma ni punto. */
+export function formatoFechaCola(f: Date): string {
+  const partes = Object.fromEntries(fechaDia.formatToParts(f).map((p) => [p.type, p.value]));
+  const quitar = (x: string | undefined) => (x ?? "").replace(/\./g, "").toLowerCase();
+  return `${quitar(partes.weekday)} ${partes.day ?? ""} de ${quitar(partes.month)}`;
+}
 export const formatoFechaHora = (f: Date): string => fechaHora.format(f);
 export const formatoHora = (f: Date): string => soloHora.format(f);
 

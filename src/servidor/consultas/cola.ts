@@ -26,6 +26,8 @@ export interface DiaCola {
   dia: string;
   redes: Record<Red, ItemCola[]>;
   avisos: AvisoCola[];
+  /** Redes sin ninguna publicación ese día (cada una avisa "Día sin video" en su celda). */
+  sinVideo: Red[];
 }
 
 export interface Cola {
@@ -50,6 +52,7 @@ export function armarCola(
     dia: sumarDias(hoy, i),
     redes: { tiktok: [], instagram: [], facebook: [] },
     avisos: [],
+    sinVideo: [],
   }));
   const porDia = new Map(lista.map((d) => [d.dia, d]));
   const avisosFuera: AvisoCola[] = [];
@@ -93,6 +96,7 @@ export function armarCola(
         });
       }
     }
+    d.sinVideo = REDES.filter((r) => d.redes[r].length === 0);
     if (REDES.every((r) => d.redes[r].length === 0)) {
       d.avisos.push({ tipo: "sin_video", dia: d.dia, mensaje: "Día sin video." });
     }

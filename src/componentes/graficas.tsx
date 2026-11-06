@@ -25,9 +25,9 @@ const ESTILO_TOOLTIP = {
 
 export function GraficaCrecimiento({ filas, series }: { filas: Fila[]; series: SerieGrafica[] }) {
   return (
-    <div className="h-72 w-full" role="img" aria-label="Vistas contra horas desde la publicación">
+    <div className="h-72 w-full min-w-0" role="img" aria-label="Vistas contra horas desde la publicación">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={filas} margin={{ top: 8, right: 12, bottom: 4, left: 0 }}>
+        <LineChart data={filas} margin={{ top: 8, right: 8, bottom: 4, left: -8 }}>
           <CartesianGrid stroke="var(--border)" strokeDasharray="3 3" />
           <XAxis
             dataKey="horas"
@@ -41,7 +41,7 @@ export function GraficaCrecimiento({ filas, series }: { filas: Fila[]; series: S
             tickFormatter={(v: number) => formatoEntero(v)}
             stroke="var(--muted-foreground)"
             fontSize={11}
-            width={52}
+            width={46}
           />
           <Tooltip
             contentStyle={ESTILO_TOOLTIP}
@@ -76,9 +76,9 @@ export function GraficaRetencion({
   nombreMejor: string | null;
 }) {
   return (
-    <div className="h-64 w-full" role="img" aria-label="Retención por segundo">
+    <div className="h-64 w-full min-w-0" role="img" aria-label="Retención por segundo">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={filas} margin={{ top: 8, right: 12, bottom: 4, left: 0 }}>
+        <LineChart data={filas} margin={{ top: 8, right: 8, bottom: 4, left: -8 }}>
           <CartesianGrid stroke="var(--border)" strokeDasharray="3 3" />
           <XAxis
             dataKey="segundo"
@@ -93,7 +93,7 @@ export function GraficaRetencion({
             tickFormatter={(v: number) => `${formatoEntero(v)} %`}
             stroke="var(--muted-foreground)"
             fontSize={11}
-            width={48}
+            width={52}
           />
           <Tooltip
             contentStyle={ESTILO_TOOLTIP}

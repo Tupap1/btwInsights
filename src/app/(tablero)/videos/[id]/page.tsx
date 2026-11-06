@@ -114,7 +114,7 @@ export default async function PaginaDetalle({ params }: { params: Promise<{ id: 
             {d.publicaciones
               .filter(({ publicacion: p }) => p.estado === "publicado" || p.estado === "parcial")
               .map(({ publicacion: p, ultima, h48, d7 }) => (
-                <Card key={p.id} className="gap-3 py-4">
+                <Card key={p.id} className="min-w-0 gap-3 py-4">
                   <CardHeader className="gap-0">
                     <CardTitle className="text-sm">{NOMBRE_RED[p.red]}</CardTitle>
                   </CardHeader>
@@ -165,7 +165,7 @@ export default async function PaginaDetalle({ params }: { params: Promise<{ id: 
         {d.crecimiento.filas.length === 0 ? (
           <p className="text-sm text-muted-foreground">Todavía no hay lecturas con horas desde la publicación.</p>
         ) : (
-          <Card className="py-4">
+          <Card className="min-w-0 py-4">
             <CardContent>
               <GraficaCrecimiento filas={d.crecimiento.filas} series={series} />
               <p className="mt-2 text-xs text-muted-foreground">
@@ -182,7 +182,7 @@ export default async function PaginaDetalle({ params }: { params: Promise<{ id: 
             Retención en TikTok
             <ChipFuente fuente={d.retencion.fuente} datoActualizadoEn={d.retencion.datoActualizadoEn} ahora={ahora} />
           </h2>
-          <Card className="py-4">
+          <Card className="min-w-0 py-4">
             <CardContent>
               <GraficaRetencion
                 filas={d.retencion.puntos}
@@ -203,7 +203,7 @@ export default async function PaginaDetalle({ params }: { params: Promise<{ id: 
           <h2 id="trafico" className="text-base font-semibold">
             De dónde viene (TikTok)
           </h2>
-          <Card className="py-4">
+          <Card className="min-w-0 py-4">
             <CardContent className="grid grid-cols-2 gap-4 sm:grid-cols-4">
               <div>
                 <p className="text-xs text-muted-foreground">Para ti</p>
@@ -230,7 +230,7 @@ export default async function PaginaDetalle({ params }: { params: Promise<{ id: 
         <h2 id="textos" className="text-base font-semibold">
           Guion y textos
         </h2>
-        <Card className="py-4">
+        <Card className="min-w-0 py-4">
           <CardContent className="flex flex-col gap-4">
             <Texto titulo="Gancho" texto={reel.gancho} />
             <Texto titulo="Guion" texto={reel.guion} />
@@ -258,7 +258,7 @@ export default async function PaginaDetalle({ params }: { params: Promise<{ id: 
         <h2 id="notas" className="text-base font-semibold">
           Notas, formato y voz
         </h2>
-        <Card className="py-4">
+        <Card className="min-w-0 py-4">
           <CardContent>
             <FormularioReel reelId={reel.id} notas={reel.notas} formato={reel.formato} voz={reel.voz} />
           </CardContent>
