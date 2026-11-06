@@ -19,6 +19,7 @@ import {
   type PublicacionFila,
   type PublicacionSalida,
 } from "./datos";
+import { cargarLeadsFila, cifrasDeLeads } from "./leads";
 import { HORA_MS, diaBogota, inicioDiaBogota, sumarDias } from "./tiempo";
 
 /** Una cifra de la semana y la de la semana anterior. */
@@ -34,8 +35,6 @@ export interface TarjetaRed {
   pctPasa3s: Comparada;
   guardadosCompartidos: Comparada;
   seguidoresNuevos: Comparada;
-  /** Los leads son de la fase 2. */
-  leads: Cifra;
   /** Publicaciones que salieron en la semana. */
   publicacionesSemana: number;
 }
@@ -66,6 +65,8 @@ export interface Hoy {
   ahora: Date;
   semana: { desde: Date; hasta: Date; anteriorDesde: Date };
   tarjetas: TarjetaRed[];
+  /** Leads registrados a mano: semana (lunes a domingo) contra la anterior. Los leads no son de una red. */
+  leads: Comparada;
   salidas: SalidaDelDia[];
   alertas: { id: number; nivel: "info" | "aviso" | "error"; mensaje: string; creadaEn: Date }[];
   mejor: MejorVideo | null;
@@ -113,7 +114,7 @@ export function vistasEn(lecturas: readonly LecturaDato[], publicadoEn: Date, in
 // ---------- Consulta ----------
 
 export async function consultarHoy(db: BaseDeDatos, ahora: Date): Promise<Hoy> {
-  const [datos, alertas, corridas, cuentas] = await Promise.all([
+  const [datos, alertas, corridas, cuentas, leadsFilas] = await Promise.all([
     cargarDatos(db),
     db
       .select()
@@ -127,6 +128,7 @@ export async function consultarHoy(db: BaseDeDatos, ahora: Date): Promise<Hoy> {
       .orderBy(desc(corrida.iniciadaEn))
       .limit(1),
     db.select().from(cuentaLectura),
+    cargarLeadsFila(db),
   ]);
 
   const hoy = diaBogota(ahora);
@@ -206,7 +208,6 @@ export async function consultarHoy(db: BaseDeDatos, ahora: Date): Promise<Hoy> {
       pctPasa3s: { actual: pasa3(desde, ahora), anterior: pasa3(anteriorDesde, desde) },
       guardadosCompartidos: { actual: guardComp(desde, ahora), anterior: guardComp(anteriorDesde, desde) },
       seguidoresNuevos: { actual: seguidores(desde, ahora), anterior: seguidores(anteriorDesde, desde) },
-      leads: sinDato,
       publicacionesSemana: delPeriodo(desde, ahora).length,
     };
   });
@@ -276,6 +277,7 @@ export async function consultarHoy(db: BaseDeDatos, ahora: Date): Promise<Hoy> {
     ahora,
     semana: { desde, hasta: ahora, anteriorDesde },
     tarjetas,
+    leads: cifrasDeLeads(leadsFilas, ahora),
     salidas,
     alertas: alertas.map((a) => ({ id: a.id, nivel: a.nivel, mensaje: a.mensaje, creadaEn: a.creadaEn })),
     mejor,

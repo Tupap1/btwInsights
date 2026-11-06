@@ -97,14 +97,23 @@ export default async function PaginaHoy() {
                 <FilaSemana etiqueta="% que pasa del segundo 3" datos={t.pctPasa3s} formato="porcentaje" ahora={ahora} />
                 <FilaSemana etiqueta="Guardados + compartidos" datos={t.guardadosCompartidos} formato="entero" ahora={ahora} />
                 <FilaSemana etiqueta="Seguidores nuevos" datos={t.seguidoresNuevos} formato="entero" ahora={ahora} />
-                <div className="flex items-center justify-between border-t py-3 last:pb-0">
-                  <p className="text-xs text-muted-foreground">Leads (fase 2)</p>
-                  <Cifra cifra={t.leads} formato="entero" ahora={ahora} />
-                </div>
               </CardContent>
             </Card>
           ))}
         </div>
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between text-base">
+              Leads
+              <Link href="/leads" className="text-xs font-normal text-muted-foreground underline">
+                registrar
+              </Link>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <FilaSemana etiqueta="Esta semana (lunes a domingo)" datos={hoy.leads} formato="entero" ahora={ahora} />
+          </CardContent>
+        </Card>
       </section>
 
       <section aria-labelledby="salidas" className="flex flex-col gap-3">

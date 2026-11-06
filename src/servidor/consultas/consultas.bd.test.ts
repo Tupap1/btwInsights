@@ -134,7 +134,7 @@ describe.skipIf(!hayBd)("consultas de las pantallas", () => {
       expect(tiktok?.vistasGanadas.actual.fuente).toBe("zernio");
       expect(tiktok?.vistasGanadas.actual.valor).toBeGreaterThan(0);
       expect(instagram?.vistasGanadas.actual.fuente).toBe("meta");
-      for (const t of h.tarjetas) expect(t.leads.valor).toBeNull();
+      expect(h.leads.actual.valor).toBeNull();
     });
 
     it("sin base de comparación no inventa: sin lecturas de cuenta, seguidores nuevos queda sin dato", async () => {
