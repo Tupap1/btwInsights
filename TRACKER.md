@@ -33,7 +33,7 @@ Tomadas sin preguntar, eligiendo lo más seguro y reversible (`docs/handoff-serv
 
 | # | Decisión | Por qué | Cómo deshacerla |
 |---|---|---|---|
-| 1 | **Sin push ni PR:** los commits quedan locales en `fase-1` | El servidor no tiene credenciales de GitHub (`git push` pide usuario) y `gh` no tiene sesión. No se buscaron credenciales | `gh auth login` y `git push origin fase-1`; luego el PR (ver "Para Andrés") |
+| 1 | ~~Sin push ni PR~~ **Resuelto el 6-nov:** `gh` quedó con sesión de `Tupap1` (login por código desde el celular), push de `fase-1`, `main` creada desde el primer commit y PR #1 abierto sin fusionar | Andrés lo autorizó desde Remote Control | `gh auth logout` (el token queda en `~/.config/gh/hosts.yml`, en texto plano) |
 | 2 | Node 24 instalado en `~/.local/node24` (solo para el usuario, verificado con SHA256 de nodejs.org) | El sistema tiene Node 20 y el proyecto pide >= 24. No se tocó el Node del sistema | `rm -rf ~/.local/node24` |
 | 3 | La base de **pruebas** corre con `synchronous_commit=off` | En WSL2 cada commit tarda ~28 ms y las pruebas del recolector pasaban de 5 s. Solo afecta a `btw_tablero_prueba*` | Quitar la línea en `pruebas/preparar-bd.ts` |
 | 4 | `PROXY_RED=proxy-net` | Es la red de `nginx-proxy` y `cloudflare-tunnel` (`docker inspect`, sin cambiarlos) | Cambiar en `.env.produccion` |
@@ -68,18 +68,15 @@ de sesión:
    hechos con IA**, aunque esos reels usan IA según el seguimiento. Lo comprobé con un GET a Zernio el 6-nov a las
    2:00: `isAiGenerated` y `video_made_with_ai` vienen en `false` (el 5-nov venían en `true`). No lo cambié: es una
    escritura en Zernio. Márcalos en Zernio antes de programarlos; la alerta se cierra sola en la siguiente lectura.
-1. **Empujar y abrir el PR** (no pude: el servidor no tiene credenciales de GitHub). Desde este repo:
-   `gh auth login`, luego `git push origin fase-1`. `main` no existe en GitHub: créala desde el primer commit
-   (`git push origin $(git rev-list --max-parents=0 HEAD):refs/heads/main`) y abre el PR sin fusionar:
-   `gh pr create --base main --head fase-1 --title "Tablero BTW Insights: fases 1 y 2" --body-file docs/pr.md`.
-2. **Nginx Proxy Manager** (`http://127.0.0.1:81` en el servidor): *Add Proxy Host* →
-   - Domain: `insights.btw-one.com`; Scheme `http`; Forward Hostname `btw-insights-app`; Port `3000`;
-   - activa *Block Common Exploits* y *Websockets Support*;
-   - SSL: igual que tus otros dominios (si Cloudflare termina el HTTPS y el túnel llega a NPM por HTTP, no hace
-     falta certificado en NPM).
-3. **Túnel de Cloudflare** (Zero Trust → Networks → Tunnels → el túnel de este servidor → *Public Hostname*):
-   `insights.btw-one.com` → el mismo servicio que usan tus otros dominios (si van a NPM: `http://nginx-proxy:80`;
-   si van directo: `http://btw-insights-app:3000`). Sin aplicación de Access delante (decidido el 5-nov).
+1. ~~Empujar y abrir el PR~~: hecho el 6-nov, https://github.com/Tupap1/btwInsights/pull/1 (no lo fusiones hasta revisarlo).
+2. **Túnel de Cloudflare** (se puede desde el celular: Zero Trust → Networks → Tunnels → el túnel de este servidor →
+   *Public hostnames* → *Add*): subdominio `insights`, dominio `btw-one.com`, servicio **HTTP** y URL
+   **`btw-insights-app:3000`**. El túnel se maneja desde el panel (corre con token) y `cloudflared` está en
+   `proxy-net`, así que llega directo a la app; Cloudflare crea el DNS solo.
+3. *(Opcional)* Si prefieres que pase por Nginx Proxy Manager como tus otros dominios (todos apuntan a
+   `http://nginx-proxy:80`): en NPM (`http://127.0.0.1:81` en el servidor) *Add Proxy Host* `insights.btw-one.com` →
+   `http` `btw-insights-app` `3000`, con *Block Common Exploits* y *Websockets*, y en el túnel el servicio
+   `nginx-proxy:80` en vez del de arriba.
 4. **Probar:** `https://insights.btw-one.com/api/salud` debe dar `{"ok":true,"base":"ok"}` y cualquier otra página
    debe mandarte a `/entrar`.
 5. **Registrar tu llave de acceso:** abre en el celular el enlace de invitación que dejé en la terminal de esta
