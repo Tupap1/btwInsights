@@ -69,7 +69,7 @@ export interface Hoy {
   /** Leads registrados a mano: semana (lunes a domingo) contra la anterior. Los leads no son de una red. */
   leads: Comparada;
   salidas: SalidaDelDia[];
-  alertas: { id: number; nivel: "info" | "aviso" | "error"; mensaje: string; creadaEn: Date }[];
+  alertas: AlertaHoy[];
   mejor: MejorVideo | null;
   ultimaLectura: Date | null;
 }
@@ -77,6 +77,26 @@ export interface Hoy {
 // ---------- Funciones puras (con pruebas) ----------
 
 /** Junta cifras: suma o promedio de las que tienen valor. Fuente: la común (o la primera que no sea manual). */
+export interface AlertaHoy {
+  id: number;
+  clave: string;
+  nivel: "info" | "aviso" | "error";
+  mensaje: string;
+  creadaEn: Date;
+}
+
+/** Avisos de calendario (días sin video y dos videos el mismo día): son muchos y no deben tapar lo urgente. */
+const esDeCalendario = (clave: string): boolean => /^cola:\d{4}-\d{2}-\d{2}:[a-z]+:(sin-video|doble)$/.test(clave);
+const PESO_NIVEL: Record<AlertaHoy["nivel"], number> = { error: 0, aviso: 1, info: 2 };
+
+/** Separa las alertas de /hoy: urgentes (errores primero, orden estable) y avisos de calendario. */
+export function separarAlertas<T extends AlertaHoy>(alertas: readonly T[]): { urgentes: T[]; calendario: T[] } {
+  const urgentes = alertas.filter((a) => !esDeCalendario(a.clave));
+  const calendario = alertas.filter((a) => esDeCalendario(a.clave));
+  urgentes.sort((x, y) => PESO_NIVEL[x.nivel] - PESO_NIVEL[y.nivel]);
+  return { urgentes, calendario };
+}
+
 export function agregar(cifras: readonly Cifra[], modo: "suma" | "promedio"): Cifra {
   const con = cifras.filter((c): c is Cifra & { valor: number } => c.valor !== null);
   if (con.length === 0) return sinDato;
@@ -268,7 +288,7 @@ export async function consultarHoy(db: BaseDeDatos, ahora: Date): Promise<Hoy> {
     tarjetas,
     leads: cifrasDeLeads(leadsFilas, ahora),
     salidas,
-    alertas: alertas.map((a) => ({ id: a.id, nivel: a.nivel, mensaje: a.mensaje, creadaEn: a.creadaEn })),
+    alertas: alertas.map((a) => ({ id: a.id, clave: a.clave, nivel: a.nivel, mensaje: a.mensaje, creadaEn: a.creadaEn })),
     mejor,
     ultimaLectura: ultima ? (ultima.terminadaEn ?? ultima.iniciadaEn) : null,
   };

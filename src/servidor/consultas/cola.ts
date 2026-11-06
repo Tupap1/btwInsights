@@ -47,8 +47,8 @@ export interface Cola {
   avisosFuera: AvisoCola[];
 }
 
-// Pendiente (no se inventa): "IA sin etiqueta" necesita la marca de IA que pone la plataforma, y hoy no se guarda.
-// Cuando exista esa columna, aquí va el aviso "doble de IA" por publicación.
+// "IA sin etiqueta" (publicacion.marca_ia contra reel.etiqueta_ia) la calcula el recolector como alerta (T19) y se ve
+// en /hoy; aquí no se repite.
 
 const NO_CUENTAN: readonly EstadoPublicacion[] = ["cancelado", "borrado"];
 

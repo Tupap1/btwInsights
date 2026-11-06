@@ -29,8 +29,10 @@ export default async function PaginaCola() {
       <header>
         <h1 className="text-xl font-semibold">Cola de 14 días</h1>
         <p className="text-sm text-muted-foreground">Lo que está programado, en borrador o publicado, por día y por red. Los borradores de TikTok e Instagram se pueden editar (texto y fecha); nada se publica desde aquí.</p>
-        {/* Pendiente: el aviso "IA sin etiqueta" necesita la marca de IA de la plataforma, que todavía no se guarda. */}
-        <p className="mt-1 text-xs text-muted-foreground">Aviso &quot;IA sin etiqueta&quot;: pendiente (todavía no se guarda la marca de IA de la plataforma).</p>
+        <p className="mt-1 text-xs text-muted-foreground">
+          Las alertas de IA sin etiqueta, dos videos el mismo día y días sin video las calcula el recolector y salen en{" "}
+          <Link href="/hoy" className="underline">Hoy</Link>.
+        </p>
       </header>
 
       {cola.avisosFuera.length > 0 && (

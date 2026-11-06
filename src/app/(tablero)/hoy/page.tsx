@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/componentes/ui/card"
 import { cn } from "@/lib/utils";
 import { exigirSesion } from "@/servidor/acceso/sesion";
 import { bd } from "@/servidor/db/cliente";
-import { consultarHoy, lecturaVencida, variacion, type Comparada } from "@/servidor/consultas/hoy";
+import { consultarHoy, lecturaVencida, separarAlertas, variacion, type AlertaHoy, type Comparada } from "@/servidor/consultas/hoy";
 import { formatoDecimal, formatoFechaHora, formatoHora, haceCuanto } from "@/servidor/consultas/formato";
 import { ahoraServidor } from "@/servidor/consultas/tiempo";
 import type { FormatoCifra } from "@/componentes/cifra";
@@ -53,6 +53,7 @@ export default async function PaginaHoy() {
   const ahora = ahoraServidor();
   const hoy = await consultarHoy(bd(), ahora);
   const vencida = lecturaVencida(hoy.ultimaLectura, ahora);
+  const alertas = separarAlertas(hoy.alertas);
 
   return (
     <div className="flex flex-col gap-6">
@@ -170,22 +171,20 @@ export default async function PaginaHoy() {
           <h2 id="alertas" className="text-base font-semibold">
             Alertas abiertas
           </h2>
-          {hoy.alertas.length === 0 ? (
+          {alertas.urgentes.length === 0 && alertas.calendario.length === 0 && (
             <p className="text-sm text-muted-foreground">No hay alertas abiertas.</p>
-          ) : (
-            <ul className="flex flex-col gap-2">
-              {hoy.alertas.map((a) => (
-                <li key={a.id} className="flex items-start gap-2 rounded-lg border bg-card p-3 text-sm">
-                  <Badge variant="outline" className={cn(a.nivel === "error" ? "border-malo/50 text-malo" : a.nivel === "aviso" ? "border-aviso/50 text-aviso" : "")}>
-                    {a.nivel === "error" ? "Error" : a.nivel === "aviso" ? "Aviso" : "Info"}
-                  </Badge>
-                  <span className="min-w-0 flex-1">
-                    {a.mensaje}
-                    <span className="block text-xs text-muted-foreground">{haceCuanto(a.creadaEn, ahora)}</span>
-                  </span>
-                </li>
-              ))}
-            </ul>
+          )}
+          {alertas.urgentes.length > 0 && <ListaAlertas alertas={alertas.urgentes} ahora={ahora} />}
+          {alertas.calendario.length > 0 && (
+            // Días sin video y dobles: son muchos y se resuelven al programar; plegados para no tapar lo urgente.
+            <details className="rounded-lg border bg-card">
+              <summary className="cursor-pointer px-3 py-2 text-sm">
+                Avisos de calendario ({alertas.calendario.length}): días sin video y dobles
+              </summary>
+              <div className="border-t p-2">
+                <ListaAlertas alertas={alertas.calendario} ahora={ahora} />
+              </div>
+            </details>
           )}
         </section>
 
@@ -236,5 +235,23 @@ export default async function PaginaHoy() {
         </section>
       </div>
     </div>
+  );
+}
+
+function ListaAlertas({ alertas, ahora }: Readonly<{ alertas: readonly AlertaHoy[]; ahora: Date }>) {
+  return (
+    <ul className="flex flex-col gap-2">
+      {alertas.map((a) => (
+        <li key={a.id} className="flex items-start gap-2 rounded-lg border bg-card p-3 text-sm">
+          <Badge variant="outline" className={cn(a.nivel === "error" ? "border-malo/50 text-malo" : a.nivel === "aviso" ? "border-aviso/50 text-aviso" : "")}>
+            {a.nivel === "error" ? "Error" : a.nivel === "aviso" ? "Aviso" : "Info"}
+          </Badge>
+          <span className="min-w-0 flex-1">
+            {a.mensaje}
+            <span className="block text-xs text-muted-foreground">{haceCuanto(a.creadaEn, ahora)}</span>
+          </span>
+        </li>
+      ))}
+    </ul>
   );
 }
