@@ -3,9 +3,9 @@
 // solo recibe los datos de las columnas que estén vacías (lo que Andrés editó después no se pisa).
 import { readFile, readdir, stat } from "node:fs/promises";
 import { basename, join } from "node:path";
-import { eq, isNotNull } from "drizzle-orm";
+import { and, between, eq, isNotNull } from "drizzle-orm";
 import type { BaseDeDatos } from "../db/cliente";
-import { publicacion, reel } from "../db/esquema";
+import { lectura, publicacion, reel } from "../db/esquema";
 import { emparejarLote, type ContextoEmparejar } from "../emparejar";
 import { guardarLectura, guardarPublicacion } from "../guardar";
 import { cifrasVacias, type LecturaVista, type PublicacionVista, type ReelCandidato, type Red } from "../tipos";
@@ -298,7 +298,8 @@ export async function importar(db: BaseDeDatos, dir: string): Promise<Informe> {
   const archivos = todos.filter((n) => /^\d{4}-\d{2}-\d{2}\.csv$/.test(n)).sort();
   for (const nombre of archivos) {
     const ruta = join(dirMetricas, nombre);
-    const leidoEn = (await stat(ruta)).mtime;
+    // En segundos enteros: al copiar la carpeta (tar, zip, otra máquina) la fecha del archivo pierde los milisegundos.
+    const leidoEn = enSegundos((await stat(ruta)).mtime);
     const posts = leerMetricasCsv(await readFile(ruta, "utf8"), leidoEn);
     avisos.push(`metricas/${nombre}: la hora de lectura (${leidoEn.toISOString()}) es la de modificación del archivo; es aproximada.`);
 
@@ -334,7 +335,9 @@ export async function importar(db: BaseDeDatos, dir: string): Promise<Informe> {
         });
       }
       if (post.lectura) {
-        const nueva = await guardarLectura(db, guardada.id, p.publicadoEn, post.lectura, leidoEn, NOTA_HORA_APROXIMADA);
+        const nueva =
+          !(await lecturaCsvYaGuardada(db, guardada.id, post.lectura)) &&
+          (await guardarLectura(db, guardada.id, p.publicadoEn, post.lectura, leidoEn, NOTA_HORA_APROXIMADA));
         if (nueva) informe.lecturasNuevas++;
         else informe.lecturasRepetidas++;
         for (const e of post.lectura.errores) avisos.push(`metricas/${nombre}, ${p.red} ${p.postIdPlataforma ?? ""}: ${e}`);
@@ -397,4 +400,27 @@ export async function importar(db: BaseDeDatos, dir: string): Promise<Informe> {
   informe.publicacionesNuevas = nuevas.size;
   informe.publicacionesActualizadas = [...vistas].filter((id) => !nuevas.has(id)).length;
   return informe;
+}
+
+const enSegundos = (f: Date): Date => new Date(Math.floor(f.getTime() / 1000) * 1000);
+
+/**
+ * La lectura de un CSV ya está guardada si hay otra de la misma publicación, fuente y vía con una hora a menos de
+ * 2 s: es el mismo archivo copiado (el índice único exige la hora exacta y la copia pierde los milisegundos).
+ */
+async function lecturaCsvYaGuardada(db: BaseDeDatos, publicacionId: number, l: LecturaVista): Promise<boolean> {
+  const t = l.datoActualizadoEn.getTime();
+  const [f] = await db
+    .select({ id: lectura.id })
+    .from(lectura)
+    .where(
+      and(
+        eq(lectura.publicacionId, publicacionId),
+        eq(lectura.fuente, l.fuente),
+        eq(lectura.via, l.via),
+        between(lectura.datoActualizadoEn, new Date(t - 2000), new Date(t + 2000)),
+      ),
+    )
+    .limit(1);
+  return f !== undefined;
 }
