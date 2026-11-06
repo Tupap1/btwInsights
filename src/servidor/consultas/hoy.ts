@@ -2,7 +2,7 @@
 import "server-only";
 import { and, desc, inArray, isNull } from "drizzle-orm";
 import type { BaseDeDatos } from "../db/cliente";
-import { alerta, corrida, cuentaLectura } from "../db/esquema";
+import { alerta, corrida } from "../db/esquema";
 import type { Red } from "../tipos";
 import {
   OBJETIVO_ULTIMA,
@@ -19,6 +19,7 @@ import {
   type PublicacionFila,
   type PublicacionSalida,
 } from "./datos";
+import { cargarLecturasCuenta, seguidoresNuevos } from "./cuentas";
 import { cargarLeadsFila, cifrasDeLeads } from "./leads";
 import { HORA_MS, diaBogota, inicioDiaBogota, sumarDias } from "./tiempo";
 
@@ -127,7 +128,7 @@ export async function consultarHoy(db: BaseDeDatos, ahora: Date): Promise<Hoy> {
       .where(and(inArray(corrida.estado, ["ok", "parcial"])))
       .orderBy(desc(corrida.iniciadaEn))
       .limit(1),
-    db.select().from(cuentaLectura),
+    cargarLecturasCuenta(db),
     cargarLeadsFila(db),
   ]);
 
@@ -186,28 +187,16 @@ export async function consultarHoy(db: BaseDeDatos, ahora: Date): Promise<Hoy> {
         "suma",
       );
 
-    const seguidores = (a: Date, b: Date): Cifra => {
-      const filas = cuentas.filter((c) => c.red === red && c.fuente === fuente && c.seguidores !== null);
-      const ultima = filas.reduce<(typeof filas)[number] | null>((m, f) => (m === null || f.leidoEn > m.leidoEn ? f : m), null);
-      if (!ultima) return sinDato;
-      const deLaCuenta = filas.filter((f) => f.cuenta === ultima.cuenta);
-      const en = (t: Date) =>
-        deLaCuenta
-          .filter((f) => f.leidoEn <= t)
-          .reduce<(typeof filas)[number] | null>((m, f) => (m === null || f.leidoEn > m.leidoEn ? f : m), null);
-      const fin = en(b);
-      const ini = en(a);
-      if (!fin || !ini || fin.seguidores === null || ini.seguidores === null) return sinDato;
-      return { valor: fin.seguidores - ini.seguidores, fuente, datoActualizadoEn: fin.leidoEn };
-    };
-
     return {
       red,
       vistasGanadas: { actual: ganadas(desde, ahora), anterior: ganadas(anteriorDesde, desde) },
       tiempoPromedioPct: { actual: tiempoPct(desde, ahora), anterior: tiempoPct(anteriorDesde, desde) },
       pctPasa3s: { actual: pasa3(desde, ahora), anterior: pasa3(anteriorDesde, desde) },
       guardadosCompartidos: { actual: guardComp(desde, ahora), anterior: guardComp(anteriorDesde, desde) },
-      seguidoresNuevos: { actual: seguidores(desde, ahora), anterior: seguidores(anteriorDesde, desde) },
+      seguidoresNuevos: {
+        actual: seguidoresNuevos(cuentas, red, fuente, desde, ahora),
+        anterior: seguidoresNuevos(cuentas, red, fuente, anteriorDesde, desde),
+      },
       publicacionesSemana: delPeriodo(desde, ahora).length,
     };
   });
