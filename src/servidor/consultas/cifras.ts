@@ -166,7 +166,8 @@ export function cifrasDePublicacion(red: Red, lecturas: readonly LecturaDato[], 
     const v = pasa3De(principal?.lectura ?? null, "ret3s");
     if (principal && v !== null) candidata = { cifra: aCifra(v, principal.lectura), aproxH: principal.aprox ? principal.horasReales : null };
   } else if (red === "instagram") {
-    const z = elegir(lecturas, "zernio", objetivo);
+    // Solo cuentan las lecturas de Zernio que traen el dato (a veces la última llega sin él).
+    const z = elegir(lecturas.filter((l) => l.fuente !== "zernio" || l.pctSalta3s !== null), "zernio", objetivo);
     const v = pasa3De(z?.lectura ?? null, "salta");
     if (z && v !== null) candidata = { cifra: aCifra(v, z.lectura), aproxH: z.aprox ? z.horasReales : null };
   }

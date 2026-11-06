@@ -237,7 +237,7 @@ export async function consultarHoy(db: BaseDeDatos, ahora: Date): Promise<Hoy> {
       grupos.set(clave, {
         clave,
         reelId: p.reelId,
-        gancho: r?.gancho ?? (p.texto ? p.texto.slice(0, 80) : null),
+        gancho: r?.gancho ?? r?.textoTiktok?.slice(0, 80) ?? (p.texto ? p.texto.slice(0, 80) : null),
         avisos: r?.avisos ?? [],
         dia: p.programadoPara < inicioManana ? "hoy" : "mañana",
         primeraHora: p.programadoPara,
