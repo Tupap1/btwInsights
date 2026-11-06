@@ -58,8 +58,6 @@ function clienteFalso(g: Guion) {
       if (h instanceof Error) throw h;
       return { comentarios: h.comentarios, completo: h.completo ?? true };
     },
-    campanasPauta: async () => [],
-    anunciosPauta: async () => [],
   };
   return { cliente, pedidos };
 }

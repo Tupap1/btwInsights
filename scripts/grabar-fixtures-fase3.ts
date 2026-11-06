@@ -1,4 +1,4 @@
-// Graba respuestas reales de Zernio para la fase 3 (solo GET): el inbox de comentarios y la pauta.
+// Graba respuestas reales de Zernio para la fase 3 (solo GET): el inbox de comentarios.
 // No toca los fixtures de las fases 1 y 2 (para eso está grabar-fixtures.ts).
 // Datos de personas (regla 3.6): en el fixture no queda nadie que no sea la propia cuenta. De quien comenta se
 // reemplazan el nombre, el @, el id, la foto, el enlace y el texto. Las imágenes firmadas de los CDN tampoco se guardan.
@@ -86,8 +86,6 @@ function limpiarHilo(h: Json): Json {
   return o;
 }
 
-const diaIso = (d: Date) => d.toISOString().slice(0, 10);
-
 async function main(): Promise<void> {
   if (!env.ZERNIO_API_KEY) throw new Error("Falta ZERNIO_API_KEY.");
   mkdirSync(DIR, { recursive: true });
@@ -113,13 +111,6 @@ async function main(): Promise<void> {
     });
     guardar(`zernio-inbox-hilo-${red}`, limpiarHilo(hilo));
   }
-
-  // Pauta: hoy no hay campañas; se graba la respuesta real (vacía) con el mismo rango que usa el tablero.
-  const hoy = new Date();
-  const desde = new Date(hoy.getTime() - 29 * 86_400_000);
-  const rango = { fromDate: diaIso(desde), toDate: diaIso(hoy), limit: "100" };
-  guardar("zernio-ads-campaigns", await pedir("/ads/campaigns", rango));
-  guardar("zernio-ads", await pedir("/ads", rango));
 
   console.log(`comentarios de otras personas anonimizados: ${otros} (de ${alias.size} personas)`);
 }

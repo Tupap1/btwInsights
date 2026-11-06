@@ -122,9 +122,7 @@ describe("zernio", () => {
     await z.seguidores();
     await z.postsConComentarios();
     await z.comentariosDePost("x", "cuenta");
-    await z.campanasPauta("2026-10-08", "2026-11-06");
-    await z.anunciosPauta("2026-10-08", "2026-11-06");
-    expect(llamadas.length).toBe(10);
+    expect(llamadas.length).toBe(8);
     for (const l of llamadas) {
       expect(l.init?.method).toBe("GET");
       expect(l.url.toString()).not.toContain(KEY);
@@ -136,8 +134,6 @@ describe("zernio", () => {
     const z = crearZernio({ apiKey: KEY, fetch: falso(() => ({})).f });
     expect(Object.keys(z).sort()).toEqual([
       "analitica",
-      "anunciosPauta",
-      "campanasPauta",
       "comentariosDePost",
       "cuentas",
       "editarBorrador",
@@ -190,7 +186,7 @@ describe("zernio", () => {
   });
 });
 
-describe("zernio: inbox de comentarios y pauta (fase 3, solo GET)", () => {
+describe("zernio: inbox de comentarios (fase 3, solo GET)", () => {
   it("postsConComentarios: /inbox/comments con limit 50, sin page, y el fixture real (17 posts)", async () => {
     const { f, llamadas } = falso(() => fixture("zernio-inbox-comments"));
     const z = crearZernio({ apiKey: KEY, fetch: f, esperar: sinEspera });
@@ -249,39 +245,6 @@ describe("zernio: inbox de comentarios y pauta (fase 3, solo GET)", () => {
     const z3 = crearZernio({ apiKey: KEY, fetch: sinCursor.f, esperar: sinEspera });
     expect((await z3.comentariosDePost("p", "c")).completo).toBe(false);
     expect(sinCursor.llamadas).toHaveLength(1);
-  });
-
-  it("campanasPauta y anunciosPauta: rutas, rango y limit 100; respuesta real vacía", async () => {
-    const { f, llamadas } = falso((url) =>
-      url.pathname.endsWith("/campaigns") ? fixture("zernio-ads-campaigns") : fixture("zernio-ads"),
-    );
-    const z = crearZernio({ apiKey: KEY, fetch: f, esperar: sinEspera });
-    expect(await z.campanasPauta("2026-10-08", "2026-11-06")).toEqual([]);
-    expect(await z.anunciosPauta("2026-10-08", "2026-11-06")).toEqual([]);
-    expect(llamadas.map((l) => l.url.pathname)).toEqual(["/api/v1/ads/campaigns", "/api/v1/ads"]);
-    for (const l of llamadas) {
-      expect(l.url.searchParams.get("fromDate")).toBe("2026-10-08");
-      expect(l.url.searchParams.get("toDate")).toBe("2026-11-06");
-      expect(l.url.searchParams.get("limit")).toBe("100");
-    }
-  });
-
-  it("campanasPauta: recorre page/pages", async () => {
-    const { f, llamadas } = falso((url) => {
-      const page = Number(url.searchParams.get("page"));
-      return { campaigns: [{ platformCampaignId: String(page) }], pagination: { page, limit: 100, total: 2, pages: 2 } };
-    });
-    const z = crearZernio({ apiKey: KEY, fetch: f, esperar: sinEspera });
-    expect(await z.campanasPauta("2026-10-08", "2026-11-06")).toHaveLength(2);
-    expect(llamadas).toHaveLength(2);
-  });
-
-  it("pauta: rechaza fechas que no sean AAAA-MM-DD sin llamar a Zernio", async () => {
-    const { f, llamadas } = falso(() => ({ campaigns: [] }));
-    const z = crearZernio({ apiKey: KEY, fetch: f, esperar: sinEspera });
-    await expect(z.campanasPauta("2026-1-8", "2026-11-06")).rejects.toThrow(/fecha/i);
-    await expect(z.anunciosPauta("2026-10-08", "mañana")).rejects.toThrow(/fecha/i);
-    expect(llamadas).toHaveLength(0);
   });
 });
 

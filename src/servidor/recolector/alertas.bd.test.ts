@@ -27,8 +27,6 @@ const zernioVacio: ClienteZernio = {
   seguidores: async () => ({ accounts: [] }),
   postsConComentarios: async () => [],
   comentariosDePost: async () => ({ comentarios: [], completo: true }),
-  campanasPauta: async () => [],
-  anunciosPauta: async () => [],
 };
 const falla = (): Promise<never> => Promise.reject(new ErrorFuente("HTTP 500: caído"));
 const zernioCaido: ClienteZernio = { ...zernioVacio, analitica: falla, posts: falla, seguidores: falla, postsConComentarios: falla };

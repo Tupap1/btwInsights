@@ -1,18 +1,12 @@
 // Cliente de Zernio: todo es GET salvo `editarBorrador` (PUT, siempre con isDraft: true). Nada crea, programa ni publica.
-// Fase 3: el inbox de comentarios y la pauta también son solo GET (nada responde, oculta, borra ni crea anuncios).
+// Fase 3: el inbox de comentarios también es solo GET (nada responde, oculta ni borra).
 import { pedirJson, type OpcionesPedir } from "./http";
 
 const BASE = "https://zernio.com/api/v1";
 const MAX_PAGINAS = 200;
 /** Un hilo de comentarios con más de 20 páginas de 100 se lee incompleto (y se marca así). */
 const MAX_PAGINAS_HILO = 20;
-const DIA = /^\d{4}-\d{2}-\d{2}$/;
 
-function exigirDia(nombre: string, valor: string): void {
-  if (!DIA.test(valor) || Number.isNaN(Date.parse(`${valor}T00:00:00Z`))) {
-    throw new Error(`La fecha ${nombre} de la pauta debe ser AAAA-MM-DD.`);
-  }
-}
 
 export type EstadoZernio =
   | "draft"
@@ -208,18 +202,6 @@ export function crearZernio(opciones: OpcionesZernio) {
         MAX_PAGINAS_HILO,
       );
       return { comentarios: r.elementos, completo: r.completo };
-    },
-    /** GET /ads/campaigns: campañas con sus cifras sumadas entre `desde` y `hasta` (AAAA-MM-DD, inclusive). */
-    async campanasPauta(desde: string, hasta: string): Promise<unknown[]> {
-      exigirDia("desde", desde);
-      exigirDia("hasta", hasta);
-      return paginar("/ads/campaigns", "campaigns", { fromDate: desde, toDate: hasta, limit: "100" });
-    },
-    /** GET /ads: anuncios con sus cifras entre `desde` y `hasta` (AAAA-MM-DD, inclusive). */
-    async anunciosPauta(desde: string, hasta: string): Promise<unknown[]> {
-      exigirDia("desde", desde);
-      exigirDia("hasta", hasta);
-      return paginar("/ads", "ads", { fromDate: desde, toDate: hasta, limit: "100" });
     },
   };
 }
