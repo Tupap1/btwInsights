@@ -1,0 +1,14 @@
+Reel: TERROR02 (dona-gloria-o-yeison), formato "elige uno" de terror, 95 s; guion en guiones/elige-uno-terror-02.md
+Voz: de IA (ElevenLabs): narra "BTW Terror - Narradora"; Doña Gloria es "Grandma Aurora" y Yeison "Juan Esteban", de la biblioteca
+Fecha: vie 2026-10-30 a las ~0:00 en Facebook + Instagram (Andrés lo adelantó del sábado el 29-oct); TikTok el vie 30 a las 19:30
+Facebook + Instagram: ahora, ~0:00 del vie 30-oct, en Meta Business Suite con "Crear reel" (una sola publicación para las dos)
+TikTok: 19:30, programado en TikTok Studio desde el computador (hasta 10 días antes)
+Etiqueta de IA: SÍ, OBLIGATORIA (personajes e imágenes de Higgsfield, voces de ElevenLabs). El video ya no trae el rótulo en pantalla (Andrés, 29-oct), así que la etiqueta de cada red es el único aviso
+TikTok: Mostrar más -> "Contenido generado por IA" activado + Divulgación de contenido -> Tu marca
+Meta: "Etiqueta de IA" activada; si Business Suite no muestra la opción, publicarlo desde la app de Instagram o de Facebook, que sí la tienen
+Comentario fijado: comentario-fijado.txt (publicarlo y fijarlo apenas salga, en las 3 redes)
+Música y sonido: propios (scripts/terror2_audio.py); no usar sonidos de la biblioteca de TikTok
+Datos en pantalla: los de ejemplo de la app (no son de un cliente)
+Duración: 95 s (Instagram y TikTok lo aceptan; si Facebook lo rechaza por largo, avisar)
+Prueba: formato (terror "elige uno") contra los reels del 04 y APP01. Mirar el % que pasa de 3 s, el tiempo promedio, los comentarios con el nombre y los comentarios LAVADO
+Estado: aprobado por Andrés el 29-oct; gancho con más movimiento el 29-oct (cortes cada ~0,5 s, mismo guion y voz). El 04C-G6 salió el 28-oct cruzado desde IG

@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "id": "18120342799999707/insights/total_interactions/lifetime",
+      "name": "total_interactions",
+      "period": "lifetime",
+      "title": "Interacciones con reels",
+      "description": "Número de Me gusta de tu reel y de veces que este se ha guardado, comentado o compartido menos el número de Ya no me gusta, de comentarios eliminados del reel y de veces que este se ha eliminado de los elementos guardados.",
+      "values": [
+        {
+          "value": 36
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "id": "18120342799999707/insights/likes/lifetime",
+      "name": "likes",
+      "period": "lifetime",
+      "title": "Me gusta",
+      "description": "Número de Me gusta de tu reel.",
+      "values": [
+        {
+          "value": 29
+        }
+      ]
+    }
+  ]
+}

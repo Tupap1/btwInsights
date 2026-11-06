@@ -1,0 +1,27 @@
+{
+  "postId": "6aed3687a153ccfbefa7203f",
+  "timeline": [
+    {
+      "date": "2026-11-06",
+      "platform": "instagram",
+      "platformPostId": "18120342799999707",
+      "impressions": 918,
+      "reach": 728,
+      "likes": 19,
+      "comments": 1,
+      "shares": 1,
+      "saves": 2,
+      "clicks": 0,
+      "views": 918,
+      "follows": null,
+      "completionRate": 0,
+      "profileViews": 0,
+      "websiteClicks": 0,
+      "impressionSources": {},
+      "audienceTypes": {},
+      "audienceCountries": {},
+      "retentionCurve": {},
+      "replays": 0
+    }
+  ]
+}

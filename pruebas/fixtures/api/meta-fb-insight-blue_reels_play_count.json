@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "name": "blue_reels_play_count",
+      "period": "lifetime",
+      "values": [
+        {
+          "value": 196
+        }
+      ],
+      "title": "Recuento de reproducciones del reel en total",
+      "description": "Total: Número de veces que tu reel empieza a reproducirse una vez que se ha contabilizado una impresión. Este resultado se define como sesiones de reels con una reproducción de al menos 1 ms. Se excluyen las repeticiones.",
+      "id": "1091172913760322/video_insights/blue_reels_play_count/lifetime"
+    }
+  ]
+}

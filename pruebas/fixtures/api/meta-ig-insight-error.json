@@ -1,0 +1,8 @@
+{
+  "error": {
+    "message": "(#100) metric[0] must be one of the following values: impressions, reach, replies, saved, likes, comments, shares, total_interactions, follows, profile_visits, profile_activity, navigation, ig_reels_video_view_total_time, ig_reels_avg_watch_time, views, reels_skip_rate, reposts, facebook_views, crossposted_views, total_views, total_likes, total_comments, link_clicks",
+    "code": 100,
+    "type": "OAuthException",
+    "fbtrace_id": "A-v2TYgMjNnpzGh2RtmHDtC"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "id": "18120342799999707/insights/saved/lifetime",
+      "name": "saved",
+      "period": "lifetime",
+      "title": "Veces que se ha guardado",
+      "description": "Número de veces que se ha guardado tu reel.",
+      "values": [
+        {
+          "value": 4
+        }
+      ]
+    }
+  ]
+}

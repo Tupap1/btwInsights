@@ -1,0 +1,18 @@
+{
+  "data": [
+    {
+      "name": "post_video_likes_by_reaction_type",
+      "period": "lifetime",
+      "values": [
+        {
+          "value": {
+            "REACTION_LIKE": 2
+          }
+        }
+      ],
+      "title": "Reacciones totales",
+      "description": "Total: número de reacciones en tu reel. El botón de reacciones de un reel permite a las personas compartir diferentes reacciones sobre el contenido: Me gusta, Me encanta, Me divierte, Me asombra, Me entristece o Me enfada.",
+      "id": "1091172913760322/video_insights/post_video_likes_by_reaction_type/lifetime"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "id": "18120342799999707/insights/views/lifetime",
+      "name": "views",
+      "period": "lifetime",
+      "title": "Visualizaciones",
+      "description": "Número de veces que tus reels se han reproducido o mostrado.",
+      "values": [
+        {
+          "value": 1275
+        }
+      ]
+    }
+  ]
+}

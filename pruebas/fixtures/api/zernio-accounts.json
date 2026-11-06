@@ -1,0 +1,162 @@
+{
+  "accounts": [
+    {
+      "_id": "6aed07f75d163393fc5c0a9d",
+      "userId": "6aed048525fe816b361408e5",
+      "profileId": {
+        "_id": "6aed07d06bc63d1eeba9f731",
+        "name": "Default",
+        "externalId": null
+      },
+      "platform": "tiktok",
+      "platformUserId": "-000lM_N8uy3tyGQjVni-Rmc-ciIstiFTfS0",
+      "username": "btw.inc",
+      "displayName": "BTW · Software para negocios",
+      "profilePicture": "https://media.zernio.com/media/tiktok-avatars/1793918967359_0afe6def77b9df6a_tiktok-avatar--000lM_N8uy3tyGQjVni-Rmc-ciIstiFTfS0.jpg",
+      "profileUrl": "https://tiktok.com/@btw.inc",
+      "isActive": true,
+      "permissions": [
+        "video.upload",
+        "discovery.search.words",
+        "message.list.send",
+        "video.insights",
+        "video.list",
+        "message.list.manage",
+        "user.account.type",
+        "video.publish",
+        "biz.brand.insights",
+        "comment.list",
+        "comment.list.manage",
+        "user.insights",
+        "user.info.stats",
+        "user.info.username",
+        "user.info.basic",
+        "biz.spark.auth",
+        "message.list.read",
+        "user.info.profile"
+      ],
+      "metadata": {
+        "scope": "video.upload,discovery.search.words,message.list.send,video.insights,video.list,message.list.manage,user.account.type,video.publish,biz.brand.insights,comment.list,comment.list.manage,user.insights,user.info.stats,user.info.username,user.info.basic,biz.spark.auth,message.list.read,user.info.profile",
+        "apiFlavor": "business",
+        "expires_in": 86400,
+        "connectedAt": "2026-11-05T22:49:27.663Z",
+        "profileData": {
+          "id": "-000lM_N8uy3tyGQjVni-Rmc-ciIstiFTfS0",
+          "username": "btw.inc",
+          "extraData": {
+            "likesCount": 49,
+            "videoCount": 8,
+            "followingCount": 0,
+            "isBusinessAccount": false
+          },
+          "followersCount": 2,
+          "displayName": "BTW · Software para negocios",
+          "profilePicture": "https://media.zernio.com/media/tiktok-avatars/1793918967359_0afe6def77b9df6a_tiktok-avatar--000lM_N8uy3tyGQjVni-Rmc-ciIstiFTfS0.jpg",
+          "profileUrl": "https://tiktok.com/@btw.inc"
+        }
+      },
+      "platformStatus": "active",
+      "platformStatusReason": null,
+      "platformStatusAt": null,
+      "oauthAppId": null,
+      "scopeAreas": null,
+      "followersCount": 2,
+      "followersLastUpdated": "2026-11-05T22:49:27.663Z",
+      "rateLimitedUntil": null,
+      "lastRateLimitAt": null,
+      "lastRateLimitError": null,
+      "rateLimitCount": 0,
+      "rateLimitCountResetAt": null,
+      "lastSuccessfulPublishAt": null,
+      "intentionalDisconnectAt": null,
+      "needsReconnection": false,
+      "enabled": true,
+      "createdAt": "2026-11-05T22:49:27.689Z",
+      "updatedAt": "2026-11-05T22:49:27.689Z",
+      "tokenExpiresAt": "<redactado>",
+      "byokCredentials": null,
+      "tiktokAccountType": "personal",
+      "adsStatus": "not_connected"
+    },
+    {
+      "_id": "6aed36858405bb702db92cda",
+      "userId": "6aed048525fe816b361408e5",
+      "profileId": {
+        "_id": "6aed07d06bc63d1eeba9f731",
+        "name": "Default",
+        "externalId": null
+      },
+      "platform": "instagram",
+      "platformUserId": "29473397282285184",
+      "username": "btwone.co",
+      "displayName": "BTW Inc",
+      "profilePicture": "https://scontent-lhr11-1.cdninstagram.com/v/t51.82787-19/870167692_18063307514533411_7884440868638054383_n.jpg?stp=dst-jpg_s240x240_tt6&_nc_cat=106&ig_cache_key=GIy03TMjVt_DeyxAAO9XvksyKWttbmNDAQAB2402400j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=ZTWEapOPQVgQ7kNvwEOvy8r&_nc_oc=AdrTQiLYTZbDNFja3XdIux-z6eu-Zm4g0-n1cXbHGqcNxXYZhQmYfu4tgx6mQKmWsWE&_nc_zt=24&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=cHAjQQdNfWZSdizg2IowuQ&_nc_tpa=Q5bMBQIKdlWnJhCIbClwLbifvLQCBf58F1Cwd0NkCW7kZMSclYw85bZUQpMA9WIkdmqcogRZlWV4iU_2Aw&oh=00_AQTm0Uk6808XpCfk-2-fk3Q51NxQ76IHESwUJN78jU7s9Q&oe=6AF31B00",
+      "profileUrl": "https://instagram.com/btwone.co",
+      "isActive": true,
+      "permissions": [
+        "instagram_business_basic",
+        "instagram_business_manage_messages",
+        "instagram_business_content_publish",
+        "instagram_business_manage_insights",
+        "instagram_business_manage_comments"
+      ],
+      "metadata": {
+        "scope": [
+          "instagram_business_basic",
+          "instagram_business_manage_messages",
+          "instagram_business_content_publish",
+          "instagram_business_manage_insights",
+          "instagram_business_manage_comments"
+        ],
+        "expires_in": 5184000,
+        "connectedAt": "2026-11-06T02:08:04.978Z",
+        "profileData": {
+          "id": "29473397282285184",
+          "bio": "Software para lavaderos y comercios 🇨🇴\nFunciona hasta sin internet 📲\nComenta LAVADO y te mostramos el tuyo 👇",
+          "website": null,
+          "username": "btwone.co",
+          "extraData": {
+            "mediaCount": 8,
+            "accountType": "MEDIA_CREATOR",
+            "followsCount": 1,
+            "instagramScopedId": "17841446002302741"
+          },
+          "followersCount": 7,
+          "displayName": "BTW Inc",
+          "profilePicture": "https://scontent-lhr11-1.cdninstagram.com/v/t51.82787-19/870167692_18063307514533411_7884440868638054383_n.jpg?stp=dst-jpg_s240x240_tt6&_nc_cat=106&ig_cache_key=GIy03TMjVt_DeyxAAO9XvksyKWttbmNDAQAB2402400j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=ZTWEapOPQVgQ7kNvwEOvy8r&_nc_oc=AdrTQiLYTZbDNFja3XdIux-z6eu-Zm4g0-n1cXbHGqcNxXYZhQmYfu4tgx6mQKmWsWE&_nc_zt=24&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=cHAjQQdNfWZSdizg2IowuQ&_nc_tpa=Q5bMBQIKdlWnJhCIbClwLbifvLQCBf58F1Cwd0NkCW7kZMSclYw85bZUQpMA9WIkdmqcogRZlWV4iU_2Aw&oh=00_AQTm0Uk6808XpCfk-2-fk3Q51NxQ76IHESwUJN78jU7s9Q&oe=6AF31B00",
+          "profileUrl": "https://instagram.com/btwone.co"
+        },
+        "instagramScopedId": "17841446002302741"
+      },
+      "platformStatus": "active",
+      "platformStatusReason": null,
+      "platformStatusAt": null,
+      "oauthAppId": null,
+      "scopeAreas": null,
+      "followersCount": 7,
+      "followersLastUpdated": "2026-11-06T02:08:04.978Z",
+      "rateLimitedUntil": null,
+      "lastRateLimitAt": null,
+      "lastRateLimitError": null,
+      "rateLimitCount": 0,
+      "rateLimitCountResetAt": null,
+      "lastSuccessfulPublishAt": null,
+      "intentionalDisconnectAt": null,
+      "needsReconnection": false,
+      "enabled": true,
+      "createdAt": "2026-11-06T02:08:05.010Z",
+      "updatedAt": "2026-11-06T02:08:07.101Z",
+      "tokenExpiresAt": "<redactado>",
+      "byokCredentials": null,
+      "messagingRestriction": null,
+      "adsStatus": "connected",
+      "inboundActivity": {
+        "firstMessageAt": null,
+        "lastMessageAt": null,
+        "firstCommentAt": null,
+        "lastCommentAt": null
+      }
+    }
+  ],
+  "hasAnalyticsAccess": true
+}

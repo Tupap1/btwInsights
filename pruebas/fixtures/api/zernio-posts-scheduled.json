@@ -1,0 +1,159 @@
+{
+  "posts": [
+    {
+      "_id": "6aed373a0b34c84d69eb4833",
+      "userId": {
+        "_id": "6aed048525fe816b361408e5",
+        "name": "",
+        "email": "<correo>",
+        "image": null
+      },
+      "title": "",
+      "content": "Un carro al día que no se registra son $780.000 al mes. En un año, más de $9 millones. 🚗💸\n\nY si es uno cada dos días, igual se te van $390.000 al mes. Con el cuaderno, ni te enteras.\n\nEn BTWash cada carro entra con su placa, su hora y quién lo lavó. Si la caja no cuadra con las cámaras, sabes dónde buscar.\n\n¿Cuántos carros crees que se te escapan a la semana? Déjame tu número 👇\n\n#lavadero #lavaderodecarros #carwash #negocios #emprendimiento #BTWash",
+      "mediaItems": [
+        {
+          "_id": "6aed373b0b34c84d69eb4840",
+          "url": "https://media.zernio.com/media/1793931031278_c0f2615712410326_2026-11-06_14_plata-que-se-escapa.mp4",
+          "type": "video"
+        }
+      ],
+      "scheduledFor": "2026-11-07T00:30:00.000Z",
+      "timezone": "America/Bogota",
+      "status": "scheduled",
+      "tags": [
+        "reel-14"
+      ],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-11-06T02:11:07.596Z",
+      "updatedAt": "2026-11-06T03:46:52.003Z",
+      "platforms": [
+        {
+          "_id": "6aed4dac98099f58c27cc8aa",
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6aed36858405bb702db92cda",
+            "platform": "instagram",
+            "username": "btwone.co",
+            "displayName": "BTW Inc",
+            "profilePicture": "https://scontent-lhr11-1.cdninstagram.com/v/t51.82787-19/870167692_18063307514533411_7884440868638054383_n.jpg?stp=dst-jpg_s240x240_tt6&_nc_cat=106&ig_cache_key=GIy03TMjVt_DeyxAAO9XvksyKWttbmNDAQAB2402400j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=ZTWEapOPQVgQ7kNvwEOvy8r&_nc_oc=AdrTQiLYTZbDNFja3XdIux-z6eu-Zm4g0-n1cXbHGqcNxXYZhQmYfu4tgx6mQKmWsWE&_nc_zt=24&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=cHAjQQdNfWZSdizg2IowuQ&_nc_tpa=Q5bMBQIKdlWnJhCIbClwLbifvLQCBf58F1Cwd0NkCW7kZMSclYw85bZUQpMA9WIkdmqcogRZlWV4iU_2Aw&oh=00_AQTm0Uk6808XpCfk-2-fk3Q51NxQ76IHESwUJN78jU7s9Q&oe=6AF31B00",
+            "isActive": true,
+            "profileId": "6aed07d06bc63d1eeba9f731"
+          },
+          "profileId": "6aed07d06bc63d1eeba9f731",
+          "customMedia": [],
+          "scheduledFor": "2026-11-07T00:30:00.000Z",
+          "platformSpecificData": {
+            "userTags": [],
+            "contentType": "reel",
+            "collaborators": [],
+            "isAiGenerated": true
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "0eabc1c9b607b49eba58f9f617c19e41"
+        }
+      ],
+      "origin": "zernio"
+    },
+    {
+      "_id": "6aed0f09c8b8b16a7925d002",
+      "userId": {
+        "_id": "6aed048525fe816b361408e5",
+        "name": "",
+        "email": "<correo>",
+        "image": null
+      },
+      "title": "",
+      "content": "Un carro al día que no se registra son $780.000 al mes. En un año, más de $9 millones. 🚗💸\n\nY si es uno cada dos días, igual se te van $390.000 al mes. Con el cuaderno, ni te enteras.\n\nEn BTWash cada carro entra con su placa, su hora y quién lo lavó. Si la caja no cuadra con las cámaras, sabes dónde buscar.\n\n¿Cuántos carros crees que se te escapan a la semana? Déjame tu número 👇\n\n#lavadero #lavaderodecarros #carwash #negocios #emprendimiento #BTWash",
+      "mediaItems": [
+        {
+          "_id": "6aed217af1d0338aa152114c",
+          "url": "https://media.zernio.com/media/1793925474369_3f74633b599dd618_2026-11-06_14_plata-que-se-escapa.mp4",
+          "type": "video"
+        }
+      ],
+      "scheduledFor": "2026-11-07T00:30:00.000Z",
+      "timezone": "America/Bogota",
+      "status": "scheduled",
+      "tags": [
+        "reel-14"
+      ],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {
+        "usageCounted": true
+      },
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-11-05T23:19:38.616Z",
+      "updatedAt": "2026-11-06T04:09:28.926Z",
+      "platforms": [
+        {
+          "_id": "6aed52f8358301ea5d165969",
+          "platform": "tiktok",
+          "accountId": {
+            "_id": "6aed07f75d163393fc5c0a9d",
+            "platform": "tiktok",
+            "username": "btw.inc",
+            "displayName": "BTW · Software para negocios",
+            "profilePicture": "https://media.zernio.com/media/tiktok-avatars/1793918967359_0afe6def77b9df6a_tiktok-avatar--000lM_N8uy3tyGQjVni-Rmc-ciIstiFTfS0.jpg",
+            "isActive": true,
+            "profileId": "6aed07d06bc63d1eeba9f731"
+          },
+          "profileId": "6aed07d06bc63d1eeba9f731",
+          "customMedia": [],
+          "scheduledFor": "2026-11-07T00:30:00.000Z",
+          "platformSpecificData": {
+            "tiktokSettings": {
+              "draft": false,
+              "allow_duet": true,
+              "media_type": "video",
+              "description": "",
+              "allow_stitch": true,
+              "allow_comment": true,
+              "privacy_level": "PUBLIC_TO_EVERYONE",
+              "auto_add_music": false,
+              "video_made_with_ai": true,
+              "brand_partner_promote": false,
+              "express_consent_given": true,
+              "is_brand_organic_post": true,
+              "commercial_content_type": "brand_organic",
+              "content_preview_confirmed": true
+            }
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "94683e819405c4c886a675ec74c2524c"
+        }
+      ],
+      "origin": "zernio"
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 50,
+    "total": 2,
+    "pages": 1,
+    "nextCursor": null
+  }
+}

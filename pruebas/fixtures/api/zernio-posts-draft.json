@@ -1,0 +1,1287 @@
+{
+  "posts": [
+    {
+      "_id": "6aed3885a0dad4a599e1e5fc",
+      "userId": {
+        "_id": "6aed048525fe816b361408e5",
+        "name": "",
+        "email": "<correo>",
+        "image": null
+      },
+      "title": "",
+      "content": "3 carros al día con $5.000 de diferencia = $390.000 al mes. 💸\n\nEl cliente pide el completo y en el cuaderno queda el sencillo. No siempre es mala fe, pero en el cuaderno solo queda una cifra y nadie lo nota.\n\nEn BTWash cada orden lleva la placa, el servicio y su precio, y se la puedes mandar al cliente por WhatsApp para que vea qué quedó registrado.\n\n¿Qué servicio es el que más te piden? 👇\n\n#lavadero #lavaderodecarros #carwash #negocios #emprendimiento #BTWash",
+      "mediaItems": [
+        {
+          "_id": "6aed3886a0dad4a599e1e5ff",
+          "url": "https://media.zernio.com/media/1793931372287_10f4e2c96b152b53_2026-11-15_21_cinco-mil.mp4",
+          "type": "video"
+        }
+      ],
+      "scheduledFor": "2026-11-16T00:30:00.000Z",
+      "timezone": "America/Bogota",
+      "status": "draft",
+      "tags": [
+        "reel-21"
+      ],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {},
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-11-06T02:16:38.673Z",
+      "updatedAt": "2026-11-06T02:26:58.785Z",
+      "platforms": [
+        {
+          "_id": "6aed3af2d868b81c1764d2d2",
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6aed36858405bb702db92cda",
+            "platform": "instagram",
+            "username": "btwone.co",
+            "displayName": "BTW Inc",
+            "profilePicture": "https://scontent-lhr11-1.cdninstagram.com/v/t51.82787-19/870167692_18063307514533411_7884440868638054383_n.jpg?stp=dst-jpg_s240x240_tt6&_nc_cat=106&ig_cache_key=GIy03TMjVt_DeyxAAO9XvksyKWttbmNDAQAB2402400j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=ZTWEapOPQVgQ7kNvwEOvy8r&_nc_oc=AdrTQiLYTZbDNFja3XdIux-z6eu-Zm4g0-n1cXbHGqcNxXYZhQmYfu4tgx6mQKmWsWE&_nc_zt=24&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=cHAjQQdNfWZSdizg2IowuQ&_nc_tpa=Q5bMBQIKdlWnJhCIbClwLbifvLQCBf58F1Cwd0NkCW7kZMSclYw85bZUQpMA9WIkdmqcogRZlWV4iU_2Aw&oh=00_AQTm0Uk6808XpCfk-2-fk3Q51NxQ76IHESwUJN78jU7s9Q&oe=6AF31B00",
+            "isActive": true,
+            "profileId": "6aed07d06bc63d1eeba9f731"
+          },
+          "profileId": "6aed07d06bc63d1eeba9f731",
+          "customMedia": [],
+          "platformSpecificData": {
+            "userTags": [],
+            "contentType": "reel",
+            "collaborators": [],
+            "isAiGenerated": true
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "7cbe870a14012a51092e64ce7ecd2fe4"
+        }
+      ],
+      "origin": "zernio"
+    },
+    {
+      "_id": "6aed19ead5a8765737e02b8e",
+      "userId": {
+        "_id": "6aed048525fe816b361408e5",
+        "name": "",
+        "email": "<correo>",
+        "image": null
+      },
+      "title": "",
+      "content": "3 carros al día con $5.000 de diferencia = $390.000 al mes. 💸\n\nEl cliente pide el completo y en el cuaderno queda el sencillo. No siempre es mala fe, pero en el cuaderno solo queda una cifra y nadie lo nota.\n\nEn BTWash cada orden lleva la placa, el servicio y su precio, y se la puedes mandar al cliente por WhatsApp para que vea qué quedó registrado.\n\n¿Qué servicio es el que más te piden? 👇\n\n#lavadero #lavaderodecarros #carwash #negocios #emprendimiento #BTWash",
+      "mediaItems": [
+        {
+          "_id": "6aed27d033ed092e9c8319cf",
+          "url": "https://media.zernio.com/media/1793927093458_8b7f7d8b4a662e9a_2026-11-15_21_cinco-mil.mp4",
+          "type": "video"
+        }
+      ],
+      "scheduledFor": "2026-11-16T00:30:00.000Z",
+      "timezone": "America/Bogota",
+      "status": "draft",
+      "tags": [
+        "reel-21"
+      ],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {},
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-11-06T00:06:04.431Z",
+      "updatedAt": "2026-11-06T03:48:22.915Z",
+      "platforms": [
+        {
+          "_id": "6aed4e0698099f58c27cc9b8",
+          "platform": "tiktok",
+          "accountId": {
+            "_id": "6aed07f75d163393fc5c0a9d",
+            "platform": "tiktok",
+            "username": "btw.inc",
+            "displayName": "BTW · Software para negocios",
+            "profilePicture": "https://media.zernio.com/media/tiktok-avatars/1793918967359_0afe6def77b9df6a_tiktok-avatar--000lM_N8uy3tyGQjVni-Rmc-ciIstiFTfS0.jpg",
+            "isActive": true,
+            "profileId": "6aed07d06bc63d1eeba9f731"
+          },
+          "profileId": "6aed07d06bc63d1eeba9f731",
+          "customMedia": [],
+          "platformSpecificData": {
+            "tiktokSettings": {
+              "draft": false,
+              "allow_duet": true,
+              "media_type": "photo",
+              "description": "",
+              "allow_stitch": true,
+              "allow_comment": true,
+              "privacy_level": "PUBLIC_TO_EVERYONE",
+              "auto_add_music": false,
+              "video_made_with_ai": true,
+              "brand_partner_promote": false,
+              "express_consent_given": true,
+              "is_brand_organic_post": false,
+              "commercial_content_type": "none",
+              "content_preview_confirmed": true
+            }
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "5e1e6803f61022fdec1d9460af326dc0"
+        }
+      ],
+      "origin": "zernio"
+    },
+    {
+      "_id": "6aed386a0ed6db058f706837",
+      "userId": {
+        "_id": "6aed048525fe816b361408e5",
+        "name": "",
+        "email": "<correo>",
+        "image": null
+      },
+      "title": "",
+      "content": "¿Tu talonario te cuida… o solo se ve ordenado? 📓\n\nCada carro tiene su papelito, pero el talonario no suma: al cierre alguien tiene que sumar 40 papelitos. Y si uno se moja, se pierde o nadie lo llenó… ese carro no existió.\n\nEn BTWash escribes la placa y, si el cliente ya vino, sus datos se llenan solos. Al cerrar, la caja ya está sumada y separada en efectivo y transferencia.\n\n¿Tú todavía usas talonario? Sí o no 👇\n\n#lavadero #lavaderodecarros #carwash #negocios #emprendimiento #BTWash",
+      "mediaItems": [
+        {
+          "_id": "6aed386b0ed6db058f70683a",
+          "url": "https://media.zernio.com/media/1793931347195_2aa11ea8dbc1d738_2026-11-14_20_talonario.mp4",
+          "type": "video"
+        }
+      ],
+      "scheduledFor": "2026-11-15T00:30:00.000Z",
+      "timezone": "America/Bogota",
+      "status": "draft",
+      "tags": [
+        "reel-20"
+      ],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {},
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-11-06T02:16:11.818Z",
+      "updatedAt": "2026-11-06T02:27:18.129Z",
+      "platforms": [
+        {
+          "_id": "6aed3b06075bd9160604872e",
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6aed36858405bb702db92cda",
+            "platform": "instagram",
+            "username": "btwone.co",
+            "displayName": "BTW Inc",
+            "profilePicture": "https://scontent-lhr11-1.cdninstagram.com/v/t51.82787-19/870167692_18063307514533411_7884440868638054383_n.jpg?stp=dst-jpg_s240x240_tt6&_nc_cat=106&ig_cache_key=GIy03TMjVt_DeyxAAO9XvksyKWttbmNDAQAB2402400j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=ZTWEapOPQVgQ7kNvwEOvy8r&_nc_oc=AdrTQiLYTZbDNFja3XdIux-z6eu-Zm4g0-n1cXbHGqcNxXYZhQmYfu4tgx6mQKmWsWE&_nc_zt=24&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=cHAjQQdNfWZSdizg2IowuQ&_nc_tpa=Q5bMBQIKdlWnJhCIbClwLbifvLQCBf58F1Cwd0NkCW7kZMSclYw85bZUQpMA9WIkdmqcogRZlWV4iU_2Aw&oh=00_AQTm0Uk6808XpCfk-2-fk3Q51NxQ76IHESwUJN78jU7s9Q&oe=6AF31B00",
+            "isActive": true,
+            "profileId": "6aed07d06bc63d1eeba9f731"
+          },
+          "profileId": "6aed07d06bc63d1eeba9f731",
+          "customMedia": [],
+          "platformSpecificData": {
+            "userTags": [],
+            "contentType": "reel",
+            "collaborators": [],
+            "isAiGenerated": true
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "fb7d75e81934fef6e75439870ad6c0bf"
+        }
+      ],
+      "origin": "zernio"
+    },
+    {
+      "_id": "6aed19d78707b03d2e1537c6",
+      "userId": {
+        "_id": "6aed048525fe816b361408e5",
+        "name": "",
+        "email": "<correo>",
+        "image": null
+      },
+      "title": "",
+      "content": "¿Tu talonario te cuida… o solo se ve ordenado? 📓\n\nCada carro tiene su papelito, pero el talonario no suma: al cierre alguien tiene que sumar 40 papelitos. Y si uno se moja, se pierde o nadie lo llenó… ese carro no existió.\n\nEn BTWash escribes la placa y, si el cliente ya vino, sus datos se llenan solos. Al cerrar, la caja ya está sumada y separada en efectivo y transferencia.\n\n¿Tú todavía usas talonario? Sí o no 👇\n\n#lavadero #lavaderodecarros #carwash #negocios #emprendimiento #BTWash",
+      "mediaItems": [
+        {
+          "_id": "6aed27b433ed092e9c8319c8",
+          "url": "https://media.zernio.com/media/1793927068741_0d2ede20a7c8ca3e_2026-11-14_20_talonario.mp4",
+          "type": "video"
+        }
+      ],
+      "scheduledFor": "2026-11-15T00:30:00.000Z",
+      "timezone": "America/Bogota",
+      "status": "draft",
+      "tags": [
+        "reel-20"
+      ],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {},
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-11-06T00:05:44.245Z",
+      "updatedAt": "2026-11-06T03:48:34.830Z",
+      "platforms": [
+        {
+          "_id": "6aed4e1236340e8d8f93369a",
+          "platform": "tiktok",
+          "accountId": {
+            "_id": "6aed07f75d163393fc5c0a9d",
+            "platform": "tiktok",
+            "username": "btw.inc",
+            "displayName": "BTW · Software para negocios",
+            "profilePicture": "https://media.zernio.com/media/tiktok-avatars/1793918967359_0afe6def77b9df6a_tiktok-avatar--000lM_N8uy3tyGQjVni-Rmc-ciIstiFTfS0.jpg",
+            "isActive": true,
+            "profileId": "6aed07d06bc63d1eeba9f731"
+          },
+          "profileId": "6aed07d06bc63d1eeba9f731",
+          "customMedia": [],
+          "platformSpecificData": {
+            "tiktokSettings": {
+              "draft": false,
+              "allow_duet": true,
+              "media_type": "photo",
+              "description": "",
+              "allow_stitch": true,
+              "allow_comment": true,
+              "privacy_level": "PUBLIC_TO_EVERYONE",
+              "auto_add_music": false,
+              "video_made_with_ai": true,
+              "brand_partner_promote": false,
+              "express_consent_given": true,
+              "is_brand_organic_post": false,
+              "commercial_content_type": "none",
+              "content_preview_confirmed": true
+            }
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "2358f696bd659c0f6719f0137d567785"
+        }
+      ],
+      "origin": "zernio"
+    },
+    {
+      "_id": "6aed38500b34c84d69eb4a61",
+      "userId": {
+        "_id": "6aed048525fe816b361408e5",
+        "name": "",
+        "email": "<correo>",
+        "image": null
+      },
+      "title": "",
+      "content": "—Jefe, la quincena me salió corta.\n—¿Cuántos carros lavaste?\n—Como dieciocho… 🤷‍♂️\n\nEn BTWash cada carro queda con su placa y con quién lo lavó, y la comisión se calcula sola. Sin discutir: se mira.\n\n¿Tú cómo llevas las comisiones? Cuéntame 👇\n\n#lavadero #lavaderodecarros #carwash #negocios #emprendimiento #BTWash",
+      "mediaItems": [
+        {
+          "_id": "6aed38520b34c84d69eb4a67",
+          "url": "https://media.zernio.com/media/1793931322104_37bba34db879b6ec_2026-11-13_19_quincena.mp4",
+          "type": "video"
+        }
+      ],
+      "scheduledFor": "2026-11-14T00:30:00.000Z",
+      "timezone": "America/Bogota",
+      "status": "draft",
+      "tags": [
+        "reel-19"
+      ],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {},
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-11-06T02:15:46.618Z",
+      "updatedAt": "2026-11-06T02:27:46.735Z",
+      "platforms": [
+        {
+          "_id": "6aed3b22075bd9160604875d",
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6aed36858405bb702db92cda",
+            "platform": "instagram",
+            "username": "btwone.co",
+            "displayName": "BTW Inc",
+            "profilePicture": "https://scontent-lhr11-1.cdninstagram.com/v/t51.82787-19/870167692_18063307514533411_7884440868638054383_n.jpg?stp=dst-jpg_s240x240_tt6&_nc_cat=106&ig_cache_key=GIy03TMjVt_DeyxAAO9XvksyKWttbmNDAQAB2402400j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=ZTWEapOPQVgQ7kNvwEOvy8r&_nc_oc=AdrTQiLYTZbDNFja3XdIux-z6eu-Zm4g0-n1cXbHGqcNxXYZhQmYfu4tgx6mQKmWsWE&_nc_zt=24&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=cHAjQQdNfWZSdizg2IowuQ&_nc_tpa=Q5bMBQIKdlWnJhCIbClwLbifvLQCBf58F1Cwd0NkCW7kZMSclYw85bZUQpMA9WIkdmqcogRZlWV4iU_2Aw&oh=00_AQTm0Uk6808XpCfk-2-fk3Q51NxQ76IHESwUJN78jU7s9Q&oe=6AF31B00",
+            "isActive": true,
+            "profileId": "6aed07d06bc63d1eeba9f731"
+          },
+          "profileId": "6aed07d06bc63d1eeba9f731",
+          "customMedia": [],
+          "platformSpecificData": {
+            "userTags": [],
+            "contentType": "reel",
+            "collaborators": []
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "48f15895bb5e1198427f8eee0cc60fe4"
+        }
+      ],
+      "origin": "zernio"
+    },
+    {
+      "_id": "6aed17ed75320fa18b938dbb",
+      "userId": {
+        "_id": "6aed048525fe816b361408e5",
+        "name": "",
+        "email": "<correo>",
+        "image": null
+      },
+      "title": "",
+      "content": "—Jefe, la quincena me salió corta.\n—¿Cuántos carros lavaste?\n—Como dieciocho… 🤷‍♂️\n\nEn BTWash cada carro queda con su placa y con quién lo lavó, y la comisión se calcula sola. Sin discutir: se mira.\n\n¿Tú cómo llevas las comisiones? Cuéntame 👇\n\n#lavadero #lavaderodecarros #carwash #negocios #emprendimiento #BTWash",
+      "mediaItems": [
+        {
+          "_id": "6aed279b33ed092e9c8319bd",
+          "url": "https://media.zernio.com/media/1793927041879_98540adb18fe2f6a_2026-11-13_19_quincena.mp4",
+          "type": "video"
+        }
+      ],
+      "scheduledFor": "2026-11-14T00:30:00.000Z",
+      "timezone": "America/Bogota",
+      "status": "draft",
+      "tags": [
+        "reel-19"
+      ],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {},
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-11-05T23:57:34.242Z",
+      "updatedAt": "2026-11-06T03:48:50.818Z",
+      "platforms": [
+        {
+          "_id": "6aed4e2236340e8d8f9336ef",
+          "platform": "tiktok",
+          "accountId": {
+            "_id": "6aed07f75d163393fc5c0a9d",
+            "platform": "tiktok",
+            "username": "btw.inc",
+            "displayName": "BTW · Software para negocios",
+            "profilePicture": "https://media.zernio.com/media/tiktok-avatars/1793918967359_0afe6def77b9df6a_tiktok-avatar--000lM_N8uy3tyGQjVni-Rmc-ciIstiFTfS0.jpg",
+            "isActive": true,
+            "profileId": "6aed07d06bc63d1eeba9f731"
+          },
+          "profileId": "6aed07d06bc63d1eeba9f731",
+          "customMedia": [],
+          "platformSpecificData": {
+            "tiktokSettings": {
+              "draft": false,
+              "allow_duet": true,
+              "media_type": "photo",
+              "description": "",
+              "allow_stitch": true,
+              "allow_comment": true,
+              "privacy_level": "PUBLIC_TO_EVERYONE",
+              "auto_add_music": false,
+              "video_made_with_ai": false,
+              "brand_partner_promote": false,
+              "express_consent_given": true,
+              "is_brand_organic_post": false,
+              "commercial_content_type": "none",
+              "content_preview_confirmed": true
+            }
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "7bdb34654f577a994c5e526b196c5e03"
+        }
+      ],
+      "origin": "zernio"
+    },
+    {
+      "_id": "6aed38370ed6db058f7066f1",
+      "userId": {
+        "_id": "6aed048525fe816b361408e5",
+        "name": "",
+        "email": "<correo>",
+        "image": null
+      },
+      "title": "",
+      "content": "Subes el lavado de $25.000 a $30.000. ¿Cuántos clientes puedes perder? 🚗\n\n26 carros a $25.000 = $650.000 al día.\n22 carros a $30.000 = $660.000 al día.\nSe te pueden ir 4 carros… y ganas más. Pero si se van 5, ya entra menos plata.\n\nPor eso no se adivina: en BTWash ves en el cierre de caja cuántos carros entraron cada semana. Si subes el precio, en 7 días sabes si te equivocaste.\n\n¿A cuánto cobras tú el lavado sencillo? 👇\n\n\n#lavadero #lavaderodecarros #carwash #negocios #emprendimiento #BTWash",
+      "mediaItems": [
+        {
+          "_id": "6aed38390ed6db058f706704",
+          "url": "https://media.zernio.com/media/1793931292785_634ad91c385040f1_2026-11-12_18_subir-precio.mp4",
+          "type": "video"
+        }
+      ],
+      "scheduledFor": "2026-11-13T00:30:00.000Z",
+      "timezone": "America/Bogota",
+      "status": "draft",
+      "tags": [
+        "reel-18"
+      ],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {},
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-11-06T02:15:21.555Z",
+      "updatedAt": "2026-11-06T02:27:59.767Z",
+      "platforms": [
+        {
+          "_id": "6aed3b2fdcf6861e617b17a1",
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6aed36858405bb702db92cda",
+            "platform": "instagram",
+            "username": "btwone.co",
+            "displayName": "BTW Inc",
+            "profilePicture": "https://scontent-lhr11-1.cdninstagram.com/v/t51.82787-19/870167692_18063307514533411_7884440868638054383_n.jpg?stp=dst-jpg_s240x240_tt6&_nc_cat=106&ig_cache_key=GIy03TMjVt_DeyxAAO9XvksyKWttbmNDAQAB2402400j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=ZTWEapOPQVgQ7kNvwEOvy8r&_nc_oc=AdrTQiLYTZbDNFja3XdIux-z6eu-Zm4g0-n1cXbHGqcNxXYZhQmYfu4tgx6mQKmWsWE&_nc_zt=24&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=cHAjQQdNfWZSdizg2IowuQ&_nc_tpa=Q5bMBQIKdlWnJhCIbClwLbifvLQCBf58F1Cwd0NkCW7kZMSclYw85bZUQpMA9WIkdmqcogRZlWV4iU_2Aw&oh=00_AQTm0Uk6808XpCfk-2-fk3Q51NxQ76IHESwUJN78jU7s9Q&oe=6AF31B00",
+            "isActive": true,
+            "profileId": "6aed07d06bc63d1eeba9f731"
+          },
+          "profileId": "6aed07d06bc63d1eeba9f731",
+          "customMedia": [],
+          "platformSpecificData": {
+            "userTags": [],
+            "contentType": "reel",
+            "collaborators": [],
+            "isAiGenerated": true
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "b4d474f2886329e9999522e5539f8d46"
+        }
+      ],
+      "origin": "zernio"
+    },
+    {
+      "_id": "6aed16b62fe693677077a03a",
+      "userId": {
+        "_id": "6aed048525fe816b361408e5",
+        "name": "",
+        "email": "<correo>",
+        "image": null
+      },
+      "title": "",
+      "content": "Subes el lavado de $25.000 a $30.000. ¿Cuántos clientes puedes perder? 🚗\n\n26 carros a $25.000 = $650.000 al día.\n22 carros a $30.000 = $660.000 al día.\nSe te pueden ir 4 carros… y ganas más. Pero si se van 5, ya entra menos plata.\n\nPor eso no se adivina: en BTWash ves en el cierre de caja cuántos carros entraron cada semana. Si subes el precio, en 7 días sabes si te equivocaste.\n\n¿A cuánto cobras tú el lavado sencillo? 👇\n\n\n#lavadero #lavaderodecarros #carwash #negocios #emprendimiento #BTWash",
+      "mediaItems": [
+        {
+          "_id": "6aed27806a23ba9c9b8b95f5",
+          "url": "https://media.zernio.com/media/1793926988341_330dcf1fc3ef176f_2026-11-12_18_subir-precio.mp4",
+          "type": "video"
+        }
+      ],
+      "scheduledFor": "2026-11-13T00:30:00.000Z",
+      "timezone": "America/Bogota",
+      "status": "draft",
+      "tags": [
+        "reel-18"
+      ],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {},
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-11-05T23:52:24.545Z",
+      "updatedAt": "2026-11-06T02:28:05.843Z",
+      "platforms": [
+        {
+          "_id": "6aed3b35d868b81c1764d444",
+          "platform": "tiktok",
+          "accountId": {
+            "_id": "6aed07f75d163393fc5c0a9d",
+            "platform": "tiktok",
+            "username": "btw.inc",
+            "displayName": "BTW · Software para negocios",
+            "profilePicture": "https://media.zernio.com/media/tiktok-avatars/1793918967359_0afe6def77b9df6a_tiktok-avatar--000lM_N8uy3tyGQjVni-Rmc-ciIstiFTfS0.jpg",
+            "isActive": true,
+            "profileId": "6aed07d06bc63d1eeba9f731"
+          },
+          "profileId": "6aed07d06bc63d1eeba9f731",
+          "customMedia": [],
+          "platformSpecificData": {
+            "tiktokSettings": {
+              "draft": false,
+              "allow_duet": true,
+              "media_type": "photo",
+              "description": "",
+              "allow_stitch": true,
+              "allow_comment": true,
+              "privacy_level": "PUBLIC_TO_EVERYONE",
+              "auto_add_music": false,
+              "video_made_with_ai": true,
+              "brand_partner_promote": false,
+              "express_consent_given": true,
+              "is_brand_organic_post": true,
+              "commercial_content_type": "brand_organic",
+              "content_preview_confirmed": true
+            }
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "b2f38862a7fa142a99293c447ebdf357"
+        }
+      ],
+      "origin": "zernio"
+    },
+    {
+      "_id": "6aed381a28621902d19a72d9",
+      "userId": {
+        "_id": "6aed048525fe816b361408e5",
+        "name": "",
+        "email": "<correo>",
+        "image": null
+      },
+      "title": "",
+      "content": "Vendiste $775.000 hoy. ¿Cuántos tienes en la mano? 💵\n\nLo que entró por transferencia está en el banco, no en el cajón. Y lo que fiaste está en la calle. Por eso la caja no te cuadra… y terminas sospechando de quien no es.\n\nEn BTWash el cierre de caja te separa solo el efectivo, las transferencias y lo que quedó por cobrar.\n\n¿A ti te cuadra la caja al final del día? Sí o no 👇\n\n#lavadero #lavaderodecarros #carwash #negocios #emprendimiento #BTWash",
+      "mediaItems": [
+        {
+          "_id": "6aed381c28621902d19a72dc",
+          "url": "https://media.zernio.com/media/1793931265860_30b6d5daf73a59e9_2026-11-11_17_en-la-mano.mp4",
+          "type": "video"
+        }
+      ],
+      "scheduledFor": "2026-11-12T00:30:00.000Z",
+      "timezone": "America/Bogota",
+      "status": "draft",
+      "tags": [
+        "reel-17"
+      ],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {},
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-11-06T02:14:52.098Z",
+      "updatedAt": "2026-11-06T02:30:55.280Z",
+      "platforms": [
+        {
+          "_id": "6aed3bdfff19d9dd115ba1b4",
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6aed36858405bb702db92cda",
+            "platform": "instagram",
+            "username": "btwone.co",
+            "displayName": "BTW Inc",
+            "profilePicture": "https://scontent-lhr11-1.cdninstagram.com/v/t51.82787-19/870167692_18063307514533411_7884440868638054383_n.jpg?stp=dst-jpg_s240x240_tt6&_nc_cat=106&ig_cache_key=GIy03TMjVt_DeyxAAO9XvksyKWttbmNDAQAB2402400j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=ZTWEapOPQVgQ7kNvwEOvy8r&_nc_oc=AdrTQiLYTZbDNFja3XdIux-z6eu-Zm4g0-n1cXbHGqcNxXYZhQmYfu4tgx6mQKmWsWE&_nc_zt=24&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=cHAjQQdNfWZSdizg2IowuQ&_nc_tpa=Q5bMBQIKdlWnJhCIbClwLbifvLQCBf58F1Cwd0NkCW7kZMSclYw85bZUQpMA9WIkdmqcogRZlWV4iU_2Aw&oh=00_AQTm0Uk6808XpCfk-2-fk3Q51NxQ76IHESwUJN78jU7s9Q&oe=6AF31B00",
+            "isActive": true,
+            "profileId": "6aed07d06bc63d1eeba9f731"
+          },
+          "profileId": "6aed07d06bc63d1eeba9f731",
+          "customMedia": [],
+          "platformSpecificData": {
+            "userTags": [],
+            "contentType": "reel",
+            "collaborators": [],
+            "isAiGenerated": true
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "3b6c2930e8206d46246e72f3870127b0"
+        }
+      ],
+      "origin": "zernio"
+    },
+    {
+      "_id": "6aed16ad2fe6936770779ff8",
+      "userId": {
+        "_id": "6aed048525fe816b361408e5",
+        "name": "",
+        "email": "<correo>",
+        "image": null
+      },
+      "title": "",
+      "content": "Vendiste $775.000 hoy. ¿Cuántos tienes en la mano? 💵\n\nLo que entró por transferencia está en el banco, no en el cajón. Y lo que fiaste está en la calle. Por eso la caja no te cuadra… y terminas sospechando de quien no es.\n\nEn BTWash el cierre de caja te separa solo el efectivo, las transferencias y lo que quedó por cobrar.\n\n¿A ti te cuadra la caja al final del día? Sí o no 👇\n\n#lavadero #lavaderodecarros #carwash #negocios #emprendimiento #BTWash",
+      "mediaItems": [
+        {
+          "_id": "6aed2211e00d70df00b758bd",
+          "url": "https://media.zernio.com/media/1793925631393_c0fe899edbb80e5f_2026-11-11_17_en-la-mano.mp4",
+          "type": "video"
+        }
+      ],
+      "scheduledFor": "2026-11-12T00:30:00.000Z",
+      "timezone": "America/Bogota",
+      "status": "draft",
+      "tags": [
+        "reel-17"
+      ],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {},
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-11-05T23:52:15.090Z",
+      "updatedAt": "2026-11-06T02:31:00.862Z",
+      "platforms": [
+        {
+          "_id": "6aed3be44daf8a852aa2c5c0",
+          "platform": "tiktok",
+          "accountId": {
+            "_id": "6aed07f75d163393fc5c0a9d",
+            "platform": "tiktok",
+            "username": "btw.inc",
+            "displayName": "BTW · Software para negocios",
+            "profilePicture": "https://media.zernio.com/media/tiktok-avatars/1793918967359_0afe6def77b9df6a_tiktok-avatar--000lM_N8uy3tyGQjVni-Rmc-ciIstiFTfS0.jpg",
+            "isActive": true,
+            "profileId": "6aed07d06bc63d1eeba9f731"
+          },
+          "profileId": "6aed07d06bc63d1eeba9f731",
+          "customMedia": [],
+          "platformSpecificData": {
+            "tiktokSettings": {
+              "draft": false,
+              "allow_duet": true,
+              "media_type": "photo",
+              "description": "",
+              "allow_stitch": true,
+              "allow_comment": true,
+              "privacy_level": "PUBLIC_TO_EVERYONE",
+              "auto_add_music": false,
+              "video_made_with_ai": true,
+              "brand_partner_promote": false,
+              "express_consent_given": true,
+              "is_brand_organic_post": true,
+              "commercial_content_type": "brand_organic",
+              "content_preview_confirmed": true
+            }
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "1a4402538a5197a8a78bc684df7bea2b"
+        }
+      ],
+      "origin": "zernio"
+    },
+    {
+      "_id": "6aed38000b34c84d69eb4a17",
+      "userId": {
+        "_id": "6aed048525fe816b361408e5",
+        "name": "",
+        "email": "<correo>",
+        "image": null
+      },
+      "title": "",
+      "content": "El mismo día, dos lavaderos: arriba con cuaderno, abajo con BTWash. 📓 vs ✅\n\n40 carros. Al cerrar la caja. Las comisiones de cada lavador. ¿Dónde se te va la tarde?\n\n¿Tú de qué lado estás? Cuéntame aquí abajo 👇\n\n#lavadero #lavaderodecarros #carwash #negocios #emprendimiento #BTWash",
+      "mediaItems": [
+        {
+          "_id": "6aed38010b34c84d69eb4a1a",
+          "url": "https://media.zernio.com/media/1793931240225_09c43c0bc7548d93_2026-11-10_16_dos-lavaderos.mp4",
+          "type": "video"
+        }
+      ],
+      "scheduledFor": "2026-11-11T00:30:00.000Z",
+      "timezone": "America/Bogota",
+      "status": "draft",
+      "tags": [
+        "reel-16"
+      ],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {},
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-11-06T02:14:25.367Z",
+      "updatedAt": "2026-11-06T02:31:14.793Z",
+      "platforms": [
+        {
+          "_id": "6aed3bf2ff19d9dd115ba213",
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6aed36858405bb702db92cda",
+            "platform": "instagram",
+            "username": "btwone.co",
+            "displayName": "BTW Inc",
+            "profilePicture": "https://scontent-lhr11-1.cdninstagram.com/v/t51.82787-19/870167692_18063307514533411_7884440868638054383_n.jpg?stp=dst-jpg_s240x240_tt6&_nc_cat=106&ig_cache_key=GIy03TMjVt_DeyxAAO9XvksyKWttbmNDAQAB2402400j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=ZTWEapOPQVgQ7kNvwEOvy8r&_nc_oc=AdrTQiLYTZbDNFja3XdIux-z6eu-Zm4g0-n1cXbHGqcNxXYZhQmYfu4tgx6mQKmWsWE&_nc_zt=24&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=cHAjQQdNfWZSdizg2IowuQ&_nc_tpa=Q5bMBQIKdlWnJhCIbClwLbifvLQCBf58F1Cwd0NkCW7kZMSclYw85bZUQpMA9WIkdmqcogRZlWV4iU_2Aw&oh=00_AQTm0Uk6808XpCfk-2-fk3Q51NxQ76IHESwUJN78jU7s9Q&oe=6AF31B00",
+            "isActive": true,
+            "profileId": "6aed07d06bc63d1eeba9f731"
+          },
+          "profileId": "6aed07d06bc63d1eeba9f731",
+          "customMedia": [],
+          "platformSpecificData": {
+            "userTags": [],
+            "contentType": "reel",
+            "collaborators": [],
+            "isAiGenerated": true
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "7ade89da014bafd73183cd5a850897fd"
+        }
+      ],
+      "origin": "zernio"
+    },
+    {
+      "_id": "6aed0fe2c7f290d6c7f21adf",
+      "userId": {
+        "_id": "6aed048525fe816b361408e5",
+        "name": "",
+        "email": "<correo>",
+        "image": null
+      },
+      "title": "",
+      "content": "El mismo día, dos lavaderos: arriba con cuaderno, abajo con BTWash. 📓 vs ✅\n\n40 carros. Al cerrar la caja. Las comisiones de cada lavador. ¿Dónde se te va la tarde?\n\n¿Tú de qué lado estás? Cuéntame aquí abajo 👇\n\n#lavadero #lavaderodecarros #carwash #negocios #emprendimiento #BTWash",
+      "mediaItems": [
+        {
+          "_id": "6aed0fe4c7f290d6c7f21ae2",
+          "url": "https://media.zernio.com/media/1793920937040_ab1a23e2d5392355_2026-11-10_16_dos-lavaderos.mp4",
+          "type": "video"
+        }
+      ],
+      "scheduledFor": "2026-11-11T00:30:00.000Z",
+      "timezone": "America/Bogota",
+      "status": "draft",
+      "tags": [
+        "reel-16"
+      ],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {},
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-11-05T23:23:16.115Z",
+      "updatedAt": "2026-11-06T02:31:28.231Z",
+      "platforms": [
+        {
+          "_id": "6aed3c00773c0ba7f1eb64d5",
+          "platform": "tiktok",
+          "accountId": {
+            "_id": "6aed07f75d163393fc5c0a9d",
+            "platform": "tiktok",
+            "username": "btw.inc",
+            "displayName": "BTW · Software para negocios",
+            "profilePicture": "https://media.zernio.com/media/tiktok-avatars/1793918967359_0afe6def77b9df6a_tiktok-avatar--000lM_N8uy3tyGQjVni-Rmc-ciIstiFTfS0.jpg",
+            "isActive": true,
+            "profileId": "6aed07d06bc63d1eeba9f731"
+          },
+          "profileId": "6aed07d06bc63d1eeba9f731",
+          "customMedia": [],
+          "platformSpecificData": {
+            "tiktokSettings": {
+              "draft": false,
+              "allow_duet": true,
+              "media_type": "photo",
+              "description": "",
+              "allow_stitch": true,
+              "allow_comment": true,
+              "privacy_level": "PUBLIC_TO_EVERYONE",
+              "auto_add_music": false,
+              "video_made_with_ai": true,
+              "brand_partner_promote": false,
+              "express_consent_given": true,
+              "is_brand_organic_post": true,
+              "commercial_content_type": "brand_organic",
+              "content_preview_confirmed": true
+            }
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "bc9f42fbc105b8d8aa8f7f083b2a34ed"
+        }
+      ],
+      "origin": "zernio"
+    },
+    {
+      "_id": "6aed37e60ed6db058f706520",
+      "userId": {
+        "_id": "6aed048525fe816b361408e5",
+        "name": "",
+        "email": "<correo>",
+        "image": null
+      },
+      "title": "",
+      "content": "—La camioneta blanca la lavé yo.\n—¡Mentira! Esa la lavé yo. 😤\n\nCon BTWash se acabó la discusión: cada carro queda con su placa, la hora y quién lo lavó.\n\n¿En tu lavadero también pasa? Cuéntame 👇\n\n#lavadero #lavaderodecarros #carwash #negocios #emprendimiento #BTWash",
+      "mediaItems": [
+        {
+          "_id": "6aed37e70ed6db058f70652b",
+          "url": "https://media.zernio.com/media/1793931213435_cf58c87b8b53a916_2026-11-09_15_quien-lavo.mp4",
+          "type": "video"
+        }
+      ],
+      "scheduledFor": "2026-11-10T00:30:00.000Z",
+      "timezone": "America/Bogota",
+      "status": "draft",
+      "tags": [
+        "reel-15"
+      ],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {},
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-11-06T02:13:59.630Z",
+      "updatedAt": "2026-11-06T02:43:47.270Z",
+      "platforms": [
+        {
+          "_id": "6aed3ee3724c96de54e3ea0d",
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6aed36858405bb702db92cda",
+            "platform": "instagram",
+            "username": "btwone.co",
+            "displayName": "BTW Inc",
+            "profilePicture": "https://scontent-lhr11-1.cdninstagram.com/v/t51.82787-19/870167692_18063307514533411_7884440868638054383_n.jpg?stp=dst-jpg_s240x240_tt6&_nc_cat=106&ig_cache_key=GIy03TMjVt_DeyxAAO9XvksyKWttbmNDAQAB2402400j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=ZTWEapOPQVgQ7kNvwEOvy8r&_nc_oc=AdrTQiLYTZbDNFja3XdIux-z6eu-Zm4g0-n1cXbHGqcNxXYZhQmYfu4tgx6mQKmWsWE&_nc_zt=24&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=cHAjQQdNfWZSdizg2IowuQ&_nc_tpa=Q5bMBQIKdlWnJhCIbClwLbifvLQCBf58F1Cwd0NkCW7kZMSclYw85bZUQpMA9WIkdmqcogRZlWV4iU_2Aw&oh=00_AQTm0Uk6808XpCfk-2-fk3Q51NxQ76IHESwUJN78jU7s9Q&oe=6AF31B00",
+            "isActive": true,
+            "profileId": "6aed07d06bc63d1eeba9f731"
+          },
+          "profileId": "6aed07d06bc63d1eeba9f731",
+          "customMedia": [],
+          "platformSpecificData": {
+            "userTags": [],
+            "contentType": "reel",
+            "collaborators": []
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "69ee53e8828d118f63c348bb565e00a0"
+        }
+      ],
+      "origin": "zernio"
+    },
+    {
+      "_id": "6aed0fa512a5ac32b4b6a6fe",
+      "userId": {
+        "_id": "6aed048525fe816b361408e5",
+        "name": "",
+        "email": "<correo>",
+        "image": null
+      },
+      "title": "",
+      "content": "—La camioneta blanca la lavé yo.\n—¡Mentira! Esa la lavé yo. 😤\n\nCon BTWash se acabó la discusión: cada carro queda con su placa, la hora y quién lo lavó.\n\n¿En tu lavadero también pasa? Cuéntame 👇\n\n#lavadero #lavaderodecarros #carwash #negocios #emprendimiento #BTWash",
+      "mediaItems": [
+        {
+          "_id": "6aed0fa712a5ac32b4b6a70a",
+          "url": "https://media.zernio.com/media/1793920907361_455b473cb40b2008_2026-11-09_15_quien-lavo.mp4",
+          "type": "video"
+        }
+      ],
+      "scheduledFor": "2026-11-10T00:30:00.000Z",
+      "timezone": "America/Bogota",
+      "status": "draft",
+      "tags": [
+        "reel-15"
+      ],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {},
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-11-05T23:22:15.236Z",
+      "updatedAt": "2026-11-06T02:31:43.954Z",
+      "platforms": [
+        {
+          "_id": "6aed3c0fff19d9dd115ba2b1",
+          "platform": "tiktok",
+          "accountId": {
+            "_id": "6aed07f75d163393fc5c0a9d",
+            "platform": "tiktok",
+            "username": "btw.inc",
+            "displayName": "BTW · Software para negocios",
+            "profilePicture": "https://media.zernio.com/media/tiktok-avatars/1793918967359_0afe6def77b9df6a_tiktok-avatar--000lM_N8uy3tyGQjVni-Rmc-ciIstiFTfS0.jpg",
+            "isActive": true,
+            "profileId": "6aed07d06bc63d1eeba9f731"
+          },
+          "profileId": "6aed07d06bc63d1eeba9f731",
+          "customMedia": [],
+          "platformSpecificData": {
+            "tiktokSettings": {
+              "draft": false,
+              "allow_duet": true,
+              "media_type": "photo",
+              "description": "",
+              "allow_stitch": true,
+              "allow_comment": true,
+              "privacy_level": "PUBLIC_TO_EVERYONE",
+              "auto_add_music": false,
+              "video_made_with_ai": false,
+              "brand_partner_promote": false,
+              "express_consent_given": true,
+              "is_brand_organic_post": true,
+              "commercial_content_type": "brand_organic",
+              "content_preview_confirmed": true
+            }
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "8875f2f29bed01e56d38e3ce16c310a8"
+        }
+      ],
+      "origin": "zernio"
+    },
+    {
+      "_id": "6aed37c90ed6db058f706451",
+      "userId": {
+        "_id": "6aed048525fe816b361408e5",
+        "name": "",
+        "email": "<correo>",
+        "image": null
+      },
+      "title": "",
+      "content": "Lavaste 40 carros hoy. Tu cuaderno dice 38. ¿Cuáles faltan? ¿Quién los lavó? ¿Los pagaron? 📓\n\nEn BTWash cada carro entra con su placa, su lavador y lo que pagó, y al cerrar la caja te dice cuánto entró en efectivo y cuánto por transferencia. Sin sumar nada.\n\n¿Cuaderno, Excel o app? Cuéntame aquí abajo.\n\n#lavadero #lavaderodecarros #carwash #negocios #emprendimiento #BTWash",
+      "mediaItems": [
+        {
+          "_id": "6aed37cc0ed6db058f706474",
+          "url": "https://media.zernio.com/media/1793931151686_f3d48635fa55e663_2026-11-08_11_el-cuaderno_facebook-instagram.mp4",
+          "type": "video"
+        }
+      ],
+      "scheduledFor": "2026-11-09T00:30:00.000Z",
+      "timezone": "America/Bogota",
+      "status": "draft",
+      "tags": [
+        "reel-11"
+      ],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {},
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-11-06T02:13:32.878Z",
+      "updatedAt": "2026-11-06T02:31:52.297Z",
+      "platforms": [
+        {
+          "_id": "6aed3c18ff19d9dd115ba2ed",
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6aed36858405bb702db92cda",
+            "platform": "instagram",
+            "username": "btwone.co",
+            "displayName": "BTW Inc",
+            "profilePicture": "https://scontent-lhr11-1.cdninstagram.com/v/t51.82787-19/870167692_18063307514533411_7884440868638054383_n.jpg?stp=dst-jpg_s240x240_tt6&_nc_cat=106&ig_cache_key=GIy03TMjVt_DeyxAAO9XvksyKWttbmNDAQAB2402400j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=ZTWEapOPQVgQ7kNvwEOvy8r&_nc_oc=AdrTQiLYTZbDNFja3XdIux-z6eu-Zm4g0-n1cXbHGqcNxXYZhQmYfu4tgx6mQKmWsWE&_nc_zt=24&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=cHAjQQdNfWZSdizg2IowuQ&_nc_tpa=Q5bMBQIKdlWnJhCIbClwLbifvLQCBf58F1Cwd0NkCW7kZMSclYw85bZUQpMA9WIkdmqcogRZlWV4iU_2Aw&oh=00_AQTm0Uk6808XpCfk-2-fk3Q51NxQ76IHESwUJN78jU7s9Q&oe=6AF31B00",
+            "isActive": true,
+            "profileId": "6aed07d06bc63d1eeba9f731"
+          },
+          "profileId": "6aed07d06bc63d1eeba9f731",
+          "customMedia": [],
+          "platformSpecificData": {
+            "userTags": [],
+            "contentType": "reel",
+            "collaborators": [],
+            "isAiGenerated": true
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "83b1eae619011d86ac48a69a2bbfc5fb"
+        }
+      ],
+      "origin": "zernio"
+    },
+    {
+      "_id": "6aed0f88adb09fcad781bb4e",
+      "userId": {
+        "_id": "6aed048525fe816b361408e5",
+        "name": "",
+        "email": "<correo>",
+        "image": null
+      },
+      "title": "",
+      "content": "Lavaste 40 carros hoy. Tu cuaderno dice 38. ¿Cuáles faltan? ¿Quién los lavó? ¿Los pagaron? 📓\n\nEn BTWash cada carro entra con su placa, su lavador y lo que pagó, y al cerrar la caja te dice cuánto entró en efectivo y cuánto por transferencia. Sin sumar nada.\n\n¿Todavía usas cuaderno? Escríbeme y te paso la prueba gratis.\n\n#lavadero #lavaderodecarros #carwash #negocios #emprendimiento #BTWash",
+      "mediaItems": [
+        {
+          "_id": "6aed0f8aadb09fcad781bb5d",
+          "url": "https://media.zernio.com/media/1793920859272_658fb7bba9c3f984_2026-11-08_11_el-cuaderno_tiktok.mp4",
+          "type": "video"
+        }
+      ],
+      "scheduledFor": "2026-11-09T00:30:00.000Z",
+      "timezone": "America/Bogota",
+      "status": "draft",
+      "tags": [
+        "reel-11"
+      ],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {},
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-11-05T23:21:46.841Z",
+      "updatedAt": "2026-11-06T02:31:58.950Z",
+      "platforms": [
+        {
+          "_id": "6aed3c1eff19d9dd115ba2fe",
+          "platform": "tiktok",
+          "accountId": {
+            "_id": "6aed07f75d163393fc5c0a9d",
+            "platform": "tiktok",
+            "username": "btw.inc",
+            "displayName": "BTW · Software para negocios",
+            "profilePicture": "https://media.zernio.com/media/tiktok-avatars/1793918967359_0afe6def77b9df6a_tiktok-avatar--000lM_N8uy3tyGQjVni-Rmc-ciIstiFTfS0.jpg",
+            "isActive": true,
+            "profileId": "6aed07d06bc63d1eeba9f731"
+          },
+          "profileId": "6aed07d06bc63d1eeba9f731",
+          "customMedia": [],
+          "platformSpecificData": {
+            "tiktokSettings": {
+              "draft": false,
+              "allow_duet": true,
+              "media_type": "photo",
+              "description": "",
+              "allow_stitch": true,
+              "allow_comment": true,
+              "privacy_level": "PUBLIC_TO_EVERYONE",
+              "auto_add_music": false,
+              "video_made_with_ai": true,
+              "brand_partner_promote": false,
+              "express_consent_given": true,
+              "is_brand_organic_post": true,
+              "commercial_content_type": "brand_organic",
+              "content_preview_confirmed": true
+            }
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "a8d9cc791288c9e8a0f1e0b7c77b5a66"
+        }
+      ],
+      "origin": "zernio"
+    },
+    {
+      "_id": "6aed378d28621902d19a71d1",
+      "userId": {
+        "_id": "6aed048525fe816b361408e5",
+        "name": "",
+        "email": "<correo>",
+        "image": null
+      },
+      "title": "",
+      "content": "3 lavadores, 120 carros en la semana. ¿Cuánto le toca a cada uno? 🧽\n\nDel cuaderno te sale la tarde del domingo… y siempre alguien dice que le faltó un carro.\n\nEn BTWash cada carro queda con el lavador que lo hizo y la comisión se calcula sola. Si alguien reclama, le muestras la placa, la hora y quién lo lavó.\n\n¿Cada cuánto les pagas a tus lavadores: cada día, cada semana o cada quince? Cuéntame 👇\n\n\n#lavadero #lavaderodecarros #carwash #negocios #emprendimiento #BTWash",
+      "mediaItems": [
+        {
+          "_id": "6aed378f28621902d19a71d8",
+          "url": "https://media.zernio.com/media/1793931086906_7e6c4b08c7fd7e84_2026-11-07_13_cuanto-le-debes.mp4",
+          "type": "video"
+        }
+      ],
+      "scheduledFor": "2026-11-08T00:30:00.000Z",
+      "timezone": "America/Bogota",
+      "status": "draft",
+      "tags": [
+        "reel-13"
+      ],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {},
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-11-06T02:12:31.046Z",
+      "updatedAt": "2026-11-06T02:32:08.354Z",
+      "platforms": [
+        {
+          "_id": "6aed3c28ff19d9dd115ba331",
+          "platform": "instagram",
+          "accountId": {
+            "_id": "6aed36858405bb702db92cda",
+            "platform": "instagram",
+            "username": "btwone.co",
+            "displayName": "BTW Inc",
+            "profilePicture": "https://scontent-lhr11-1.cdninstagram.com/v/t51.82787-19/870167692_18063307514533411_7884440868638054383_n.jpg?stp=dst-jpg_s240x240_tt6&_nc_cat=106&ig_cache_key=GIy03TMjVt_DeyxAAO9XvksyKWttbmNDAQAB2402400j-ccb7-5&ccb=7-5&_nc_sid=669407&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLnd3dy4xMDgwLkMzIn0%3D&_nc_ohc=ZTWEapOPQVgQ7kNvwEOvy8r&_nc_oc=AdrTQiLYTZbDNFja3XdIux-z6eu-Zm4g0-n1cXbHGqcNxXYZhQmYfu4tgx6mQKmWsWE&_nc_zt=24&_nc_ht=scontent-lhr11-1.cdninstagram.com&edm=AP4hL3IEAAAA&_nc_gid=cHAjQQdNfWZSdizg2IowuQ&_nc_tpa=Q5bMBQIKdlWnJhCIbClwLbifvLQCBf58F1Cwd0NkCW7kZMSclYw85bZUQpMA9WIkdmqcogRZlWV4iU_2Aw&oh=00_AQTm0Uk6808XpCfk-2-fk3Q51NxQ76IHESwUJN78jU7s9Q&oe=6AF31B00",
+            "isActive": true,
+            "profileId": "6aed07d06bc63d1eeba9f731"
+          },
+          "profileId": "6aed07d06bc63d1eeba9f731",
+          "customMedia": [],
+          "platformSpecificData": {
+            "userTags": [],
+            "contentType": "reel",
+            "collaborators": [],
+            "isAiGenerated": true
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "e6d2e374a394c954bc52947595f9ee92"
+        }
+      ],
+      "origin": "zernio"
+    },
+    {
+      "_id": "6aed0f584fee3a3e0c1c948c",
+      "userId": {
+        "_id": "6aed048525fe816b361408e5",
+        "name": "",
+        "email": "<correo>",
+        "image": null
+      },
+      "title": "",
+      "content": "3 lavadores, 120 carros en la semana. ¿Cuánto le toca a cada uno? 🧽\n\nDel cuaderno te sale la tarde del domingo… y siempre alguien dice que le faltó un carro.\n\nEn BTWash cada carro queda con el lavador que lo hizo y la comisión se calcula sola. Si alguien reclama, le muestras la placa, la hora y quién lo lavó.\n\n¿Cada cuánto les pagas a tus lavadores: cada día, cada semana o cada quince? Cuéntame 👇\n\n#lavadero #lavaderodecarros #carwash #negocios #emprendimiento #BTWash",
+      "mediaItems": [
+        {
+          "_id": "6aed0f5a4fee3a3e0c1c948f",
+          "url": "https://media.zernio.com/media/1793920797818_7d874c1cde61bb6f_2026-11-07_13_cuanto-le-debes.mp4",
+          "type": "video"
+        }
+      ],
+      "scheduledFor": "2026-11-08T00:30:00.000Z",
+      "timezone": "America/Bogota",
+      "status": "draft",
+      "tags": [
+        "reel-13"
+      ],
+      "hashtags": [],
+      "mentions": [],
+      "visibility": "public",
+      "crosspostingEnabled": true,
+      "metadata": {},
+      "recycling": {
+        "enabled": false,
+        "gapFreq": "month",
+        "recycleCount": 0,
+        "contentVariations": [],
+        "contentVariationIndex": 0
+      },
+      "createdAt": "2026-11-05T23:20:58.651Z",
+      "updatedAt": "2026-11-06T02:32:13.401Z",
+      "platforms": [
+        {
+          "_id": "6aed3c2dff19d9dd115ba359",
+          "platform": "tiktok",
+          "accountId": {
+            "_id": "6aed07f75d163393fc5c0a9d",
+            "platform": "tiktok",
+            "username": "btw.inc",
+            "displayName": "BTW · Software para negocios",
+            "profilePicture": "https://media.zernio.com/media/tiktok-avatars/1793918967359_0afe6def77b9df6a_tiktok-avatar--000lM_N8uy3tyGQjVni-Rmc-ciIstiFTfS0.jpg",
+            "isActive": true,
+            "profileId": "6aed07d06bc63d1eeba9f731"
+          },
+          "profileId": "6aed07d06bc63d1eeba9f731",
+          "customMedia": [],
+          "platformSpecificData": {
+            "tiktokSettings": {
+              "draft": false,
+              "allow_duet": true,
+              "media_type": "photo",
+              "description": "",
+              "allow_stitch": true,
+              "allow_comment": true,
+              "privacy_level": "PUBLIC_TO_EVERYONE",
+              "auto_add_music": false,
+              "video_made_with_ai": true,
+              "brand_partner_promote": false,
+              "express_consent_given": true,
+              "is_brand_organic_post": true,
+              "commercial_content_type": "brand_organic",
+              "content_preview_confirmed": true
+            }
+          },
+          "status": "pending",
+          "publishAttempts": 0,
+          "contentHash": "a42a78c44bff755f30b81466cc552574"
+        }
+      ],
+      "origin": "zernio"
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 50,
+    "total": 18,
+    "pages": 1,
+    "nextCursor": null
+  }
+}

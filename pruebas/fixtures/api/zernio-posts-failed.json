@@ -1,0 +1,10 @@
+{
+  "posts": [],
+  "pagination": {
+    "page": 1,
+    "limit": 50,
+    "total": 0,
+    "pages": 0,
+    "nextCursor": null
+  }
+}

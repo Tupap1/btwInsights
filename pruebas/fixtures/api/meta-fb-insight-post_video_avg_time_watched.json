@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "name": "post_video_avg_time_watched",
+      "period": "lifetime",
+      "values": [
+        {
+          "value": 6778
+        }
+      ],
+      "title": "Tiempo medio de reproducción del reel en total",
+      "description": "Total: número medio (en minutos) que se ha reproducido tu reel, incluido el tiempo invertido en volver a reproducirlo durante una única instancia de reproducción. Es posible que el número sea mayor que la duración total del reel porque esta métrica incluye las reproducciones repetidas.",
+      "id": "1091172913760322/video_insights/post_video_avg_time_watched/lifetime"
+    }
+  ]
+}

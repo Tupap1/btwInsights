@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "name": "post_video_view_time",
+      "period": "lifetime",
+      "values": [
+        {
+          "value": 1328665
+        }
+      ],
+      "title": "Tiempo de reproducción del reel (en ms) en total",
+      "description": "Total: tiempo total (en ms) que se ha reproducido tu reel, incluido el tiempo invertido en volver a reproducirlo.",
+      "id": "1091172913760322/video_insights/post_video_view_time/lifetime"
+    }
+  ]
+}

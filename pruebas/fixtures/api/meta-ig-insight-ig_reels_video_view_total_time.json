@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "id": "18120342799999707/insights/ig_reels_video_view_total_time/lifetime",
+      "name": "ig_reels_video_view_total_time",
+      "period": "lifetime",
+      "title": "Tiempo total de reproducción del vídeo (milisegundos)",
+      "description": "Este texto explica la definición del tiempo de visualización del vídeo de Reels",
+      "values": [
+        {
+          "value": 18986157
+        }
+      ]
+    }
+  ]
+}

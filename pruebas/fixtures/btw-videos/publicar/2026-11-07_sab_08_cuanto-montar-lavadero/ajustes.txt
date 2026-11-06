@@ -1,0 +1,12 @@
+Reel: 08 "Tienes 15 millones para montar tu lavadero. ¿Te alcanzan?" (guiones/08-cuanto-montar-lavadero.md, versión 2)
+Voz: IA (ElevenLabs eleven_v4, Sebastián)
+Fecha propuesta: sáb 2026-11-07
+Facebook + Instagram: 12:00, en Meta Business Suite (una sola publicación)
+TikTok: 19:30, desde TikTok Studio en el computador
+Etiqueta de IA: SÍ, obligatoria en cada red (voz de IA)
+TikTok: Contenido comercial -> Tu marca
+Música: ritmo-01 (Eleven Music, plan Starter)
+Imágenes: 3D hecho en Remotion; hidrolavadoras, aspiradora y estante hechos en Blender con scripts propios (scripts/blender/); carros, personajes y edificios de Kenney (CC0); la pantalla de la tablet es la app real en modo de prueba
+Precios: docs/costos-montar-lavadero-2026-11.md (Homecenter, Cámara de Comercio 2026, avisos de arriendo). BTWash $1.550.000 el primer año: Andrés debe confirmarlo antes de publicar
+Prueba: formato "imagina / cuánto cuesta" en 3D, frente al sketch 06 y al TERROR02
+Estado: aprobado por Andrés el 3-nov ("me encantó, avanti"); render final del 3-nov, 42 s (movimiento 8,13, quieto 0%, 3,8 cortes cada 10 s, pico -2,5 dBFS). Antes de publicar falta confirmar el precio de BTWash

@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "id": "18120342799999707/insights/comments/lifetime",
+      "name": "comments",
+      "period": "lifetime",
+      "title": "Comentarios",
+      "description": "Número de comentarios de tu reel.",
+      "values": [
+        {
+          "value": 1
+        }
+      ]
+    }
+  ]
+}
