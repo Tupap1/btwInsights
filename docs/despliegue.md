@@ -60,12 +60,22 @@ arranca solo si terminó bien. Para probar desde el
 servidor, descomenta `ports: 127.0.0.1:3100:3000` en `app` y abre `http://127.0.0.1:3100/api/salud`.
 
 Comandos de una vez (por ejemplo la importación inicial) con la imagen `herramientas`; las variables llegan por
-entorno, sin `.env.local`, y Node corre `tsx` directo:
+entorno, sin `.env.local`, y Node corre `tsx` directo. Los que usan código de `src/servidor/` (importar,
+recolectar, invitar) necesitan `--conditions=react-server`: sin eso, `server-only` los detiene (probado el 6-nov).
 
 ```bash
+# Importación: monta la carpeta de btw-videos (solo lectura) y apúntale BTW_VIDEOS_DIR
+docker compose --env-file .env.produccion -f docker-compose.prod.yml run --rm \
+  -v /ruta/a/btw-videos:/btw-videos:ro -e BTW_VIDEOS_DIR=/btw-videos migrar \
+  node --conditions=react-server --import tsx scripts/importar.ts
+
+# Invitar a alguien (el enlace sale de WEBAUTHN_ORIGEN; vale 24 h y un solo uso; no lo pegues en git ni en el chat)
 docker compose --env-file .env.produccion -f docker-compose.prod.yml run --rm migrar \
-  node --import tsx scripts/importar.ts
+  node --conditions=react-server --import tsx scripts/invitar.ts "Nombre"
 ```
+
+En Nginx Proxy Manager, el destino del proxy host es `http://btw-insights-app:3000` (alias fijo de `app` en la red
+`PROXY_RED`).
 
 ## 4. Ver los registros
 
