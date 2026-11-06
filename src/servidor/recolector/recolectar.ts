@@ -35,7 +35,7 @@ import {
   type PublicacionParaAlertas,
 } from "./alertas";
 import { leerComentarios } from "./comentarios";
-import { porLeer } from "./plan";
+import { porLeer, porLeerAlEntrar } from "./plan";
 
 export interface DepsRecolector {
   zernio?: ClienteZernio;
@@ -43,6 +43,8 @@ export interface DepsRecolector {
   ahora?: () => Date;
   /** Tiempo máximo para pedir métricas a Meta. Lo que no alcance queda para la siguiente corrida. */
   presupuestoMs?: number;
+  /** T25, lectura pedida al entrar al tablero: además del plan, Meta relee lo de menos de 30 días (ver plan.ts). */
+  alEntrar?: boolean;
   origen: "cli" | "http" | "boton";
   /** Valores que no pueden salir en ningún mensaje. */
   secretos: string[];
@@ -410,7 +412,7 @@ export async function recolectar(db: BaseDeDatos, deps: DepsRecolector): Promise
         const porId = new Map(ultimas.map((u) => [u.id, u.ultima ? new Date(u.ultima) : null]));
         for (const it of items) it.ultimaLectura = porId.get(it.publicacionId) ?? null;
       }
-      const toca = porLeer(items, reloj());
+      const toca = deps.alEntrar ? porLeerAlEntrar(items, reloj()) : porLeer(items, reloj());
 
       if (toca.length > 0) {
         intentoMetricas = true;

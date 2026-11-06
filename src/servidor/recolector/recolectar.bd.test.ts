@@ -89,6 +89,7 @@ interface Extra {
   ahora?: Date;
   presupuestoMs?: number;
   meta?: ClienteMeta;
+  alEntrar?: boolean;
 }
 
 const corre = (c: ReturnType<typeof clientes>, extra: Extra = {}): Promise<Resumen> => {
@@ -98,6 +99,7 @@ const corre = (c: ReturnType<typeof clientes>, extra: Extra = {}): Promise<Resum
     meta: extra.meta ?? c.meta,
     ahora: () => ahora,
     ...(extra.presupuestoMs !== undefined ? { presupuestoMs: extra.presupuestoMs } : {}),
+    ...(extra.alEntrar ? { alEntrar: true } : {}),
     origen: "cli",
     secretos: [SECRETO],
   });
@@ -140,6 +142,21 @@ describe.skipIf(!hayBd)("recolector", () => {
     expect((await db.select().from(lectura)).length).toBe(antes);
     expect((await db.select().from(publicacion)).length).toBe(pubs);
     console.log("llamadas en la segunda corrida (a Meta todavía no le toca leer):", c2.llamadas);
+  });
+
+  it("al entrar (T25): vuelve a leer de Meta lo reciente aunque el plan no le toque", async () => {
+    conCorrida(await corre(clientes()));
+    const t = new Date(AHORA.getTime() + UNA_HORA);
+    const normal = clientes();
+    const n = conCorrida(await corre(normal, { ahora: t }));
+    const alEntrar = clientes();
+    const e = conCorrida(await corre(alEntrar, { ahora: new Date(t.getTime() + UNA_HORA), alEntrar: true }));
+    // Los 19 reels (11 de Facebook y 8 de Instagram) tienen menos de 30 días y su lectura de Meta tiene 2 h.
+    expect(alEntrar.llamadas.meta - normal.llamadas.meta).toBe(19);
+    // Meta fecha cada lectura cuando se lee: las 19 son nuevas (el plan normal no leyó ninguna).
+    expect(n.lecturasNuevas).toBe(0);
+    expect(e.lecturasNuevas).toBe(19);
+    expect(e.estado).toBe("ok");
   });
 
   it("si Meta falla, abre alertas sin llaves, guarda lo de Zernio y la corrida queda parcial", async () => {
