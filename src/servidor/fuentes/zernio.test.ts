@@ -73,6 +73,18 @@ describe("zernio", () => {
     expect(llamadas).toHaveLength(3);
   });
 
+  it("historial devuelve el timeline real de varios días (acumulado: el último punto es el total de analytics)", async () => {
+    const real = fixture("zernio-post-timeline-varios-dias");
+    const { f } = falso(() => real);
+    const z = crearZernio({ apiKey: KEY, fetch: f, esperar: sinEspera });
+    const r = (await z.historial("6aed07f98fef160e5991b10e")) as { timeline: { date: string; views: number }[] };
+    const total = (fixture("zernio-analytics")["posts"] as { _id: string; analytics: { views: number } }[]).find(
+      (p) => p._id === real["postId"],
+    );
+    expect(r.timeline.at(-1)?.views).toBe(total?.analytics.views);
+    expect(JSON.stringify(real)).not.toMatch(/bearer/i);
+  });
+
   it("cuentas, post, historial y seguidores usan sus rutas", async () => {
     const { f, llamadas } = falso((url) => {
       if (url.pathname.endsWith("/accounts")) return fixture("zernio-accounts");

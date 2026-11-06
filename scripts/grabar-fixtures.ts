@@ -60,6 +60,34 @@ const lista = (j: Json | undefined): Json[] => (Array.isArray(j) ? j : []);
 
 mkdirSync(DIR, { recursive: true });
 
+// Modo `--solo post-timeline`: graba únicamente el historial diario del post de Zernio publicado hace más días (de los
+// que trae /analytics) en zernio-post-timeline-varios-dias.json, sin tocar los demás fixtures.
+const soloTimeline = process.argv.includes("--solo") && process.argv[process.argv.indexOf("--solo") + 1] === "post-timeline";
+if (soloTimeline) {
+  if (!env.ZERNIO_API_KEY) fallos.push("Zernio: falta ZERNIO_API_KEY.");
+  else {
+    const auth = { Authorization: `Bearer ${env.ZERNIO_API_KEY}` };
+    const z = (ruta: string, params: Record<string, string>) => {
+      const u = new URL(`https://zernio.com/api/v1${ruta}`);
+      for (const [k, v] of Object.entries(params)) u.searchParams.set(k, v);
+      return pedir(u, auth);
+    };
+    await paso("zernio-post-timeline-varios-dias", async () => {
+      const r = await z("/analytics", { limit: "100", page: "1" });
+      const posts = lista(objeto(r.json).posts)
+        .map(objeto)
+        .filter((p) => typeof p._id === "string" && typeof p.publishedAt === "string")
+        .sort((a, b) => String(a.publishedAt).localeCompare(String(b.publishedAt)));
+      const viejo = posts[0];
+      if (!viejo || typeof viejo._id !== "string") throw new Error("no hubo post con fecha de publicación en analytics");
+      guardar("zernio-post-timeline-varios-dias", (await z("/analytics/post-timeline", { postId: viejo._id })).json);
+    });
+  }
+  console.log(`Grabadas (${grabadas.length}): ${grabadas.join(", ")}`);
+  for (const f of fallos) console.log(`Falló: ${f}`);
+  process.exit(fallos.length ? 1 : 0);
+}
+
 // ---------- Zernio ----------
 if (env.ZERNIO_API_KEY) {
   const Z = "https://zernio.com/api/v1";
