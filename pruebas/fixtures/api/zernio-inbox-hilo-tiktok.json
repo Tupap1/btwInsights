@@ -1,0 +1,39 @@
+{
+  "status": "success",
+  "comments": [
+    {
+      "id": "7704758797697549076",
+      "message": "Haz la cuenta con tus propios números (arriendo, sueldos, precio): btwash.btw-one.com/calculadora",
+      "createdTime": "2026-11-05T18:39:40.000Z",
+      "from": {
+        "id": "+ZMU+Y7/HUkdSLAmeRsYq/FuJ/awKL6/zp7QMwz8xlPyfSUMYdIYBG19ksPOAl/v",
+        "name": "BTW · Software para negocios",
+        "username": "btw.inc",
+        "picture": null,
+        "isOwner": true
+      },
+      "likeCount": 0,
+      "replyCount": 0,
+      "platform": "tiktok",
+      "url": null,
+      "replies": [],
+      "isHidden": false,
+      "canReply": true,
+      "canDelete": true,
+      "canHide": true,
+      "canLike": true,
+      "isLiked": false,
+      "canPin": true,
+      "isPinned": false
+    }
+  ],
+  "pagination": {
+    "hasMore": false
+  },
+  "meta": {
+    "platform": "tiktok",
+    "postId": "7704758213807312180",
+    "accountId": "6aed07f75d163393fc5c0a9d",
+    "lastUpdated": "2026-11-06T12:07:12.870Z"
+  }
+}

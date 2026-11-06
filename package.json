@@ -21,7 +21,8 @@
     "recolectar": "tsx --conditions=react-server --env-file=.env.local scripts/recolectar.ts",
     "invitar": "tsx --conditions=react-server --env-file=.env.local scripts/invitar.ts",
     "preparar-env": "node scripts/preparar-env.mjs",
-    "grabar-fixtures": "tsx --env-file=.env.local scripts/grabar-fixtures.ts"
+    "grabar-fixtures": "tsx --env-file=.env.local scripts/grabar-fixtures.ts",
+    "grabar-fixtures:fase3": "tsx --env-file=.env.local scripts/grabar-fixtures-fase3.ts"
   },
   "dependencies": {
     "@simplewebauthn/browser": "14.0.0",

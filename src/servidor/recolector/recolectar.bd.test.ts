@@ -73,6 +73,10 @@ const zernioQueFalla: ClienteZernio = {
   post: falla,
   historial: falla,
   seguidores: falla,
+  postsConComentarios: falla,
+  comentariosDePost: falla,
+  campanasPauta: falla,
+  anunciosPauta: falla,
 };
 
 const AHORA = new Date("2026-11-07T12:00:00Z"); // 07:00 en Bogotá

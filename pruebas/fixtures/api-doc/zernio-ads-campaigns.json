@@ -1,0 +1,64 @@
+{
+  "campaigns": [
+    {
+      "platformCampaignId": "120210000000000001",
+      "platform": "instagram",
+      "campaignName": "Lavadero: la cuenta real",
+      "status": "active",
+      "platformCampaignStatus": "ACTIVE",
+      "adCount": 1,
+      "budget": { "amount": 20000, "type": "daily" },
+      "budgetLevel": "campaign",
+      "currency": "COP",
+      "metrics": {
+        "spend": 85000,
+        "impressions": 12000,
+        "reach": 9000,
+        "clicks": 140,
+        "ctr": 1.17,
+        "cpc": 607.14,
+        "cpm": 7083.33,
+        "engagement": 320,
+        "conversions": 0
+      },
+      "platformAdAccountId": "act_100000000000001",
+      "platformAdAccountName": "BTW",
+      "accountId": "6aed36858405bb702db92cda",
+      "profileId": "6aed00000000000000000001",
+      "platformObjective": "OUTCOME_ENGAGEMENT",
+      "optimizationGoal": "POST_ENGAGEMENT",
+      "earliestAd": "2026-11-01T14:00:00.000Z",
+      "latestAd": "2026-11-01T14:00:00.000Z"
+    },
+    {
+      "platformCampaignId": "120210000000000002",
+      "platform": "facebook",
+      "campaignName": "Calculadora: tráfico",
+      "status": "paused",
+      "platformCampaignStatus": "PAUSED",
+      "adCount": 2,
+      "budget": null,
+      "budgetLevel": "adset",
+      "currency": "COP",
+      "metrics": {
+        "spend": 41250.5,
+        "impressions": 5300,
+        "reach": 4100,
+        "clicks": 61,
+        "ctr": 1.15,
+        "cpc": 676.24,
+        "cpm": 7783.11,
+        "engagement": 75,
+        "conversions": 2.5
+      },
+      "platformAdAccountId": "act_100000000000001",
+      "platformAdAccountName": "BTW",
+      "accountId": "6aed00000000000000000002",
+      "profileId": "6aed00000000000000000001",
+      "platformObjective": "OUTCOME_TRAFFIC",
+      "earliestAd": "2026-10-20T15:00:00.000Z",
+      "latestAd": "2026-10-22T15:00:00.000Z"
+    }
+  ],
+  "pagination": { "page": 1, "limit": 100, "total": 2, "pages": 1 }
+}

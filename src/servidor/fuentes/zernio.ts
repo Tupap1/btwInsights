@@ -1,8 +1,18 @@
 // Cliente de Zernio: todo es GET salvo `editarBorrador` (PUT, siempre con isDraft: true). Nada crea, programa ni publica.
+// Fase 3: el inbox de comentarios y la pauta también son solo GET (nada responde, oculta, borra ni crea anuncios).
 import { pedirJson, type OpcionesPedir } from "./http";
 
 const BASE = "https://zernio.com/api/v1";
 const MAX_PAGINAS = 200;
+/** Un hilo de comentarios con más de 20 páginas de 100 se lee incompleto (y se marca así). */
+const MAX_PAGINAS_HILO = 20;
+const DIA = /^\d{4}-\d{2}-\d{2}$/;
+
+function exigirDia(nombre: string, valor: string): void {
+  if (!DIA.test(valor) || Number.isNaN(Date.parse(`${valor}T00:00:00Z`))) {
+    throw new Error(`La fecha ${nombre} de la pauta debe ser AAAA-MM-DD.`);
+  }
+}
 
 export type EstadoZernio =
   | "draft"
@@ -135,6 +145,30 @@ export function crearZernio(opciones: OpcionesZernio) {
     return todos;
   }
 
+  /** Pagina solo con el cursor opaco que devuelva la respuesta (sin `page`): `pagination.nextCursor` o `.cursor`. */
+  async function porCursor(
+    ruta: string,
+    clave: string,
+    params: Record<string, string>,
+    maxPaginas: number,
+  ): Promise<{ elementos: unknown[]; completo: boolean }> {
+    const todos: unknown[] = [];
+    let cursor: string | null = null;
+    for (let i = 0; i < maxPaginas; i += 1) {
+      const p: Record<string, string> = { ...params };
+      if (cursor) p["cursor"] = cursor;
+      const cuerpo = await pedir(ruta, p);
+      todos.push(...elementos(cuerpo, clave));
+      const pag = esObjeto(cuerpo) && esObjeto(cuerpo["pagination"]) ? cuerpo["pagination"] : {};
+      if (pag["hasMore"] !== true) return { elementos: todos, completo: true };
+      const siguiente = pag["nextCursor"] ?? pag["cursor"];
+      // hasMore sin cursor: no hay cómo seguir; lo leído queda marcado como incompleto.
+      if (typeof siguiente !== "string" || siguiente === "") return { elementos: todos, completo: false };
+      cursor = siguiente;
+    }
+    return { elementos: todos, completo: false };
+  }
+
   return {
     async cuentas(): Promise<unknown[]> {
       return elementos(await pedir("/accounts"), "accounts");
@@ -160,6 +194,32 @@ export function crearZernio(opciones: OpcionesZernio) {
     },
     seguidores(): Promise<unknown> {
       return pedir("/accounts/follower-stats");
+    },
+    /** GET /inbox/comments: los posts (Instagram y TikTok) con su número de comentarios. Todas las páginas. */
+    async postsConComentarios(): Promise<unknown[]> {
+      return (await porCursor("/inbox/comments", "data", { limit: "50" }, MAX_PAGINAS)).elementos;
+    },
+    /** GET /inbox/comments/{postId}: el hilo de un post. `completo` = se leyeron todas sus páginas. */
+    async comentariosDePost(postId: string, accountId: string): Promise<{ comentarios: unknown[]; completo: boolean }> {
+      const r = await porCursor(
+        `/inbox/comments/${encodeURIComponent(postId)}`,
+        "comments",
+        { accountId, limit: "100" },
+        MAX_PAGINAS_HILO,
+      );
+      return { comentarios: r.elementos, completo: r.completo };
+    },
+    /** GET /ads/campaigns: campañas con sus cifras sumadas entre `desde` y `hasta` (AAAA-MM-DD, inclusive). */
+    async campanasPauta(desde: string, hasta: string): Promise<unknown[]> {
+      exigirDia("desde", desde);
+      exigirDia("hasta", hasta);
+      return paginar("/ads/campaigns", "campaigns", { fromDate: desde, toDate: hasta, limit: "100" });
+    },
+    /** GET /ads: anuncios con sus cifras entre `desde` y `hasta` (AAAA-MM-DD, inclusive). */
+    async anunciosPauta(desde: string, hasta: string): Promise<unknown[]> {
+      exigirDia("desde", desde);
+      exigirDia("hasta", hasta);
+      return paginar("/ads", "ads", { fromDate: desde, toDate: hasta, limit: "100" });
     },
   };
 }

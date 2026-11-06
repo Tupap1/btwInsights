@@ -1,0 +1,49 @@
+{
+  "status": "success",
+  "comments": [
+    {
+      "id": "18212936308364837",
+      "message": "Haz la cuenta con tus propios números (arriendo, sueldos, precio): btwash.btw-one.com/calculadora",
+      "createdTime": "2026-11-05T18:41:29+0000",
+      "from": {
+        "id": "17841446002302741",
+        "name": "btwone.co",
+        "username": "btwone.co",
+        "picture": null,
+        "isOwner": true
+      },
+      "likeCount": 0,
+      "replyCount": 0,
+      "platform": "instagram",
+      "url": "https://www.instagram.com/reel/DfXsc6Kjwib/?comment_id=18212936308364837",
+      "replies": [],
+      "isHidden": false,
+      "canReply": true,
+      "canDelete": true,
+      "canHide": true,
+      "canLike": false,
+      "isLiked": false,
+      "canPin": false,
+      "isPinned": false
+    }
+  ],
+  "pagination": {
+    "hasMore": false
+  },
+  "post": {
+    "id": "18120342799999707",
+    "permalink": "https://www.instagram.com/reel/DfXsc6Kjwib/",
+    "text": "Montaste tu lavadero con $20 millones. ¿En cuánto tiempo los recuperas? 🚗\n\nLa cuenta fácil: a $25.000 por carro son 800 carros. Lavando 30 al día, en un mes.\n\nLa cuenta real:\n– $3.000 se van en jabón e insumos → te quedan $22.000 por carro\n– Arriendo, agua y 2 lavadores: unos $4.870.000 al mes → se comen los primeros 9 carros de cada día\n\nCon 12 carros al día, los $20 millones vuelven en unos 10 meses. Con 8, pierdes plata.\n\n¿Cuántos carros lavas tú en un día normal? Déjame tu número 👇\n\n#lavadero #lavaderodecarros #carwash #negocios #emprendimiento #BTWash",
+    "thumbnailUrl": "<imagen>",
+    "mediaUrl": "<imagen>",
+    "mediaType": "VIDEO",
+    "productType": "REELS",
+    "createdAt": "2026-11-05T18:39:26+0000"
+  },
+  "meta": {
+    "platform": "instagram",
+    "postId": "18120342799999707",
+    "accountId": "6aed36858405bb702db92cda",
+    "lastUpdated": "2026-11-06T12:06:58.293Z"
+  }
+}
