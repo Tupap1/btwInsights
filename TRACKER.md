@@ -1,6 +1,6 @@
 # Tracker del tablero BTW Insights
 
-Estado al 5-nov-2026 (hora de Bogotá). Cada tarea dice quién la hace (Opus = la sesión principal, que arma, revisa
+Estado al 6-nov-2026, madrugada (hora de Bogotá): fases 1 y 2 terminadas y desplegadas en Docker en el servidor de BTW; de la fase 3 no quedó nada sin un permiso o una decisión de Andrés. Cada tarea dice quién la hace (Opus = la sesión principal, que arma, revisa
 e integra; Sonnet o Haiku = subagentes) y qué archivos son suyos. Nadie toca archivos de otra tarea. **Cada tarea
 terminada va en su propio commit** (Andrés, 5-nov).
 
@@ -35,6 +35,17 @@ Tomadas sin preguntar, eligiendo lo más seguro y reversible (`docs/handoff-serv
 | 5 | Los archivos de `~/btw-respaldos` se movieron a `respaldos/` (ignorado por git); los tar se extrajeron en `datos/btw-videos/` (ignorado) y `BTW_VIDEOS_DIR` apunta ahí | Lo pidió Andrés | — |
 | 6 | La base de **desarrollo** del servidor (`127.0.0.1:5434`) se llenó con `btw_tablero.dump` | Para probar las pantallas con datos reales | `docker compose down -v` del compose de desarrollo |
 | 7 | `.env.produccion` creado con secretos nuevos al azar (nunca impresos) y las 4 llaves de `respaldos/llaves-api.env` | Paso 0 del traspaso | Borrar el archivo y regenerar |
+| 8 | **T08b sin relleno:** el historial de Zernio es acumulado, pero solo existe desde el 5-nov y sus puntos no traen la hora | Guardarlos sería inventar cuándo valía la cifra | Reabrir si Zernio agrega la hora (`docs/specs/T08b.md`) |
+| 9 | Las imágenes se construyen desde un worktree limpio del último commit y producción se levanta desde el repo con `--no-build` | Que el trabajo a medias de los subagentes nunca entre a producción, y que `RESPALDO_HOST_DIR` quede en el repo | Con el árbol limpio, `docker compose ... up -d --build` desde el repo da lo mismo |
+| 10 | Healthcheck de la base por TCP (`pg_isready -h 127.0.0.1`) en los dos compose | En el primer arranque `migrar` fallaba (el servidor temporal de inicialización solo escucha por socket) | — |
+| 11 | Alias fijo `btw-insights-app` de la app en `proxy-net`; NPM apunta a `http://btw-insights-app:3000` | Un nombre que no depende del nombre del contenedor | Quitar el alias del compose |
+| 12 | Producción arrancó del dump del 6-nov (no de `importar`), como pide el traspaso; luego se corrió `importar` una vez para las ideas y los guiones (idempotente, no pisa lo editado) | El dump trae lo leído hasta el 6-nov 00:23 | Restaurar el respaldo de antes (`respaldos/produccion/`) |
+| 13 | **Facebook cuenta para "día sin video"** (T19) | La regla es por red; sale mucho aviso porque Facebook casi nunca está programado. Se plegó en `/hoy` como "Avisos de calendario" | Si Facebook no se programa a propósito, quitarlo de `alertasNuevasDeCola` |
+| 14 | Ideas con formato que no está en el enum (p. ej. "Mito") quedan como `otro` y el formato original va al final del título | `idea` no tiene columna para el texto original | Una columna nueva si hace falta |
+| 15 | El CSV de exportación lleva las fechas en ISO UTC (`Z`) | Es lo estándar; quien lo lea lo pasa a Bogotá | Cambiar `metricas.ts` |
+| 16 | En el celular la barra muestra Hoy, Videos, Cola y "Más" (el resto y Salir en `/mas`) | Con 8 pantallas no caben | `src/componentes/enlaces.ts` |
+| 17 | `editarBorrador` manda `scheduledFor` en UTC y sin `timezone` (documentación de Zernio: `PUT /v1/posts/{id}`) | No tocar más campos de los necesarios | Confirmar en el primer uso real (punto 8 de "Para Andrés") |
+| 18 | **Incidente corregido:** al importar en producción (01:50) entraron 19 lecturas CSV de Meta repetidas (la hora del archivo perdió los milisegundos en el tar). Se arregló el código (hora en segundos enteros y tolerancia de 2 s) y se borraron esas 19 filas, verificadas como copias exactas, en producción y en desarrollo | "No se duplican cifras". Había respaldo de justo antes (`respaldos/produccion/btw-insights-20261106-014942.dump`) | Restaurar ese respaldo |
 
 ## Para Andrés al levantarse
 
@@ -42,6 +53,11 @@ El tablero ya corre en Docker en este servidor (proyecto `btw-insights`: `db`, `
 diario a las 3:00), con los datos del dump del 6-nov y una recolección real hecha. Falta lo que necesita tu inicio
 de sesión:
 
+0. **Urgente, IA sin etiqueta:** la primera recolección con las alertas nuevas encontró que los borradores de
+   Zernio de los reels **11 (sale el 8-nov), 16, 17, 18, 20 y 21** (TikTok e Instagram) **no están marcados como
+   hechos con IA**, aunque esos reels usan IA según el seguimiento. Lo comprobé con un GET a Zernio el 6-nov a las
+   2:00: `isAiGenerated` y `video_made_with_ai` vienen en `false` (el 5-nov venían en `true`). No lo cambié: es una
+   escritura en Zernio. Márcalos en Zernio antes de programarlos; la alerta se cierra sola en la siguiente lectura.
 1. **Empujar y abrir el PR** (no pude: el servidor no tiene credenciales de GitHub). Desde este repo:
    `gh auth login`, luego `git push origin fase-1`. `main` no existe en GitHub: créala desde el primer commit
    (`git push origin $(git rev-list --max-parents=0 HEAD):refs/heads/main`) y abre el PR sin fusionar:
@@ -63,6 +79,14 @@ de sesión:
 6. **`seguimiento.csv`** (en btw-videos): las filas del 13 y el 14 tienen una celda con coma sin comillas; ponla
    entre comillas y vuelve a importar.
 7. **Asignar a mano** los 2 posts del 28-oct en "Sin asignar" (deben ser del 04-G4).
+8. **Primer uso real de "Editar" en `/cola`** (T15): pruébalo con un borrador que no importe; revisa en Zernio que
+   el texto cambió, que la hora quedó en Bogotá y que sigue siendo borrador. Si algo no cuadra, dime y se ajusta.
+9. **Fase 3, decide:** qué se guarda de los comentarios del inbox de Zernio (regla 3.6); si quieres la pauta de
+   Meta Ads, dale `ads_read` al token y dime la cuenta publicitaria; si apruebas leer los leads de BTWash desde
+   Supabase (solo lectura, regla 3.7).
+10. **Tarea de las 8:00** (en tu PC): sigue `docs/tarea-8am.md`. El secreto es `RECOLECTOR_SECRETO` de
+    `.env.produccion` en el servidor: cópialo a una variable de entorno del PC, nunca al chat ni a un archivo del repo.
+11. **Revisa "Decisiones por revisar"** (arriba): todas se pueden deshacer.
 
 ## Pendiente de Andrés
 
@@ -97,10 +121,28 @@ de sesión:
 
 **Siguiente:** la sesión del servidor sigue con `docs/handoff-servidor.md`: fase 1 (T09, T10b, T08b, T12, T13 y T14), fase 2 (T15 a T21) y, de la fase 3, lo que no necesita a Andrés.
 
-## Fase 2
+## Tareas — Fase 2
 
-- Ver y editar los borradores de Zernio (texto y fecha), siempre con `isDraft: true` y con confirmación.
-- Ideas, leads, alertas completas y la tarea de las 8:00 de `btw-videos` leyendo del tablero.
+Regla de toda la fase: ninguna escritura real en Zernio ni en Meta durante la noche (todo con `fetch` simulado).
+
+| ID | Tarea | Quién | Estado | Archivos |
+|---|---|---|---|---|
+| — | Migración `0002`: `publicacion.marca_ia` e índice único de `idea.fuente` | Opus | ✅ | `esquema.ts`, `migraciones/0002_*` |
+| T15 | Editar borradores de Zernio (texto y fecha) desde `/cola`: un solo método de escritura con `isDraft: true` fijo, revisar → confirmar | Sonnet | ✅ (sin uso real todavía) | `fuentes/{http,zernio}.ts`, `borradores/*`, `cola/*`, `editar-borrador.tsx` |
+| T16 | Banco de ideas y guiones: importación idempotente, `/ideas` y "Pasar a reel" | Sonnet | ✅ (14 ideas y 15 guiones en desarrollo) | `importar/{ideas,guiones,ideas-a-la-base}*`, `ideas/*`, `consultas/ideas*` |
+| T17 | Leads: registro manual en `/leads`, por semana y por canal, tarjeta de `/hoy` | Sonnet | ✅ | `leads/*`, `consultas/leads*`, `(tablero)/leads/` |
+| T18 | Cuentas: `/cuentas` y "Seguidores nuevos" de `/hoy` desde la misma consulta | Sonnet | ✅ | `consultas/cuentas*`, `(tablero)/cuentas/`, `grafica-cuentas.tsx` |
+| T19 | Alertas completas: lectura atrasada, dobles, días sin video, token de Meta, IA sin etiqueta | Sonnet | ✅ | `recolector/alertas*`, `recolectar.ts`, `normalizar/zernio.ts`, `guardar.ts` |
+| T20 | `/aprendizajes`: medianas a 48 h por gancho, formato, voz y variable; "pocos datos" con n < 3 | Sonnet | ✅ | `consultas/aprendizajes*`, `(tablero)/aprendizajes/` |
+| T21 | `GET /api/exportar/metricas.csv` con secreto y `docs/tarea-8am.md` | Sonnet | ✅ (la tarea de las 8:00 no se cambió: está en tu PC) | `exportar/*`, `api/exportar/`, `docs/tarea-8am.md` |
+| — | Integración: navegación con "Más", alertas de calendario plegadas en `/hoy`, capturas | Opus | ✅ | `navegacion.tsx`, `enlaces.ts`, `(tablero)/mas/`, `hoy` |
+
+## Fase 3
+
+- **Copia de los videos en R2:** descartada (5-nov: los videos no se guardan en el tablero).
+- **Bloqueadas** (necesitan a Andrés; ver "Para Andrés", punto 9): comentarios del inbox de Zernio (regla 3.6: qué
+  datos de quien comenta se guardan), pauta de Meta Ads en solo lectura (el token no tiene `ads_read` ni hay cuenta
+  publicitaria configurada) y leads de BTWash desde Supabase (regla 3.7: aprobación explícita).
 
 ## Investigación de servidores (5-nov; se eligió el servidor propio)
 
