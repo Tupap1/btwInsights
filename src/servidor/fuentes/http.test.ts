@@ -98,3 +98,15 @@ describe("pedirJson", () => {
     expect(f).toHaveBeenCalledTimes(2);
   });
 });
+
+describe("pedirJson: escritura explícita", () => {
+  it("sin `escritura` es GET; con ella, PUT con cuerpo JSON y sin reintentos", async () => {
+    const f = vi.fn<typeof fetch>(async () => new Response("{}", { status: 503 }));
+    await expect(
+      pedirJson(new URL("https://x.test/a"), { secretos: [], fetch: f, esperar: async () => {}, escritura: { metodo: "PUT", cuerpo: { a: 1 } } }),
+    ).rejects.toThrow();
+    expect(f).toHaveBeenCalledTimes(1);
+    expect(f.mock.calls[0]?.[1]?.method).toBe("PUT");
+    expect(f.mock.calls[0]?.[1]?.body).toBe('{"a":1}');
+  });
+});

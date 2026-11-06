@@ -1,4 +1,4 @@
-// Cliente de solo lectura de Zernio. No hay ningún método que acepte otro verbo HTTP.
+// Cliente de Zernio: todo es GET salvo `editarBorrador` (PUT, siempre con isDraft: true). Nada crea, programa ni publica.
 import { pedirJson, type OpcionesPedir } from "./http";
 
 const BASE = "https://zernio.com/api/v1";
@@ -44,6 +44,36 @@ function elementos(cuerpo: unknown, clave: string): unknown[] {
   return Array.isArray(v) ? (v as unknown[]) : [];
 }
 
+export interface CambiosBorrador {
+  contenido?: string;
+  programadoPara?: Date;
+}
+
+export interface CuerpoEditarBorrador {
+  isDraft: true;
+  content?: string;
+  scheduledFor?: string;
+}
+
+/**
+ * Cuerpo del PUT /v1/posts/{id}. Pura y cerrada: SIEMPRE `isDraft: true` y, como mucho, `content` y `scheduledFor`.
+ * Cualquier otra clave de la entrada se ignora (solo se leen esas dos, por propiedad propia). Sin cambios válidos: error.
+ */
+export function cuerpoEditarBorrador(cambios: unknown): CuerpoEditarBorrador {
+  const cuerpo: CuerpoEditarBorrador = { isDraft: true };
+  if (esObjeto(cambios)) {
+    const propio = (k: string): unknown => (Object.hasOwn(cambios, k) ? cambios[k] : undefined);
+    const contenido = propio("contenido");
+    if (typeof contenido === "string" && contenido.trim() !== "") cuerpo.content = contenido;
+    const fecha = propio("programadoPara");
+    if (fecha instanceof Date && Number.isFinite(fecha.getTime())) cuerpo.scheduledFor = fecha.toISOString();
+  }
+  if (cuerpo.content === undefined && cuerpo.scheduledFor === undefined) {
+    throw new Error("No hay nada que cambiar en el borrador.");
+  }
+  return cuerpo;
+}
+
 export function crearZernio(opciones: OpcionesZernio) {
   const { apiKey } = opciones;
   const porMinuto = opciones.porMinuto ?? 50;
@@ -64,7 +94,11 @@ export function crearZernio(opciones: OpcionesZernio) {
     return fetchBase(entrada, init);
   };
 
-  const pedir = (ruta: string, params: Record<string, string> = {}): Promise<unknown> => {
+  const pedir = (
+    ruta: string,
+    params: Record<string, string> = {},
+    escritura?: { metodo: "PUT"; cuerpo: unknown },
+  ): Promise<unknown> => {
     const url = new URL(`${BASE}${ruta}`);
     for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
     const op: OpcionesPedir = {
@@ -73,6 +107,7 @@ export function crearZernio(opciones: OpcionesZernio) {
       fetch: fetchLimitado,
     };
     if (opciones.esperar) op.esperar = opciones.esperar;
+    if (escritura) op.escritura = escritura;
     return pedirJson(url, op);
   };
 
@@ -115,6 +150,11 @@ export function crearZernio(opciones: OpcionesZernio) {
       const cuerpo = await pedir(`/posts/${encodeURIComponent(id)}`);
       return esObjeto(cuerpo) && "post" in cuerpo ? cuerpo["post"] : cuerpo;
     },
+    /** Único método de escritura: edita el texto y/o la fecha de un BORRADOR. Siempre `isDraft: true`. */
+    async editarBorrador(id: string, cambios: CambiosBorrador): Promise<void> {
+      const cuerpo = cuerpoEditarBorrador(cambios);
+      await pedir(`/posts/${encodeURIComponent(id)}`, {}, { metodo: "PUT", cuerpo });
+    },
     historial(postId: string): Promise<unknown> {
       return pedir("/analytics/post-timeline", { postId });
     },
@@ -124,4 +164,7 @@ export function crearZernio(opciones: OpcionesZernio) {
   };
 }
 
-export type ClienteZernio = ReturnType<typeof crearZernio>;
+/** Cliente completo (con la única escritura). */
+export type ClienteZernioCompleto = ReturnType<typeof crearZernio>;
+/** Lo que ve el recolector: solo lecturas. El recolector no tiene acceso a `editarBorrador` ni por tipo. */
+export type ClienteZernio = Omit<ClienteZernioCompleto, "editarBorrador">;

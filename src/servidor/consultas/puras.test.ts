@@ -231,3 +231,30 @@ describe("ordenar /videos por fecha", () => {
     expect(ordenar(filas, "fecha", 1).map((f) => f.reel.id)).toEqual(["a", "b", "f", "g"]);
   });
 });
+
+describe("cola: borradores editables (T15)", () => {
+  const hoy = "2026-11-06";
+  const base = { estado: "borrador" as const, origen: "zernio" as const, zernioPostId: "z1", texto: "hola", programadoPara: new Date("2026-11-07T15:00:00Z") };
+  it("marca editable solo TikTok/Instagram, borrador, de Zernio y con id", () => {
+    const c = armarCola(
+      [
+        pub(1, { ...base, red: "tiktok" }),
+        pub(2, { ...base, red: "instagram", zernioPostId: null }),
+        pub(3, { ...base, red: "facebook" }),
+        pub(4, { ...base, red: "instagram", estado: "programado" }),
+        pub(5, { ...base, red: "instagram", origen: "meta" }),
+      ],
+      [],
+      hoy,
+    );
+    const items = c.dias.flatMap((d) => Object.values(d.redes).flat());
+    const por = (id: number) => items.find((i) => i.publicacionId === id);
+    expect(por(1)?.editable).toBe(true);
+    expect(por(1)?.texto).toBe("hola");
+    expect(por(2)?.editable).toBe(false);
+    expect(por(3)?.editable).toBe(false);
+    expect(por(3)?.soloMeta).toBe(true);
+    expect(por(4)?.editable).toBe(false);
+    expect(por(5)?.editable).toBe(false);
+  });
+});

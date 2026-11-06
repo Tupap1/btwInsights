@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it, vi } from "vitest";
-import { crearZernio } from "./zernio";
+import { crearZernio, cuerpoEditarBorrador } from "./zernio";
 
 const fixture = (nombre: string): Record<string, unknown> =>
   JSON.parse(readFileSync(fileURLToPath(new URL(`../../../pruebas/fixtures/api/${nombre}.json`, import.meta.url)), "utf8")) as Record<string, unknown>;
@@ -128,9 +128,9 @@ describe("zernio", () => {
     }
   });
 
-  it("el cliente no tiene métodos genéricos", () => {
+  it("el cliente no tiene métodos genéricos (la única escritura es editarBorrador)", () => {
     const z = crearZernio({ apiKey: KEY, fetch: falso(() => ({})).f });
-    expect(Object.keys(z).sort()).toEqual(["analitica", "cuentas", "historial", "post", "posts", "seguidores"]);
+    expect(Object.keys(z).sort()).toEqual(["analitica", "cuentas", "editarBorrador", "historial", "post", "posts", "seguidores"]);
   });
 
   it("limita a porMinuto peticiones por ventana de 60 s con reloj falso", async () => {
@@ -171,5 +171,103 @@ describe("zernio", () => {
     const error = (await z.cuentas().catch((e: unknown) => e)) as Error;
     expect(error.message).not.toContain(KEY);
     expect(error.message).toContain("<redactado>");
+  });
+});
+
+describe("zernio: editarBorrador (escritura, solo con fetch simulado)", () => {
+  const FECHA = new Date("2026-11-20T15:00:00Z");
+
+  it("el cuerpo siempre trae isDraft: true y solo content/scheduledFor, pase lo que pase", () => {
+    const sucios: unknown[] = [
+      { contenido: "hola", isDraft: false, status: "scheduled", publishNow: true, platforms: [{}], queuedFromProfile: true },
+      { contenido: "hola", programadoPara: FECHA, isDraft: false },
+      { contenido: null, programadoPara: null },
+      { contenido: 5, programadoPara: "2026-11-20" },
+      { contenido: "  ", programadoPara: new Date("x") },
+      JSON.parse('{"__proto__": {"isDraft": false, "publishNow": true}, "contenido": "x"}'),
+      Object.assign(Object.create({ contenido: "heredado", programadoPara: FECHA }), {}),
+      { content: "directo", scheduledFor: FECHA.toISOString(), isDraft: false },
+    ];
+    for (const e of sucios) {
+      let cuerpo: Record<string, unknown> | undefined;
+      try {
+        cuerpo = cuerpoEditarBorrador(e) as unknown as Record<string, unknown>;
+      } catch {
+        continue; // sin nada que cambiar: error, tampoco hay cuerpo
+      }
+      expect(cuerpo["isDraft"]).toBe(true);
+      expect(Object.keys(cuerpo).every((k) => ["isDraft", "content", "scheduledFor"].includes(k))).toBe(true);
+    }
+    expect(cuerpoEditarBorrador({ contenido: "hola", programadoPara: FECHA, isDraft: false })).toEqual({
+      isDraft: true,
+      content: "hola",
+      scheduledFor: "2026-11-20T15:00:00.000Z",
+    });
+  });
+
+  it("sin nada que cambiar es un error", () => {
+    for (const e of [{}, null, undefined, "x", 3, { isDraft: false }, { contenido: "" }, { programadoPara: new Date("x") }]) {
+      expect(() => cuerpoEditarBorrador(e)).toThrow();
+    }
+  });
+
+  it("hace PUT /posts/<id codificado> con Bearer y el cuerpo exacto", async () => {
+    const llamadas: Llamada[] = [];
+    const f = (async (entrada: URL | string, init?: RequestInit) => {
+      llamadas.push({ url: new URL(entrada.toString()), init });
+      return json({ post: { _id: "x" } });
+    }) as typeof fetch;
+    const z = crearZernio({ apiKey: KEY, fetch: f, esperar: sinEspera });
+    await z.editarBorrador("a/b c?d", { contenido: "nuevo", programadoPara: FECHA });
+    expect(llamadas).toHaveLength(1);
+    const l = llamadas[0];
+    expect(l?.init?.method).toBe("PUT");
+    expect(l?.url.pathname).toBe("/api/v1/posts/a%2Fb%20c%3Fd");
+    expect(l?.url.search).toBe("");
+    const h = l?.init?.headers as Record<string, string>;
+    expect(h["Authorization"]).toBe(`Bearer ${KEY}`);
+    expect(JSON.parse(String(l?.init?.body))).toEqual({
+      isDraft: true,
+      content: "nuevo",
+      scheduledFor: "2026-11-20T15:00:00.000Z",
+    });
+  });
+
+  it("un 4xx no reintenta y el error no lleva la llave", async () => {
+    let n = 0;
+    const f = (async () => {
+      n += 1;
+      return json({ error: `clave ${KEY} inválida` }, 400);
+    }) as typeof fetch;
+    const z = crearZernio({ apiKey: KEY, fetch: f, esperar: sinEspera });
+    const e = await z.editarBorrador("p1", { contenido: "x" }).catch((x: unknown) => x);
+    expect(n).toBe(1);
+    expect(String((e as Error).message)).not.toContain(KEY);
+    expect(String((e as Error).message)).toContain("HTTP 400");
+  });
+
+  it("un 429 o un 500 tampoco se reintentan en una escritura; el GET sigue reintentando", async () => {
+    let n = 0;
+    const f = (async () => {
+      n += 1;
+      return json({}, n === 1 ? 500 : 200);
+    }) as typeof fetch;
+    const z = crearZernio({ apiKey: KEY, fetch: f, esperar: sinEspera });
+    await expect(z.editarBorrador("p1", { contenido: "x" })).rejects.toThrow();
+    expect(n).toBe(1);
+    n = 0;
+    await z.post("p1");
+    expect(n).toBe(2);
+  });
+
+  it("el GET sigue siendo GET y sin cuerpo", async () => {
+    const llamadas: Llamada[] = [];
+    const f = (async (entrada: URL | string, init?: RequestInit) => {
+      llamadas.push({ url: new URL(entrada.toString()), init });
+      return json({ accounts: [] });
+    }) as typeof fetch;
+    await crearZernio({ apiKey: KEY, fetch: f }).cuentas();
+    expect(llamadas[0]?.init?.method).toBe("GET");
+    expect(llamadas[0]?.init?.body).toBeUndefined();
   });
 });

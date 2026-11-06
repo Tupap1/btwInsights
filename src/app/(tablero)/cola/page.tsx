@@ -1,5 +1,6 @@
 import { TriangleAlert } from "lucide-react";
 import Link from "next/link";
+import { EditarBorrador } from "@/componentes/editar-borrador";
 import { EstadoPublicacionBadge } from "@/componentes/estado-publicacion";
 import { NOMBRE_RED } from "@/componentes/etiquetas";
 import { Card, CardContent, CardHeader, CardTitle } from "@/componentes/ui/card";
@@ -10,6 +11,9 @@ import { consultarCola } from "@/servidor/consultas/cola";
 import { REDES } from "@/servidor/consultas/datos";
 import { formatoFechaCola, formatoHora } from "@/servidor/consultas/formato";
 import { ahoraServidor, diaBogota, inicioDiaBogota } from "@/servidor/consultas/tiempo";
+
+/** "HH:MM" de Bogotá (UTC-5) para precargar el campo de hora. */
+const horaBogota = (f: Date): string => new Date(f.getTime() - 5 * 3_600_000).toISOString().slice(11, 16);
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Cola · BTW Insights" };
@@ -24,7 +28,7 @@ export default async function PaginaCola() {
     <div className="flex flex-col gap-4">
       <header>
         <h1 className="text-xl font-semibold">Cola de 14 días</h1>
-        <p className="text-sm text-muted-foreground">Solo lectura: lo que está programado o publicado, por día y por red.</p>
+        <p className="text-sm text-muted-foreground">Lo que está programado, en borrador o publicado, por día y por red. Los borradores de TikTok e Instagram se pueden editar (texto y fecha); nada se publica desde aquí.</p>
         {/* Pendiente: el aviso "IA sin etiqueta" necesita la marca de IA de la plataforma, que todavía no se guarda. */}
         <p className="mt-1 text-xs text-muted-foreground">Aviso &quot;IA sin etiqueta&quot;: pendiente (todavía no se guarda la marca de IA de la plataforma).</p>
       </header>
@@ -78,18 +82,29 @@ export default async function PaginaCola() {
                       )
                     ) : (
                       d.redes[red].map((i) => (
-                        <div key={i.publicacionId} className="flex items-center justify-between gap-2 text-sm">
-                          <span className="min-w-0 truncate">
-                            {i.reelId ? (
-                              <Link href={`/videos/${encodeURIComponent(i.reelId)}`} className="underline-offset-4 hover:underline">
-                                {i.reelId}
-                              </Link>
-                            ) : (
-                              "Sin reel"
-                            )}
-                            <span className="ml-1.5 text-xs text-muted-foreground">{formatoHora(i.momento)}</span>
-                          </span>
-                          <EstadoPublicacionBadge estado={i.estado} />
+                        <div key={i.publicacionId} className="flex flex-col gap-2">
+                          <div className="flex items-center justify-between gap-2 text-sm">
+                            <span className="min-w-0 truncate">
+                              {i.reelId ? (
+                                <Link href={`/videos/${encodeURIComponent(i.reelId)}`} className="underline-offset-4 hover:underline">
+                                  {i.reelId}
+                                </Link>
+                              ) : (
+                                "Sin reel"
+                              )}
+                              <span className="ml-1.5 text-xs text-muted-foreground">{formatoHora(i.momento)}</span>
+                            </span>
+                            <EstadoPublicacionBadge estado={i.estado} />
+                          </div>
+                          {i.editable && (
+                            <EditarBorrador
+                              publicacionId={i.publicacionId}
+                              texto={i.texto ?? ""}
+                              dia={diaBogota(i.momento)}
+                              hora={horaBogota(i.momento)}
+                            />
+                          )}
+                          {i.soloMeta && <p className="text-xs text-muted-foreground">Solo en Meta Business Suite</p>}
                         </div>
                       ))
                     )}

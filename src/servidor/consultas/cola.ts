@@ -14,6 +14,17 @@ export interface ItemCola {
   estado: EstadoPublicacion;
   momento: Date;
   enlace: string | null;
+  /** Texto actual (para precargar el formulario de edición). */
+  texto: string | null;
+  /** Borrador de Zernio en TikTok o Instagram con id de Zernio: se puede editar desde aquí (T15). */
+  editable: boolean;
+  /** Borrador de Facebook: no se edita aquí (falta el permiso pages_manage_posts). */
+  soloMeta: boolean;
+}
+
+/** Se puede editar: origen Zernio, borrador, con zernioPostId y no Facebook. Misma regla que revisa el servidor. */
+export function esEditable(p: Pick<PublicacionFila, "origen" | "estado" | "red" | "zernioPostId">): boolean {
+  return p.origen === "zernio" && p.estado === "borrador" && p.red !== "facebook" && !!p.zernioPostId;
 }
 
 export interface AvisoCola {
@@ -82,6 +93,9 @@ export function armarCola(
       estado: p.estado,
       momento,
       enlace: p.enlace,
+      texto: p.texto,
+      editable: esEditable(p),
+      soloMeta: p.red === "facebook" && p.estado === "borrador",
     });
   }
 

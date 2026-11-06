@@ -1,4 +1,4 @@
-// Cliente HTTP mínimo: solo GET, con reintentos y errores que nunca llevan la URL, las cabeceras ni las llaves.
+// Cliente HTTP mínimo: GET por defecto (PUT solo si el llamador lo pide con `escritura`), con reintentos y errores que nunca llevan la URL, las cabeceras ni las llaves.
 
 export class ErrorFuente extends Error {
   readonly estado?: number;
@@ -21,6 +21,11 @@ export interface OpcionesPedir {
   /** Reintentos después del primer intento. Por defecto 3. */
   intentos?: number;
   timeoutMs?: number;
+  /**
+   * Único camino a una escritura: un PUT con cuerpo JSON. Sin esto todo es GET. Una escritura no se reintenta
+   * (ni 4xx ni 5xx ni red caída): el llamador decide si repetirla.
+   */
+  escritura?: { metodo: "PUT"; cuerpo: unknown };
 }
 
 /** Códigos de Meta que significan "espera y vuelve a intentar" (límite de uso o error temporal). */
@@ -76,7 +81,7 @@ function descripcionCorta(cuerpo: unknown): string | undefined {
 export async function pedirJson(url: URL, op: OpcionesPedir): Promise<unknown> {
   const hacerFetch = op.fetch ?? fetch;
   const esperar = op.esperar ?? esperarReal;
-  const reintentos = op.intentos ?? 3;
+  const reintentos = op.escritura ? 0 : (op.intentos ?? 3);
   const timeoutMs = op.timeoutMs ?? 15_000;
   const limpiar = (t: string) => redactar(t, op.secretos);
 
@@ -88,8 +93,13 @@ export async function pedirJson(url: URL, op: OpcionesPedir): Promise<unknown> {
     let reintentable = false;
     try {
       const respuesta = await hacerFetch(url, {
-        method: "GET",
-        headers: { Accept: "application/json", ...op.cabeceras },
+        method: op.escritura ? op.escritura.metodo : "GET",
+        headers: {
+          Accept: "application/json",
+          ...(op.escritura ? { "Content-Type": "application/json" } : {}),
+          ...op.cabeceras,
+        },
+        ...(op.escritura ? { body: JSON.stringify(op.escritura.cuerpo) } : {}),
         signal: AbortSignal.timeout(timeoutMs),
       });
       const cuerpo = await leerCuerpo(respuesta);
