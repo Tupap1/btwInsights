@@ -1,8 +1,13 @@
 # Traspaso: terminar la fase 1 en el servidor (6-nov-2026)
 
-**Meta:** antes de que Andrés se levante, la fase 1 terminada y corriendo en Docker en este servidor, con un commit
-por tarea, todo empujado a `origin/fase-1` y un PR a `main` **sin fusionar**. Lo que necesite a Andrés (iniciar
-sesión en un panel, registrar su llave de acceso) queda en una lista corta al final del `TRACKER.md`.
+**Meta:** antes de que Andrés se levante, **todo el tablero** terminado y corriendo en Docker en este servidor:
+- la fase 1 completa;
+- la fase 2 completa;
+- de la fase 3, lo que no necesita un permiso o una decisión de Andrés.
+
+Un commit por tarea, todo empujado a `origin/fase-1` y un PR a `main` **sin fusionar**. Primero la fase 1 entera y
+desplegada (T09 a T14); después la 2 y la 3, desplegando al cerrar cada tarea. Lo bloqueado y lo que necesite a
+Andrés (iniciar sesión en un panel, registrar su llave de acceso) queda en una lista corta al final del `TRACKER.md`.
 
 ## Cómo trabajar
 
@@ -36,7 +41,8 @@ sesión en un panel, registrar su llave de acceso) queda en una lista corta al f
 2. **Lo que no está en git** lo deja Andrés en `respaldos/` (git lo ignora):
    - `llaves-api.env`: `META_PAGE_TOKEN`, `META_PAGE_ID`, `IG_USER_ID` y `ZERNIO_API_KEY`;
    - `btw_tablero.dump`: la base con todo lo importado y leído hasta el 6-nov a las 00:23 (pg_dump `-Fc`);
-   - `publicar-sin-videos.tar.gz`: `btw-videos/publicar/` sin videos ni imágenes, para `npm run importar`.
+   - `publicar-sin-videos.tar.gz`: `btw-videos/publicar/` sin videos ni imágenes, para `npm run importar`;
+   - `guiones-md.tar.gz`: los `.md` de `btw-videos/guiones/` (guiones por reel e `ideas-*.md`), para T16.
 
    Si falta alguno, sigue con lo que no dependa de él y anótalo.
 3. **`.env.local`** (desarrollo y pruebas en el servidor):
@@ -146,6 +152,72 @@ valores son acumulados o del día. Si no se puede saber con certeza, no lo imple
 pasos exactos:
 - el proxy host `insights.btw-one.com` → `<contenedor app>:3000`, con SSL;
 - el hostname público del túnel, si aplica.
+
+## Fase 2 (después de desplegar la fase 1)
+
+Regla de toda la fase: **ninguna escritura real en Zernio ni en Meta durante la noche.** Lo que escriba en las APIs se
+prueba con fetch simulado y el primer uso real lo hace Andrés con su clic.
+
+### T15: ver y editar borradores de Zernio (decidido por Andrés el 5-nov)
+- En `/cola`, cada borrador de TikTok o Instagram se puede editar: el texto y la fecha y hora (Bogotá).
+- Se guarda con `PUT /v1/posts/{id}`, **siempre con `isDraft: true`**. Nunca se crea un post, nunca se programa, nunca
+  se publica y nunca se cambia `isDraft`.
+- Antes de enviar, una confirmación que muestra qué cambia, en qué red y para cuándo, con un botón "Guardar
+  borrador".
+- El cliente de Zernio gana un único método de escritura, `editarBorrador(id, { contenido?, programadoPara? })`, que
+  arma el cuerpo con `isDraft: true` fijo. Prueba que ninguna combinación de entrada lo pueda quitar.
+- Facebook no se edita: no hay permiso `pages_manage_posts`. Muéstralo como "solo en Meta Business Suite".
+
+### T16: banco de ideas y guiones
+- Importa `guiones/ideas-*.md` a `idea`: título, gancho, formato, función de BTWash, puntaje y estado.
+- Importa a `reel.guion` el texto de `guiones/<id>-*.md` de cada reel, sin pisar lo que ya tenga.
+- Pantalla `/ideas`: lista con filtros y puntaje, y el botón "Pasar a reel", que crea el reel en la base del tablero
+  con estado "idea".
+- Re-importar es idempotente.
+
+### T17: leads
+- Registro manual en `/leads`: fecha, canal (calculadora, comentario, DM o WhatsApp), reel (opcional), nota y
+  resultado (prueba, venta o nada).
+- Leads por semana y por canal.
+- La tarjeta "Leads" de `/hoy` deja de ser "—".
+- Sin datos personales: solo el canal y una nota libre que escribe Andrés.
+
+### T18: cuentas
+`/cuentas` muestra los seguidores por red en el tiempo, desde `cuenta_lectura`, cada punto con su fuente y su fecha.
+"Seguidores nuevos" de `/hoy` sale de aquí.
+
+### T19: alertas completas
+Además de las que ya hay (borrador sin programar y fallida):
+- más de 24 h sin leer;
+- dos videos el mismo día en la misma red;
+- día sin video en los próximos 7;
+- token de Meta por vencer o sin permisos (`debug_token` no sirve sin poner el token en la URL; usa el error que
+  devuelvan las llamadas);
+- **IA sin etiqueta:** guarda la marca de IA de cada borrador de Zernio (`tiktokSettings.video_made_with_ai` o
+  `platformSpecificData.isAiGenerated`) en una columna nueva de `publicacion`, y compárala con `reel.etiquetaIa`.
+
+Cada alerta se resuelve sola cuando deja de cumplirse.
+
+### T20: qué funciona (pruebas A/B)
+- `/aprendizajes`: compara grupos de reels por gancho, formato, voz y variables probadas, usando la mediana a 48 h
+  de cada métrica por red y cuántos videos hay en cada grupo.
+- Con menos de 3 videos en un grupo, "pocos datos" en vez de conclusión. Sin inventar significancia.
+
+### T21: datos para btw-videos
+- `GET /api/exportar/metricas.csv`, protegida con `RECOLECTOR_SECRETO`: una fila por publicación con la última lectura
+  y su fuente, para la tarea de las 8:00.
+- Deja escrito en `docs/tarea-8am.md` cómo cambiar esa tarea (vive en el PC de Andrés,
+  `C:\Users\Andres\.claude\scheduled-tasks\btw-metricas-diarias\SKILL.md`) para que lea del tablero. No la cambies
+  tú: no está en este servidor.
+
+## Fase 3: solo lo que no necesita a Andrés
+
+- **Copia de videos en R2:** descartada. Andrés dijo el 5-nov que los videos no importan.
+- **Bloqueados.** Déjalos en "Para Andrés", con lo que haría falta:
+  - **Comentarios del inbox de Zernio:** la regla 3.6 dice que no se guardan datos de quien comenta salvo lo que
+    Andrés pida. Él tiene que decir qué se guarda.
+  - **Pauta de Meta Ads (solo lectura):** el token no tiene `ads_read` ni hay cuenta publicitaria configurada.
+  - **Leads de BTWash desde Supabase:** la regla 3.7 exige su aprobación explícita.
 
 ### Al final
 - PR `fase-1` → `main` con `gh pr create`: resumen, pruebas y lo pendiente. No lo fusiones.

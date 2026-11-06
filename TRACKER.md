@@ -52,7 +52,7 @@ terminada va en su propio commit** (Andrés, 5-nov).
 | T13 | Prueba de portabilidad (base nueva), búsqueda de secretos en `.next`, README, `docs/nube.md`, `.env.example` | Haiku + Opus | ⬜ | `README.md`, `docs/*`, `.env.example`, `scripts/revisar-secretos.*` |
 | T14 | Desplegar en el servidor de BTW: levantar el Compose entero, unirlo a Nginx Proxy Manager y abrir insights.btw-one.com | Opus | ⬜ (espera la pregunta 2) | — |
 
-**Siguiente:** la sesión del servidor sigue con `docs/handoff-servidor.md` (T09, T10b, T08b, T12, T13 y T14).
+**Siguiente:** la sesión del servidor sigue con `docs/handoff-servidor.md`: fase 1 (T09, T10b, T08b, T12, T13 y T14), fase 2 (T15 a T21) y, de la fase 3, lo que no necesita a Andrés.
 
 ## Fase 2
 
