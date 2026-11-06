@@ -1,0 +1,4 @@
+# Todo con fin de línea LF, también al clonar en Windows: los scripts de docker/ corren en Linux y con CRLF fallan.
+* text=auto eol=lf
+*.ico binary
+*.png binary
