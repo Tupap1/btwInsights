@@ -1,0 +1,24 @@
+# Postgres del tablero. En desarrollo solo escucha en 127.0.0.1; el compose de producción (servidor) se arma aparte.
+# Uso: npm run db:subir   (lee las variables de .env.local)
+name: btw-tablero
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: btw-tablero-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: btw_tablero
+      POSTGRES_USER: btw_dueno
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?falta POSTGRES_PASSWORD en .env.local}
+    ports:
+      - "127.0.0.1:${POSTGRES_PUERTO:-5434}:5432"
+    volumes:
+      - btw_tablero_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U btw_dueno -d btw_tablero"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+
+volumes:
+  btw_tablero_pgdata:

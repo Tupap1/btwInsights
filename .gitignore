@@ -1,0 +1,35 @@
+# Secretos
+.env
+.env.*
+!.env.example
+*.pem
+
+# Dependencias y builds
+node_modules/
+.next/
+out/
+build/
+dist/
+.vercel/
+coverage/
+*.tsbuildinfo
+next-env.d.ts
+
+# Datos locales y videos
+datos/
+respaldos/
+*.db
+*.db-journal
+*.mp4
+*.mov
+*.wav
+*.mp3
+
+# Sistema y registros
+.DS_Store
+Thumbs.db
+npm-debug.log*
+
+# Claude Code (local)
+.claude/worktrees/
+.claude/settings.local.json

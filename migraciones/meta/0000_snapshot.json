@@ -1,0 +1,1402 @@
+{
+  "id": "814bd082-c9ef-4d7a-803f-0a38b86b3741",
+  "prevId": "00000000-0000-0000-0000-000000000000",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.alerta": {
+      "name": "alerta",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "alerta_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "clave": {
+          "name": "clave",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "tipo": {
+          "name": "tipo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "nivel": {
+          "name": "nivel",
+          "type": "nivel_alerta",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'aviso'"
+        },
+        "mensaje": {
+          "name": "mensaje",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reel_id": {
+          "name": "reel_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "publicacion_id": {
+          "name": "publicacion_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "creada_en": {
+          "name": "creada_en",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "resuelta_en": {
+          "name": "resuelta_en",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "alerta_abierta_unica": {
+          "name": "alerta_abierta_unica",
+          "columns": [
+            {
+              "expression": "clave",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "where": "\"alerta\".\"resuelta_en\" is null",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "alerta_reel_id_reel_id_fk": {
+          "name": "alerta_reel_id_reel_id_fk",
+          "tableFrom": "alerta",
+          "tableTo": "reel",
+          "columnsFrom": [
+            "reel_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        },
+        "alerta_publicacion_id_publicacion_id_fk": {
+          "name": "alerta_publicacion_id_publicacion_id_fk",
+          "tableFrom": "alerta",
+          "tableTo": "publicacion",
+          "columnsFrom": [
+            "publicacion_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.corrida": {
+      "name": "corrida",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "corrida_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "origen": {
+          "name": "origen",
+          "type": "origen_corrida",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "estado": {
+          "name": "estado",
+          "type": "estado_corrida",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'en_curso'"
+        },
+        "iniciada_en": {
+          "name": "iniciada_en",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "terminada_en": {
+          "name": "terminada_en",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "resumen": {
+          "name": "resumen",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "errores": {
+          "name": "errores",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "corrida_una_en_curso": {
+          "name": "corrida_una_en_curso",
+          "columns": [
+            {
+              "expression": "estado",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "where": "\"corrida\".\"estado\" = 'en_curso'",
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.cuenta_lectura": {
+      "name": "cuenta_lectura",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "cuenta_lectura_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "red": {
+          "name": "red",
+          "type": "red",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cuenta": {
+          "name": "cuenta",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fuente": {
+          "name": "fuente",
+          "type": "fuente",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "leido_en": {
+          "name": "leido_en",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "seguidores": {
+          "name": "seguidores",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "publicaciones": {
+          "name": "publicaciones",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "cuenta_lectura_unica": {
+          "name": "cuenta_lectura_unica",
+          "columns": [
+            {
+              "expression": "red",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "cuenta",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "fuente",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "leido_en",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.curva_retencion": {
+      "name": "curva_retencion",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "curva_retencion_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "publicacion_id": {
+          "name": "publicacion_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fuente": {
+          "name": "fuente",
+          "type": "fuente",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "leido_en": {
+          "name": "leido_en",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "dato_actualizado_en": {
+          "name": "dato_actualizado_en",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "puntos": {
+          "name": "puntos",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {
+        "curva_unica": {
+          "name": "curva_unica",
+          "columns": [
+            {
+              "expression": "publicacion_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "fuente",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "dato_actualizado_en",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "curva_retencion_publicacion_id_publicacion_id_fk": {
+          "name": "curva_retencion_publicacion_id_publicacion_id_fk",
+          "tableFrom": "curva_retencion",
+          "tableTo": "publicacion",
+          "columnsFrom": [
+            "publicacion_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.idea": {
+      "name": "idea",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "idea_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "titulo": {
+          "name": "titulo",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "gancho": {
+          "name": "gancho",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "formato": {
+          "name": "formato",
+          "type": "formato",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "funcion_btwash": {
+          "name": "funcion_btwash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "verificada_en_codigo": {
+          "name": "verificada_en_codigo",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
+        "puntaje": {
+          "name": "puntaje",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "estado": {
+          "name": "estado",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'nueva'"
+        },
+        "fuente": {
+          "name": "fuente",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reel_id": {
+          "name": "reel_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "creada_en": {
+          "name": "creada_en",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "idea_reel_id_reel_id_fk": {
+          "name": "idea_reel_id_reel_id_fk",
+          "tableFrom": "idea",
+          "tableTo": "reel",
+          "columnsFrom": [
+            "reel_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.lead": {
+      "name": "lead",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "lead_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "fecha": {
+          "name": "fecha",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "canal": {
+          "name": "canal",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reel_id": {
+          "name": "reel_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nota": {
+          "name": "nota",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "resultado": {
+          "name": "resultado",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "creado_en": {
+          "name": "creado_en",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "lead_reel_id_reel_id_fk": {
+          "name": "lead_reel_id_reel_id_fk",
+          "tableFrom": "lead",
+          "tableTo": "reel",
+          "columnsFrom": [
+            "reel_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.lectura": {
+      "name": "lectura",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "lectura_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "publicacion_id": {
+          "name": "publicacion_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fuente": {
+          "name": "fuente",
+          "type": "fuente",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "via": {
+          "name": "via",
+          "type": "via",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "leido_en": {
+          "name": "leido_en",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "dato_actualizado_en": {
+          "name": "dato_actualizado_en",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "horas_desde_publicacion": {
+          "name": "horas_desde_publicacion",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "vistas": {
+          "name": "vistas",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "alcance": {
+          "name": "alcance",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "me_gusta": {
+          "name": "me_gusta",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "comentarios": {
+          "name": "comentarios",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "compartidos": {
+          "name": "compartidos",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "guardados": {
+          "name": "guardados",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "seguidores_ganados": {
+          "name": "seguidores_ganados",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "visitas_perfil": {
+          "name": "visitas_perfil",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "interacciones": {
+          "name": "interacciones",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reproducciones_con_repeticion": {
+          "name": "reproducciones_con_repeticion",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "completos": {
+          "name": "completos",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "reacciones": {
+          "name": "reacciones",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tiempo_promedio_s": {
+          "name": "tiempo_promedio_s",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tiempo_total_s": {
+          "name": "tiempo_total_s",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pct_completo": {
+          "name": "pct_completo",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pct_salta3s": {
+          "name": "pct_salta3s",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ret1s": {
+          "name": "ret1s",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ret3s": {
+          "name": "ret3s",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ret5s": {
+          "name": "ret5s",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ret10s": {
+          "name": "ret10s",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pct_para_ti": {
+          "name": "pct_para_ti",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pct_busqueda": {
+          "name": "pct_busqueda",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pct_no_seguidores": {
+          "name": "pct_no_seguidores",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pais_principal": {
+          "name": "pais_principal",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "pais_principal_pct": {
+          "name": "pais_principal_pct",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "nota": {
+          "name": "nota",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "creado_en": {
+          "name": "creado_en",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "lectura_unica": {
+          "name": "lectura_unica",
+          "columns": [
+            {
+              "expression": "publicacion_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "fuente",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "via",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "dato_actualizado_en",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "lectura_publicacion_idx": {
+          "name": "lectura_publicacion_idx",
+          "columns": [
+            {
+              "expression": "publicacion_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "dato_actualizado_en",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "lectura_publicacion_id_publicacion_id_fk": {
+          "name": "lectura_publicacion_id_publicacion_id_fk",
+          "tableFrom": "lectura",
+          "tableTo": "publicacion",
+          "columnsFrom": [
+            "publicacion_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.publicacion": {
+      "name": "publicacion",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "identity": {
+            "type": "always",
+            "name": "publicacion_id_seq",
+            "schema": "public",
+            "increment": "1",
+            "startWith": "1",
+            "minValue": "1",
+            "maxValue": "2147483647",
+            "cache": "1",
+            "cycle": false
+          }
+        },
+        "reel_id": {
+          "name": "reel_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "red": {
+          "name": "red",
+          "type": "red",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "cuenta": {
+          "name": "cuenta",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "post_id_plataforma": {
+          "name": "post_id_plataforma",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "zernio_post_id": {
+          "name": "zernio_post_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "etiquetas": {
+          "name": "etiquetas",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::text[]"
+        },
+        "enlace": {
+          "name": "enlace",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "texto": {
+          "name": "texto",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "duracion_s": {
+          "name": "duracion_s",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "programado_para": {
+          "name": "programado_para",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "publicado_en": {
+          "name": "publicado_en",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "estado": {
+          "name": "estado",
+          "type": "estado_publicacion",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "origen": {
+          "name": "origen",
+          "type": "origen_publicacion",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "emparejado_por": {
+          "name": "emparejado_por",
+          "type": "emparejado_por",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "creado_en": {
+          "name": "creado_en",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "actualizado_en": {
+          "name": "actualizado_en",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "publicacion_red_post_unico": {
+          "name": "publicacion_red_post_unico",
+          "columns": [
+            {
+              "expression": "red",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "post_id_plataforma",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "publicacion_zernio_unico": {
+          "name": "publicacion_zernio_unico",
+          "columns": [
+            {
+              "expression": "zernio_post_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "publicacion_reel_idx": {
+          "name": "publicacion_reel_idx",
+          "columns": [
+            {
+              "expression": "reel_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "publicacion_reel_id_reel_id_fk": {
+          "name": "publicacion_reel_id_reel_id_fk",
+          "tableFrom": "publicacion",
+          "tableTo": "reel",
+          "columnsFrom": [
+            "reel_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "cascade"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.reel": {
+      "name": "reel",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "slug": {
+          "name": "slug",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "carpeta": {
+          "name": "carpeta",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "gancho": {
+          "name": "gancho",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "formato": {
+          "name": "formato",
+          "type": "formato",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "formato_detalle": {
+          "name": "formato_detalle",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "voz": {
+          "name": "voz",
+          "type": "voz",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "voz_detalle": {
+          "name": "voz_detalle",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "etiqueta_ia": {
+          "name": "etiqueta_ia",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "duracion_s": {
+          "name": "duracion_s",
+          "type": "double precision",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "puntaje_guion": {
+          "name": "puntaje_guion",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "variables_probadas": {
+          "name": "variables_probadas",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "guion": {
+          "name": "guion",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "texto_tiktok": {
+          "name": "texto_tiktok",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "texto_meta": {
+          "name": "texto_meta",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "comentario_fijado": {
+          "name": "comentario_fijado",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "avisos": {
+          "name": "avisos",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::text[]"
+        },
+        "fecha_plan": {
+          "name": "fecha_plan",
+          "type": "date",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "estado": {
+          "name": "estado",
+          "type": "estado_reel",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'idea'"
+        },
+        "notas": {
+          "name": "notas",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "creado_en": {
+          "name": "creado_en",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "actualizado_en": {
+          "name": "actualizado_en",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {
+    "public.emparejado_por": {
+      "name": "emparejado_por",
+      "schema": "public",
+      "values": [
+        "id",
+        "etiqueta",
+        "fecha_texto",
+        "manual"
+      ]
+    },
+    "public.estado_corrida": {
+      "name": "estado_corrida",
+      "schema": "public",
+      "values": [
+        "en_curso",
+        "ok",
+        "parcial",
+        "error",
+        "abandonada"
+      ]
+    },
+    "public.estado_publicacion": {
+      "name": "estado_publicacion",
+      "schema": "public",
+      "values": [
+        "borrador",
+        "pendiente_aprobacion",
+        "programado",
+        "publicando",
+        "publicado",
+        "parcial",
+        "fallido",
+        "cancelado",
+        "borrado"
+      ]
+    },
+    "public.estado_reel": {
+      "name": "estado_reel",
+      "schema": "public",
+      "values": [
+        "idea",
+        "guion",
+        "produccion",
+        "listo",
+        "archivado"
+      ]
+    },
+    "public.formato": {
+      "name": "formato",
+      "schema": "public",
+      "values": [
+        "la_cuenta",
+        "dialogo",
+        "prueba_real",
+        "plata_3d",
+        "pantalla_dividida",
+        "otro"
+      ]
+    },
+    "public.fuente": {
+      "name": "fuente",
+      "schema": "public",
+      "values": [
+        "meta",
+        "zernio",
+        "manual"
+      ]
+    },
+    "public.nivel_alerta": {
+      "name": "nivel_alerta",
+      "schema": "public",
+      "values": [
+        "info",
+        "aviso",
+        "error"
+      ]
+    },
+    "public.origen_corrida": {
+      "name": "origen_corrida",
+      "schema": "public",
+      "values": [
+        "cli",
+        "http",
+        "boton"
+      ]
+    },
+    "public.origen_publicacion": {
+      "name": "origen_publicacion",
+      "schema": "public",
+      "values": [
+        "zernio",
+        "meta",
+        "manual"
+      ]
+    },
+    "public.red": {
+      "name": "red",
+      "schema": "public",
+      "values": [
+        "tiktok",
+        "instagram",
+        "facebook"
+      ]
+    },
+    "public.via": {
+      "name": "via",
+      "schema": "public",
+      "values": [
+        "api",
+        "csv",
+        "timeline",
+        "captura"
+      ]
+    },
+    "public.voz": {
+      "name": "voz",
+      "schema": "public",
+      "values": [
+        "fernando",
+        "andres",
+        "andres_voice_changer",
+        "sin_voz",
+        "otra"
+      ]
+    }
+  },
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
