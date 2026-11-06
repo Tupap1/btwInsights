@@ -14,6 +14,7 @@ import { leerCalendario, type VideoCalendario } from "./calendario";
 import { leerNombreCarpeta } from "./carpetas";
 import { leerMetricasCsv } from "./metricas-csv";
 import { leerSeguimiento, type FilaSeguimiento, type LecturaManual } from "./seguimiento";
+import { importarIdeasYGuiones } from "./ideas-a-la-base";
 import { leerTextoTxt, type TextoReel } from "./texto";
 
 export interface SinAsignar {
@@ -34,6 +35,11 @@ export interface Informe {
   /** Publicaciones que se unieron a su reel por fecha + texto (la regla), no por id ni etiqueta. */
   emparejadosPorRegla: number;
   sinAsignar: SinAsignar[];
+  /** Ideas y guiones de guiones/ (T16). */
+  ideasNuevas: number;
+  ideasYaEstaban: number;
+  guionesPuestos: number;
+  guionesYaTenian: number;
   avisos: string[];
 }
 
@@ -221,6 +227,10 @@ export async function importar(db: BaseDeDatos, dir: string): Promise<Informe> {
     lecturasRepetidas: 0,
     emparejadosPorRegla: 0,
     sinAsignar: [],
+    ideasNuevas: 0,
+    ideasYaEstaban: 0,
+    guionesPuestos: 0,
+    guionesYaTenian: 0,
     avisos,
   };
 
@@ -375,6 +385,14 @@ export async function importar(db: BaseDeDatos, dir: string): Promise<Informe> {
       else informe.lecturasRepetidas++;
     }
   }
+
+  // ---------- 5. Ideas y guiones (T16) ----------
+  const ig = await importarIdeasYGuiones(db, join(dir, "guiones"));
+  informe.ideasNuevas = ig.ideasNuevas;
+  informe.ideasYaEstaban = ig.ideasYaEstaban;
+  informe.guionesPuestos = ig.guionesPuestos;
+  informe.guionesYaTenian = ig.guionesYaTenian;
+  avisos.push(...ig.avisos);
 
   informe.publicacionesNuevas = nuevas.size;
   informe.publicacionesActualizadas = [...vistas].filter((id) => !nuevas.has(id)).length;
