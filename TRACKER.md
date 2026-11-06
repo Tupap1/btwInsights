@@ -27,7 +27,7 @@ terminada va en su propio commit** (Andrés, 5-nov).
 1. **`seguimiento.csv` (en btw-videos):** las filas del 14 y del 13 tienen una celda con coma sin comillas (la de
    la etiqueta de IA). Ponerla entre comillas y volver a correr `npm run importar`.
 2. **Nginx Proxy Manager:** ¿cómo se llama la red de Docker donde corre? El tablero se une a ella (`PROXY_RED`).
-3. **Inicio de sesión:** ¿quiénes entran? Propuesta: llave de acceso (passkey) del celular, sin contraseñas.
+3. **Inicio de sesión:** passkey (decidido el 6-nov). Falta saber quiénes más entran, además de Andrés.
 4. **Asignar a mano** los 2 posts del 28-oct ("¿Cuánto te quedó hoy?", TikTok y Facebook): deben ser del 04-G4.
 
 ## Tareas — Fase 1
@@ -46,11 +46,13 @@ terminada va en su propio commit** (Andrés, 5-nov).
 | T08 | Recolector: plan de lecturas, candado con `corrida`, alertas, `npm run recolectar` y `POST /api/recolectar`. Probado con las APIs reales: 36 lecturas y luego 0 repetidas | Opus + Sonnet | ✅ | `src/servidor/recolector/*`, `src/app/api/recolectar/`, `scripts/recolectar.ts` |
 | T08b | Rellenar huecos (domingos) con el historial diario de Zernio | Sonnet | ⬜ | `src/servidor/recolector/historial*.ts` |
 | T11 | Docker de producción: imagen `app` (326 MB, amd64 probada) y `herramientas`; Compose con base, migración, app, cron cada hora y respaldo diario | Sonnet | ✅ | `Dockerfile`, `docker-compose.prod.yml`, `docker/*`, `src/app/api/salud/`, `docs/despliegue.md` |
-| T09 | Inicio de sesión propio, sesión en la base, `proxy.ts` y verificación en cada ruta | Opus | ⬜ (espera la pregunta 3) | `src/servidor/acceso/*`, `src/proxy.ts` |
-| T10 | Pantallas: Hoy, Videos, Detalle, Cola de 14 días y Sin asignar (celular primero; cada cifra con su fuente y antigüedad) | Sonnet | ⬜ | `src/app/(tablero)/*`, `src/componentes/*`, `src/servidor/consultas/*` |
+| T09 | Inicio de sesión propio, sesión en la base, `proxy.ts` y verificación en cada ruta | Opus | ⬜ (passkey decidida el 6-nov; diseño en `docs/handoff-servidor.md`) | `src/servidor/acceso/*`, `src/proxy.ts` |
+| T10 | Pantallas: Hoy, Videos, Detalle, Cola de 14 días y Sin asignar (celular primero; cada cifra con su fuente y antigüedad) | Sonnet | ✅ (229 pruebas; pulido en T10b) | `src/app/(tablero)/*`, `src/componentes/*`, `src/servidor/consultas/*` |
 | T12 | Roles de la base (dueño, app y lectura), copia del respaldo fuera del servidor y restauración probada | Opus | ⬜ | `scripts/roles.sql`, `docker/respaldo/*` |
 | T13 | Prueba de portabilidad (base nueva), búsqueda de secretos en `.next`, README, `docs/nube.md`, `.env.example` | Haiku + Opus | ⬜ | `README.md`, `docs/*`, `.env.example`, `scripts/revisar-secretos.*` |
 | T14 | Desplegar en el servidor de BTW: levantar el Compose entero, unirlo a Nginx Proxy Manager y abrir insights.btw-one.com | Opus | ⬜ (espera la pregunta 2) | — |
+
+**Siguiente:** la sesión del servidor sigue con `docs/handoff-servidor.md` (T09, T10b, T08b, T12, T13 y T14).
 
 ## Fase 2
 
